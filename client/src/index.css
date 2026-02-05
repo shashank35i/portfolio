@@ -40,44 +40,56 @@
   --radius: 0.5rem;
 }
 
-/* DARK MODE FIRST - Premium Engineering Aesthetic */
-:root {
-  /* Base - Deep Dark / Zinc Palette */
-  --background: 240 10% 3.9%;   /* #09090b */
-  --foreground: 0 0% 98%;       /* #fafafa */
-  
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
-  
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  
-  /* Primary - Clean White/Off-White for strong contrast */
+/* THEME COLOR BLOCKS - For scroll transitions */
+[data-section-theme="zinc"] {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
   --primary: 0 0% 98%;
-  --primary-foreground: 240 5.9% 10%;
-  
-  /* Secondary - Subtle Zinc */
   --secondary: 240 3.7% 15.9%;
-  --secondary-foreground: 0 0% 98%;
-  
-  /* Muted - For secondary text */
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%; /* #a1a1aa */
-  
-  /* Accent - Subtle interactive states */
-  --accent: 240 3.7% 15.9%;
-  --accent-foreground: 0 0% 98%;
-  
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  
-  /* Borders - Subtle and refined */
   --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --ring: 240 4.9% 83.9%;
-
-  --radius: 0.5rem;
 }
+
+[data-section-theme="slate"] {
+  --background: 222 47% 11%;
+  --foreground: 210 40% 98%;
+  --primary: 199 89% 48%;
+  --secondary: 217 32% 17%;
+  --border: 217 32% 17%;
+}
+
+[data-section-theme="stone"] {
+  --background: 25 20% 12%;
+  --foreground: 60 9% 98%;
+  --primary: 35 92% 50%;
+  --secondary: 20 14% 18%;
+  --border: 20 14% 18%;
+}
+
+[data-section-theme="indigo"] {
+  --background: 244 47% 10%;
+  --foreground: 244 60% 98%;
+  --primary: 255 83% 68%;
+  --secondary: 244 32% 18%;
+  --border: 244 32% 18%;
+}
+
+html {
+  scroll-behavior: smooth;
+  transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
 
 /* Light Mode Toggle Support (Optional) */
 .light {
