@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Environment } from "@react-three/drei";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import * as THREE from "three";
 
 function GeometricShape({ position, rotation, scale, color }: any) {
@@ -31,13 +31,30 @@ function GeometricShape({ position, rotation, scale, color }: any) {
 }
 
 export function HeroBackground() {
+  const [hasWebGL, setHasWebGL] = useState(true);
+
+  useEffect(() => {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) {
+      setHasWebGL(false);
+    }
+  }, []);
+
+  if (!hasWebGL) {
+    return (
+      <div className="absolute inset-0 -z-10 bg-background">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--primary)_0%,transparent_70%)] opacity-10 animate-pulse" />
+      </div>
+    );
+  }
+
   return (
     <div className="absolute inset-0 -z-10 bg-background">
-      <Canvas camera={{ position: [0, 0, 10], fov: 45 }}>
+      <Canvas camera={{ position: [0, 0, 10], fov: 45 }} gl={{ antialias: true, alpha: true }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         
-        {/* Abstract floating shapes */}
         <GeometricShape position={[-4, 2, -5]} rotation={[0, 0, 0]} scale={2} color="#52525b" />
         <GeometricShape position={[4, -2, -2]} rotation={[0.5, 0.5, 0]} scale={1.5} color="#71717a" />
         <GeometricShape position={[0, 3, -8]} rotation={[0.2, 0, 0]} scale={3} color="#3f3f46" />
