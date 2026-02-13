@@ -186,7 +186,7 @@ export const content = {
       links: {
         github: "https://github.com/shashank35i/OpsPilot-AI",
       },
-      image: "/projects/opspilot-demo.mp4",
+      image: "/projects/opspilot-demo.gif",
       highlights: [
         "Implemented SLA-aware incident boards with status, priority, and timeline handling.",
         "Added Redis-backed cache paths and client-side caching to reduce repeated fetch cost.",
