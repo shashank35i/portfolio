@@ -137,7 +137,7 @@ export const content = {
       links: {
         github: "https://github.com/shashank35i/DentraOS",
       },
-      image: "/projects/dentraos-demo.webm",
+      image: "/projects/dentraos-demo.gif",
       highlights: [
         "Implemented multi-role authorization and protected route composition for Admin/Doctor/Patient journeys.",
         "Aligned backend APIs and SQL schema to support appointments, cases, billing, and inventory workflows.",
