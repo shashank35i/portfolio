@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Github, Linkedin, Twitter, Mail, Send } from "lucide-react";
+import { Github, Linkedin, Twitter, Mail, Send, Code2 } from "lucide-react";
 
 export function Contact() {
   const { toast } = useToast();
@@ -29,19 +29,19 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 bg-background">
-      <div className="container mx-auto px-6">
+    <section id="contact" data-section-theme="slate" className="section-flow py-20 md:py-24">
+      <div className="container mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="max-w-4xl mx-auto"
         >
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold font-display mb-6">Get in Touch</h2>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-display mb-5 md:mb-6">Get in Touch</h2>
               <div className="w-16 h-1 bg-primary mb-8" />
-              <p className="text-muted-foreground text-lg mb-8">
+              <p className="text-muted-foreground text-base md:text-lg mb-8">
                 I'm currently open to new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
               </p>
               
@@ -62,6 +62,9 @@ export function Contact() {
                   </a>
                   <a href={content.contact.socials.linkedin} target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-secondary/50 hover:bg-secondary text-foreground transition-colors">
                     <Linkedin className="w-5 h-5" />
+                  </a>
+                  <a href={content.contact.socials.leetcode} target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-secondary/50 hover:bg-secondary text-foreground transition-colors">
+                    <Code2 className="w-5 h-5" />
                   </a>
                   <a href={content.contact.socials.twitter} target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-secondary/50 hover:bg-secondary text-foreground transition-colors">
                     <Twitter className="w-5 h-5" />
@@ -104,3 +107,4 @@ export function Contact() {
     </section>
   );
 }
+

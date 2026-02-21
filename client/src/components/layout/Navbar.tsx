@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { Menu, X, Github, Linkedin, Twitter } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,6 +10,8 @@ const navLinks = [
   { name: "Skills", href: "#skills" },
   { name: "Projects", href: "#projects" },
   { name: "Experience", href: "#experience" },
+  { name: "Education", href: "#education" },
+  { name: "Recognition", href: "#recognition" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -37,14 +39,14 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent",
-        scrolled ? "bg-background/80 backdrop-blur-md border-border/40 py-2" : "bg-transparent py-4"
+        "fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent pt-[max(env(safe-area-inset-top),0.5rem)] md:pt-0",
+        scrolled ? "bg-background/80 backdrop-blur-md border-border/40 py-2" : "bg-transparent py-3 md:py-4"
       )}
     >
-      <div className="container mx-auto px-6 flex items-center justify-between">
+      <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between gap-3">
         <Link href="/">
           <a className="text-xl font-bold font-display tracking-tight hover:opacity-80 transition-opacity">
-            ALEX<span className="text-muted-foreground">DEV</span>
+            SHASHANK<span className="text-muted-foreground">.DEV</span>
           </a>
         </Link>
 
@@ -60,8 +62,10 @@ export function Navbar() {
               {link.name}
             </a>
           ))}
-          <Button variant="outline" size="sm" className="ml-4 hidden lg:flex">
-            Resume
+          <Button variant="outline" size="sm" className="ml-4 hidden lg:flex" asChild>
+            <a href="/resume.pdf" download="Shashank_Preetham_Pendyala_Resume.pdf">
+              Resume
+            </a>
           </Button>
         </nav>
 
@@ -84,19 +88,21 @@ export function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-background border-b border-border/40 overflow-hidden"
           >
-            <nav className="flex flex-col p-6 gap-4">
+            <nav className="flex max-h-[70svh] flex-col overflow-y-auto p-4 sm:p-6 gap-3">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={(e) => scrollToSection(e, link.href)}
-                  className="text-lg font-medium text-muted-foreground hover:text-foreground"
+                  className="text-base font-medium text-muted-foreground hover:text-foreground"
                 >
                   {link.name}
                 </a>
               ))}
-              <Button variant="outline" className="w-full mt-2">
-                Download Resume
+              <Button variant="outline" className="w-full mt-2" asChild>
+                <a href="/resume.pdf" download="Shashank_Preetham_Pendyala_Resume.pdf">
+                  Download Resume
+                </a>
               </Button>
             </nav>
           </motion.div>

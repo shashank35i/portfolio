@@ -39,6 +39,22 @@ export interface Experience {
   skills: string[];
 }
 
+export interface AndroidProject {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  highlights: string[];
+  tags: string[];
+  accent: string;
+  screens: string[];
+  links?: {
+    repo?: string;
+    demo?: string;
+  };
+  featured?: boolean;
+}
+
 type SkillCategory = {
   name: string;
   skills: string[];
@@ -48,7 +64,7 @@ type SkillCategory = {
 export const content = {
   hero: {
     name: "Shashank Preetham",
-    title: "Full-Stack Engineer",
+    title: "Software Engineer",
     tagline:
       "I build production-ready web platforms end-to-end: architecture, APIs, data modeling, deployment, and clean UX.",
     cta: {
@@ -58,10 +74,11 @@ export const content = {
   },
   about: {
     paragraphs: [
-      "I focus on practical full-stack engineering: turning product ideas into shipped systems with reliable backend workflows and professional frontend UX.",
-      "My recent work includes multi-role healthcare and ops automation platforms with role-based access, event-driven modules, cloud deployment, and end-to-end integration testing.",
+      "I build production-grade software systems end-to-end, from product thinking and system design to APIs, data models, deployment, and polished user interfaces.",
+      "My core strength is shipping multi-role platforms where backend correctness, role-safe workflows, and frontend clarity must all work together under real constraints.",
+      "Recent projects span healthcare, operations, and mobile ecosystems with secure auth, event-driven modules, payment integration, observability surfaces, and cloud-ready architecture.",
     ],
-    now: "Currently improving distributed workflow reliability, platform observability, and enterprise-grade UI systems.",
+    now: "Currently focused on resilient workflow engines, scalable API contracts, and enterprise UX systems that stay fast and reliable under growth.",
   },
   skills: {
     categories: [
@@ -136,6 +153,7 @@ export const content = {
       role: "Full-Stack Developer",
       links: {
         github: "https://github.com/shashank35i/DentraOS",
+        demo: "https://dentraos.pages.dev/",
       },
       image: "/projects/dentraos-demo.gif",
       highlights: [
@@ -185,6 +203,7 @@ export const content = {
       role: "Full-Stack Developer",
       links: {
         github: "https://github.com/shashank35i/OpsPilot-AI",
+        demo: "https://opspilot-ai.pages.dev/",
       },
       image: "/projects/opspilot-demo.gif",
       highlights: [
@@ -214,30 +233,185 @@ export const content = {
         ],
       },
     },
+    
+  ],
+  androidProjects: [
     {
-      id: "farmledger-backend",
-      title: "FarmLedger Backend",
-      shortDescription:
-        "Backend service for domain workflows with API modules, data persistence, and deployment-ready service structure.",
+      id: "criticall",
+      title: "CritiCall",
+      category: "Mobile App",
       description:
-        "Implemented backend modules for business workflows with secure API boundaries, schema operations, environment configuration, and cloud deployment readiness.",
-      tags: ["Backend", "API", "Deployment"],
-      techStack: ["Node.js", "Express", "MySQL", "Docker", "Railway"],
-      role: "Backend Developer",
-      links: {
-        github: "https://github.com/shashank35i/FarmLedger-Backend",
-      },
-      image: "/projects/farmledger-demo.mp4",
+        "Multi-role healthcare platform for appointments, consultations, and pharmacy workflows.",
       highlights: [
-        "Modularized API handlers for maintainability and faster iteration.",
-        "Added deployment-safe environment configuration and startup validation.",
-        "Structured data access logic for predictable behavior under load.",
+        "Role-based journeys for Patient, Doctor, Pharmacist, and Admin",
+        "Appointment lifecycle with payments, status updates, and consult links",
+        "Pharmacy inventory + prescription handling with notifications",
       ],
-      metrics: [
-        "Service-first backend architecture",
-        "Cloud-deployable runtime",
-        "Environment-driven configuration",
+      tags: ["ANDROID", "KOTLIN", "PHP", "MYSQL", "RAZORPAY"],
+      accent: "#0f7f5c",
+      screens: [
+        "/projects/android/criticall-1.jpeg",
+        "/projects/android/criticall-2.jpeg",
+        "/projects/android/criticall-3.jpeg",
       ],
+      links: {
+        repo: "https://github.com/shashank35i/criticall",
+      },
+      featured: true,
+    },
+    {
+      id: "docnest",
+      title: "DocNest",
+      category: "Mobile App",
+      description:
+        "Local-first document vault with OCR, reminders, and secure sharing.",
+      highlights: [
+        "Scan/import docs with on-device OCR and category organization",
+        "Expiry, warranty, and bill reminders with filters",
+        "PIN/biometric lock, auto-lock, and screenshot protection",
+      ],
+      tags: ["ANDROID", "KOTLIN", "OCR", "CAMERAX", "MATERIAL 3"],
+      accent: "#1a6eea",
+      screens: [
+        "/projects/android/docnest-1.jpeg",
+        "/projects/android/docnest-2.jpeg",
+        "/projects/android/docnest-3.jpeg",
+      ],
+      links: {
+        repo: "https://github.com/shashank35i/docnest-android",
+      },
+    },
+    {
+      id: "signalfence",
+      title: "SignalFence AI",
+      category: "Mobile App",
+      description:
+        "Privacy-first SMS firewall with on-device AI scoring and quarantine.",
+      highlights: [
+        "Default SMS app with real-time spam/phishing detection",
+        "On-device XGBoost + heuristics, no cloud data sharing",
+        "Clean Inbox/Blocked separation with feedback loops",
+      ],
+      tags: ["ANDROID", "KOTLIN", "ONNX", "XGBOOST", "SQLITE"],
+      accent: "#2457d6",
+      screens: [
+        "/projects/android/signalfence-1.jpeg",
+        "/projects/android/signalfence-2.jpeg",
+        "/projects/android/signalfence-3.jpeg",
+      ],
+      links: {
+        repo: "https://github.com/shashank35i/signalfence-ai-android",
+      },
+    },
+    {
+      id: "farmledger",
+      title: "FarmLedger",
+      category: "Mobile App",
+      description:
+        "QR-first traceability app for farm-to-shelf custody tracking.",
+      highlights: [
+        "Role-based flows for Farmer, Distributor, Retailer, Consumer",
+        "QR scan + verification with tamper-evident hash trail",
+        "Custody handoff tracking with timestamps and location",
+      ],
+      tags: ["ANDROID", "KOTLIN", "PHP", "HARDHAT", "QR"],
+      accent: "#0ea34a",
+      screens: [
+        "/projects/android/farmledger-1.jpeg",
+        "/projects/android/farmledger-2.jpeg",
+        "/projects/android/farmledger-3.jpeg",
+      ],
+      links: {
+        repo: "https://github.com/shashank35i/FarmLedger",
+      },
+    },
+    {
+      id: "harborfresh",
+      title: "HarborFresh",
+      category: "Mobile App",
+      description:
+        "Multi-role seafood commerce app with onboarding, ordering, and tracking.",
+      highlights: [
+        "Customer, Seller, Admin flows with KYC onboarding",
+        "Catalog, cart, checkout, and delivery slot management",
+        "Real-time order tracking and fulfillment updates",
+      ],
+      tags: ["ANDROID", "KOTLIN", "RETROFIT", "RAZORPAY", "MAPS"],
+      accent: "#118ab2",
+      screens: [
+        "/projects/android/harborfresh-1.jpeg",
+        "/projects/android/harborfresh-2.jpeg",
+        "/projects/android/harborfresh-3.jpeg",
+      ],
+      links: {
+        repo: "https://github.com/shashank35i/harborfresh-android",
+      },
+    },
+    {
+      id: "nourishnest",
+      title: "NourishNest",
+      category: "Mobile App",
+      description:
+        "Baby meal planner with recipes, grocery lists, and feeding guidance.",
+      highlights: [
+        "Child profile onboarding with age and allergy filters",
+        "Daily meal plans with recipe details and nutrition tips",
+        "Auto-generated grocery lists and offline recipe cache",
+      ],
+      tags: ["ANDROID", "JAVA", "FIREBASE", "MATERIAL 3", "LOTTIE"],
+      accent: "#f06b4f",
+      screens: [
+        "/projects/android/nourishnest-1.jpeg",
+        "/projects/android/nourishnest-2.jpeg",
+        "/projects/android/nourishnest-3.jpeg",
+      ],
+      links: {
+        repo: "https://github.com/shashank35i/nourishnest-android",
+      },
+    },
+    {
+      id: "pulsegrid",
+      title: "PulseGrid",
+      category: "Mobile App",
+      description:
+        "Multi-role healthcare app with real-time clinical workflows.",
+      highlights: [
+        "Role-based flows for Admin, Doctor, Lab Tech, Patient",
+        "Firebase RTDB sync for assignments, alerts, and status",
+        "Payments + AI utilities with secure data handling",
+      ],
+      tags: ["ANDROID", "FIREBASE", "TFLITE", "RAZORPAY", "FCM"],
+      accent: "#7a5cff",
+      screens: [
+        "/projects/android/pulsegrid-1.jpeg",
+        "/projects/android/pulsegrid-2.jpeg",
+        "/projects/android/pulsegrid-3.jpeg",
+      ],
+      links: {
+        repo: "https://github.com/shashank35i/pulsegrid-android",
+      },
+    },
+    {
+      id: "routepulse",
+      title: "RoutePulse",
+      category: "Mobile App",
+      description:
+        "Traffic intelligence app with live routing and fuel discovery.",
+      highlights: [
+        "Live maps with route alternatives and delay summaries",
+        "Nearby fuel discovery and alerts feed",
+        "Firebase identity + profile with cached routes",
+      ],
+      tags: ["ANDROID", "JAVA", "MAPS API", "FIREBASE", "DIRECTIONS"],
+      accent: "#f59e0b",
+      screens: [
+        "/projects/android/routepulse-1.jpeg",
+        "/projects/android/routepulse-2.jpeg",
+        "/projects/android/routepulse-3.jpeg",
+      ],
+      links: {
+        repo: "https://github.com/shashank35i/routepulse-android",
+      },
     },
   ],
   experience: [
