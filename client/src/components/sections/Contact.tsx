@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Github, Linkedin, Twitter, Mail, Send, Code2 } from "lucide-react";
+import { Github, Linkedin, Mail, Send, Code2 } from "lucide-react";
 
 export function Contact() {
   const { toast } = useToast();
@@ -65,9 +65,6 @@ export function Contact() {
                   </a>
                   <a href={content.contact.socials.leetcode} target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-secondary/50 hover:bg-secondary text-foreground transition-colors">
                     <Code2 className="w-5 h-5" />
-                  </a>
-                  <a href={content.contact.socials.twitter} target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-secondary/50 hover:bg-secondary text-foreground transition-colors">
-                    <Twitter className="w-5 h-5" />
                   </a>
                 </div>
               </div>

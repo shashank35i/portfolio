@@ -536,9 +536,8 @@ export const content = {
     email: "shashankpendyala3549@gmail.com",
     socials: {
       github: "https://github.com/shashank35i",
-      linkedin: "https://www.linkedin.com/in/shashank-preetham",
-      twitter: "https://twitter.com/shashank35i",
-      leetcode: "https://leetcode.com/shashank35i",
+      linkedin: "https://www.linkedin.com/in/shashank35i/",
+      leetcode: "https://leetcode.com/u/shashank3549/",
     },
   },
 };
