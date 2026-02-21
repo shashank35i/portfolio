@@ -301,6 +301,7 @@ function GlobeMesh({
   useFrame((_, delta) => {
     if (!groupRef.current) return;
 
+    dragRef.current.rotY += delta * 0.16;
     const targetY = dragRef.current.rotY + scrollYProgress.get() * Math.PI * 0.72;
     const targetX = dragRef.current.rotX;
     groupRef.current.rotation.y = THREE.MathUtils.damp(groupRef.current.rotation.y, targetY, 7, delta);
@@ -423,6 +424,27 @@ export function Skills() {
               event.currentTarget.releasePointerCapture(event.pointerId);
             }}
             onPointerLeave={() => {
+              dragRef.current.isDragging = false;
+            }}
+            onTouchStart={(event) => {
+              const touch = event.touches[0];
+              if (!touch) return;
+              dragRef.current.isDragging = true;
+              dragRef.current.lastX = touch.clientX;
+              dragRef.current.lastY = touch.clientY;
+            }}
+            onTouchMove={(event) => {
+              if (!dragRef.current.isDragging) return;
+              const touch = event.touches[0];
+              if (!touch) return;
+              const dx = touch.clientX - dragRef.current.lastX;
+              const dy = touch.clientY - dragRef.current.lastY;
+              dragRef.current.rotY += dx * 0.0046;
+              dragRef.current.rotX = THREE.MathUtils.clamp(dragRef.current.rotX + dy * 0.0042, -1.1, 1.1);
+              dragRef.current.lastX = touch.clientX;
+              dragRef.current.lastY = touch.clientY;
+            }}
+            onTouchEnd={() => {
               dragRef.current.isDragging = false;
             }}
           >

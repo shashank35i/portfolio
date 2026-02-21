@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Download, Github, Linkedin, Code2 } from "lucide-react";
+import { ArrowRight, Download, Github, Linkedin, Code2, ChevronDown } from "lucide-react";
 import { content } from "@/content/content";
 import { HeroBackground } from "./HeroBackground";
 
@@ -123,6 +123,18 @@ export function Hero() {
               <Code2 className="w-4 h-4" />
             </a>
           </motion.div>
+
+          <motion.a
+            href="#about"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-5 inline-flex md:hidden items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/75"
+            aria-label="Scroll to About section"
+          >
+            Swipe to explore
+            <ChevronDown className="h-3.5 w-3.5 animate-bounce text-primary" />
+          </motion.a>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
