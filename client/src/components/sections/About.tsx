@@ -2,19 +2,20 @@ import { motion } from "framer-motion";
 import { content } from "@/content/content";
 
 const profilePillars = [
-  "Full-stack system design",
-  "Role-based product architecture",
-  "Cloud deployment and reliability",
+  "System design for scalable digital products",
+  "Scalable API and data architecture",
+  "Cloud deployment and reliability engineering",
   "Performance-focused frontend UX",
 ];
 
-const profileMetrics = [
-  "3+ multi-role healthcare platforms",
-  "Production deployments across web stacks",
-  "Web + Android product execution",
-];
-
 export function About() {
+  const profileProof = [
+    `${content.projects.length}+ full-stack web products shipped`,
+    `${content.androidProjects.length}+ Android apps delivered`,
+    "End-to-end ownership: architecture to deployment",
+    "Cross-domain delivery: healthcare, ops, and commerce",
+  ];
+
   return (
     <section
       id="about"
@@ -65,8 +66,8 @@ export function About() {
                 <h3 className="text-primary text-xs sm:text-sm font-mono tracking-[0.2em] uppercase mb-2">
                   Core Strengths
                 </h3>
-                <p className="text-foreground/65 text-sm sm:text-base mb-5 sm:mb-6">
-                  Product-focused technical capabilities with delivery depth across web and mobile.
+                <p className="text-foreground/70 text-sm sm:text-base mb-5 sm:mb-6 max-w-3xl">
+                  Senior-level engineering focus: architecture decisions, reliable delivery, and measurable execution across product surfaces.
                 </p>
                 <div className="grid sm:grid-cols-2 gap-2.5 sm:gap-3.5 mb-5 sm:mb-6">
                   {profilePillars.map((pillar, idx) => (
@@ -82,12 +83,12 @@ export function About() {
                   ))}
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {profileMetrics.map((metric) => (
+                  {profileProof.map((item) => (
                     <span
-                      key={metric}
-                      className="rounded-xl border border-primary/25 bg-primary/10 px-3.5 py-2 text-xs sm:text-sm text-primary/90"
+                      key={item}
+                      className="rounded-xl border border-primary/25 bg-primary/10 px-3.5 py-2 text-xs sm:text-sm text-primary/90 font-medium"
                     >
-                      {metric}
+                      {item}
                     </span>
                   ))}
                 </div>

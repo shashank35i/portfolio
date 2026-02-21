@@ -23,6 +23,8 @@ type DragState = {
   lastY: number;
   rotX: number;
   rotY: number;
+  velocityX: number;
+  velocityY: number;
 };
 
 const techNodes: TechNode[] = [
@@ -301,7 +303,15 @@ function GlobeMesh({
   useFrame((_, delta) => {
     if (!groupRef.current) return;
 
-    dragRef.current.rotY += delta * 0.16;
+    if (!dragRef.current.isDragging) {
+      const decay = Math.exp(-8 * delta);
+      dragRef.current.rotY += dragRef.current.velocityY;
+      dragRef.current.rotX = THREE.MathUtils.clamp(dragRef.current.rotX + dragRef.current.velocityX, -1.1, 1.1);
+      dragRef.current.velocityX *= decay;
+      dragRef.current.velocityY *= decay;
+      dragRef.current.rotY += delta * 0.16;
+    }
+
     const targetY = dragRef.current.rotY + scrollYProgress.get() * Math.PI * 0.72;
     const targetX = dragRef.current.rotX;
     groupRef.current.rotation.y = THREE.MathUtils.damp(groupRef.current.rotation.y, targetY, 7, delta);
@@ -359,6 +369,8 @@ export function Skills() {
     lastY: 0,
     rotX: 0,
     rotY: 0,
+    velocityX: 0,
+    velocityY: 0,
   });
 
   const { scrollYProgress } = useScroll({
@@ -404,18 +416,27 @@ export function Skills() {
         >
           <div
             className="relative mx-auto aspect-square w-[86vw] max-w-[360px] rounded-full sm:w-[76vw] sm:max-w-[460px] md:w-[80vw] md:max-w-[560px]"
+            style={{ touchAction: "none", WebkitTapHighlightColor: "transparent" }}
             onPointerDown={(event) => {
+              event.preventDefault();
               dragRef.current.isDragging = true;
               dragRef.current.lastX = event.clientX;
               dragRef.current.lastY = event.clientY;
+              dragRef.current.velocityX = 0;
+              dragRef.current.velocityY = 0;
               event.currentTarget.setPointerCapture(event.pointerId);
             }}
             onPointerMove={(event) => {
               if (!dragRef.current.isDragging) return;
+              event.preventDefault();
               const dx = event.clientX - dragRef.current.lastX;
               const dy = event.clientY - dragRef.current.lastY;
-              dragRef.current.rotY += dx * 0.0046;
-              dragRef.current.rotX = THREE.MathUtils.clamp(dragRef.current.rotX + dy * 0.0042, -1.1, 1.1);
+              const speedY = dx * 0.0048;
+              const speedX = dy * 0.0042;
+              dragRef.current.rotY += speedY;
+              dragRef.current.rotX = THREE.MathUtils.clamp(dragRef.current.rotX + speedX, -1.1, 1.1);
+              dragRef.current.velocityY = THREE.MathUtils.clamp(speedY * 0.28, -0.12, 0.12);
+              dragRef.current.velocityX = THREE.MathUtils.clamp(speedX * 0.2, -0.08, 0.08);
               dragRef.current.lastX = event.clientX;
               dragRef.current.lastY = event.clientY;
             }}
@@ -423,28 +444,10 @@ export function Skills() {
               dragRef.current.isDragging = false;
               event.currentTarget.releasePointerCapture(event.pointerId);
             }}
-            onPointerLeave={() => {
+            onPointerCancel={() => {
               dragRef.current.isDragging = false;
             }}
-            onTouchStart={(event) => {
-              const touch = event.touches[0];
-              if (!touch) return;
-              dragRef.current.isDragging = true;
-              dragRef.current.lastX = touch.clientX;
-              dragRef.current.lastY = touch.clientY;
-            }}
-            onTouchMove={(event) => {
-              if (!dragRef.current.isDragging) return;
-              const touch = event.touches[0];
-              if (!touch) return;
-              const dx = touch.clientX - dragRef.current.lastX;
-              const dy = touch.clientY - dragRef.current.lastY;
-              dragRef.current.rotY += dx * 0.0046;
-              dragRef.current.rotX = THREE.MathUtils.clamp(dragRef.current.rotX + dy * 0.0042, -1.1, 1.1);
-              dragRef.current.lastX = touch.clientX;
-              dragRef.current.lastY = touch.clientY;
-            }}
-            onTouchEnd={() => {
+            onPointerLeave={() => {
               dragRef.current.isDragging = false;
             }}
           >
