@@ -44,10 +44,8 @@ export function Navbar() {
       )}
     >
       <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between gap-3">
-        <Link href="/">
-          <a className="text-xl font-bold font-display tracking-tight hover:opacity-80 transition-opacity">
-            SHASHANK<span className="text-muted-foreground">.DEV</span>
-          </a>
+        <Link href="/" className="text-xl font-bold font-display tracking-tight hover:opacity-80 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+          SHASHANK<span className="text-muted-foreground">.DEV</span>
         </Link>
 
         {/* Desktop Nav */}
@@ -57,7 +55,7 @@ export function Navbar() {
               key={link.name}
               href={link.href}
               onClick={(e) => scrollToSection(e, link.href)}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             >
               {link.name}
             </a>
@@ -71,7 +69,7 @@ export function Navbar() {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden p-2 text-foreground"
+          className="md:hidden p-2 text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
@@ -94,7 +92,7 @@ export function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={(e) => scrollToSection(e, link.href)}
-                  className="text-base font-medium text-muted-foreground hover:text-foreground"
+                  className="text-base font-medium text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >
                   {link.name}
                 </a>

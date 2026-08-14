@@ -124,6 +124,20 @@ export function Hero() {
             </a>
           </motion.div>
 
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.46 }}
+            className="mx-auto mt-6 grid max-w-2xl grid-cols-3 divide-x divide-white/10 border-y border-white/10 bg-black/20 py-4 backdrop-blur-sm"
+          >
+            {[['Java 17', 'Oracle certified'], ['AWS', 'Cloud certified'], ['470+', 'LeetCode solved']].map(([value, label]) => (
+              <div key={value} className="px-2 sm:px-5">
+                <div className="font-display text-lg font-bold text-white sm:text-2xl">{value}</div>
+                <div className="mt-1 text-[9px] uppercase tracking-[0.12em] text-zinc-400 sm:text-[10px]">{label}</div>
+              </div>
+            ))}
+          </motion.div>
+
           <motion.a
             href="#about"
             initial={{ opacity: 0, y: 20 }}

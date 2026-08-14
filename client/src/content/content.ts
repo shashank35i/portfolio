@@ -64,68 +64,68 @@ type SkillCategory = {
 export const content = {
   hero: {
     name: "Shashank Preetham",
-    title: "Software Engineer",
+    title: "Java & Backend Software Engineer",
     tagline:
-      "I build production-ready web platforms end-to-end: architecture, APIs, data modeling, deployment, and clean UX.",
+      "I build resilient Spring Boot APIs and event-driven systems—measured, tested, and ready for production.",
     cta: {
-      primary: "View Projects",
+      primary: "View flagship work",
       secondary: "Download Resume",
     },
   },
   about: {
     paragraphs: [
-      "I build production-grade software systems end-to-end, from product thinking and system design to APIs, data models, deployment, and polished user interfaces.",
-      "My core strength is shipping multi-role platforms where backend correctness, role-safe workflows, and frontend clarity must all work together under real constraints.",
-      "Recent projects span healthcare, operations, and mobile ecosystems with secure auth, event-driven modules, payment integration, observability surfaces, and cloud-ready architecture.",
+      "I’m a backend-focused software engineer who turns complex workflows into reliable Java systems, from API contracts and data models to caching, messaging, testing, and deployment.",
+      "My core strength is engineering multi-role products where correctness, security, idempotency, and observable performance matter—not just the happy path.",
+      "I also build thoughtful React and Android interfaces, giving me the end-to-end context to make better backend decisions.",
     ],
-    now: "Currently focused on resilient workflow engines, scalable API contracts, and enterprise UX systems that stay fast and reliable under growth.",
+    now: "Currently focused on Spring Boot, Kafka delivery guarantees, Redis caching, and API performance under realistic load.",
   },
   skills: {
     categories: [
       {
-        name: "Frontend",
+        name: "Java Backend",
         skills: [
-          "React",
-          "TypeScript",
-          "Vite",
-          "Tailwind CSS",
-          "Framer Motion",
-          "Playwright",
+          "Java 17",
+          "Spring Boot",
+          "Spring Security",
+          "REST APIs",
+          "JUnit",
+          "Mockito",
         ],
         icon: LayoutTemplate,
       },
       {
-        name: "Backend",
+        name: "Messaging & Data",
         skills: [
-          "Node.js",
-          "Express",
-          "REST APIs",
-          "Python",
-          "FastAPI",
-          "JWT/Auth",
+          "Apache Kafka",
+          "Redis",
+          "MySQL",
+          "Firebase",
+          "Transactional Outbox",
+          "WebSockets / STOMP",
         ],
         icon: Server,
       },
       {
-        name: "Data & Infra",
+        name: "Cloud & Delivery",
         skills: [
-          "MySQL",
-          "MongoDB",
-          "Redis",
+          "AWS",
           "Docker",
-          "Railway",
-          "Cloudflare Pages",
+          "GitHub Actions",
+          "CI/CD",
+          "Load Testing",
+          "Observability",
         ],
         icon: Terminal,
       },
       {
         name: "Architecture",
         skills: [
-          "Role-Based Access",
+          "React / TypeScript",
+          "Android / Java",
           "Event-Driven Flows",
-          "Caching Strategy",
           "Schema Design",
-          "CI/CD",
+          "Idempotency",
           "Performance Tuning",
         ],
         icon: Layers,
@@ -187,35 +187,39 @@ export const content = {
       id: "opspilot-ai",
       title: "OpsPilot AI",
       shortDescription:
-        "Enterprise-style incident command platform with SLA timers, ownership workflows, analytics, and cache-backed API performance.",
+        "Production-grade incident command system with secure Spring APIs, real-time operations, and reliable event delivery.",
       description:
-        "Built a modern ops platform for incident triage and response coordination. Implemented incident lifecycle features, search/filter capabilities, role-aware views, health observability, and caching integration with Redis.",
-      tags: ["Full Stack", "SaaS", "Operations"],
+        "Engineered an incident response platform around Spring Boot, Kafka, Redis, and MySQL, with transactional event delivery, role-aware security, real-time updates, and measured load performance.",
+      tags: ["Java", "Distributed Systems", "Operations"],
       techStack: [
-        "React",
-        "TypeScript",
-        "Node.js",
-        "Express",
-        "MongoDB",
+        "Java",
+        "Spring Boot",
+        "Spring Security",
+        "Apache Kafka",
         "Redis",
-        "Railway",
+        "MySQL",
+        "WebSockets/STOMP",
+        "AWS",
+        "Docker",
+        "GitHub Actions",
       ],
-      role: "Full-Stack Developer",
+      role: "Backend / Full-Stack Engineer",
       links: {
         github: "https://github.com/shashank35i/OpsPilot-AI",
         demo: "https://opspilot-ai.pages.dev/",
       },
       image: "/projects/opspilot-demo.gif",
       highlights: [
-        "Implemented SLA-aware incident boards with status, priority, and timeline handling.",
-        "Added Redis-backed cache paths and client-side caching to reduce repeated fetch cost.",
-        "Created health/debug surface to track service status and runtime diagnostics.",
-        "Shipped responsive UI with structured information architecture and production deployment workflow.",
+        "Designed 23 secure REST endpoints for incident, ownership, SLA, and analytics workflows.",
+        "Built an at-least-once Kafka pipeline with transactional outbox, retries, DLT, and deduplication.",
+        "Used Redis to reduce repeated database reads by 86.9% and dashboard latency by 82%.",
+        "Validated behavior with 43 JUnit/Mockito tests and a 15,000-request load run.",
       ],
       metrics: [
-        "Sub-second cached responses on repeated views",
-        "Mongo + Redis + API orchestration",
-        "Railway + Cloudflare deployment workflow",
+        "288 req/s · zero failures",
+        "86.9% fewer repeated DB reads",
+        "82% lower dashboard latency",
+        "43 automated tests",
       ],
       caseStudy: {
         problem:
@@ -236,6 +240,23 @@ export const content = {
     
   ],
   androidProjects: [
+    {
+      id: "bookmyticket",
+      title: "BookMyTicket",
+      category: "Flagship Android System",
+      description: "Ticketing and parking validation for three roles, with paid bookings, one-time QR entry, and OCR-assisted plate verification.",
+      highlights: [
+        "Tourist, Place Admin, and Parking Admin role-specific workflows",
+        "Razorpay payments with one-time QR validation",
+        "Idempotent Cloud Functions and Firebase transactions",
+        "ML Kit OCR reached 93.0% exact match across 500 labeled plate images",
+      ],
+      tags: ["ANDROID", "JAVA", "FIREBASE", "RAZORPAY", "ML KIT OCR"],
+      accent: "#b7791f",
+      screens: [],
+      links: { repo: "https://github.com/shashank35i/BookMyTicket" },
+      featured: true,
+    },
     {
       id: "criticall",
       title: "CritiCall",
@@ -419,7 +440,7 @@ export const content = {
       id: "exp-1",
       company: "9X IT Solutions",
       role: "Software Engineer Intern",
-      period: "Oct 2025 - Dec 2025",
+      period: "Oct 2025 - Mar 2026",
       description: [
         "Developed and optimized Java-based RESTful microservices handling 1,000+ daily requests.",
         "Reduced average response time by ~25% using payload simplification, pagination, and controller-level improvements.",
@@ -447,9 +468,9 @@ export const content = {
       id: "edu-1",
       degree: "B.E. in Computer Science and Engineering",
       school: "Saveetha School of Engineering",
-      period: "Jul 2022 - Jul 2026",
+      period: "Jul 2022 - Jun 2026",
       details: [
-        "CGPA: 8.7 / 10",
+        "CGPA: 8.5 / 10",
         "Coursework: Data Structures & Algorithms, Applied Statistics, Linear Algebra, ML & AI Fundamentals.",
       ],
     },
@@ -479,56 +500,32 @@ export const content = {
     hackathons: [
       {
         title: "Adobe India Hackathon (Unstop)",
-        award: "Round 1 Participant",
+        award: "Finalist",
         year: "2026",
         summary:
-          "Participated as team_alpha in the Online MCQ + Coding round, representing Saveetha Institute of Medical and Technical Sciences.",
+          "Selected as a finalist in Adobe India’s national hackathon.",
       },
       {
-        title: "Hack2Hire: AI-Powered Interview Hackathon",
-        award: "Participant",
-        year: "2026",
-        summary:
-          "Successfully completed the hackathon organized by UnsaidTalks Education Pvt. Ltd.",
-      },
-      {
-        title: "OfferShield Hackathon",
-        award: "Project Participant",
-        year: "2026",
-        summary:
-          "Participated with an OfferShield concept focused on practical hiring and offer-validation workflows.",
+        title: "YuKeSong2025",
+        award: "Winner",
+        year: "2025",
+        summary: "Won YuKeSong2025 for applied engineering and product execution.",
       },
     ],
     awards: [
       {
-        title: "Complex Systems Builder",
-        issuer: "Portfolio Recognition",
+        title: "Competitive Programming",
+        issuer: "LeetCode",
         year: "2026",
-        summary:
-          "Recognized for shipping multi-service, role-based full-stack products with deployment readiness.",
-      },
-      {
-        title: "End-to-End Engineering Focus",
-        issuer: "Project Portfolio",
-        year: "2025",
-        summary:
-          "Demonstrated strong ownership from schema design through cloud production deployment.",
+        summary: "Solved 470+ problems and reached a 1570 contest rating.",
       },
     ],
     community: [
       {
-        title: "Open Project Maintainer",
-        org: "GitHub Portfolio",
-        year: "2025 - Present",
-        summary:
-          "Maintaining and iterating full-stack repositories with deployment docs and architecture notes.",
-      },
-      {
-        title: "Peer Learning Contributor",
-        org: "Developer Communities",
-        year: "2024 - Present",
-        summary:
-          "Sharing practical debugging and deployment workflows for Node, React, and cloud hosting.",
+        title: "LeetCode",
+        org: "Problem solving",
+        year: "470+ solved",
+        summary: "Peak rating 1570 across data structures and algorithmic problem solving.",
       },
     ],
   },
