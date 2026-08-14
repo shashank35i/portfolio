@@ -1,107 +1,35 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { ArrowUpRight, Code2, Github, Linkedin, Mail, MapPin } from "lucide-react";
 import { content } from "@/content/content";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
-import { Github, Linkedin, Mail, Send, Code2 } from "lucide-react";
+
+const profileLinks = [
+  { label: "GitHub", detail: "Code & repositories", href: content.contact.socials.github, icon: Github },
+  { label: "LinkedIn", detail: "Experience & network", href: content.contact.socials.linkedin, icon: Linkedin },
+  { label: "LeetCode", detail: "470+ problems solved", href: content.contact.socials.leetcode, icon: Code2 },
+];
 
 export function Contact() {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Message sent",
-      description: "Thanks for reaching out! I'll get back to you soon.",
-    });
-    
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
-  };
-
+  const mailto = `mailto:${content.contact.email}?subject=${encodeURIComponent("Backend engineering opportunity")}`;
   return (
-    <section id="contact" data-section-theme="slate" className="section-flow py-20 md:py-24">
-      <div className="container mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-            <div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-display mb-5 md:mb-6">Get in Touch</h2>
-              <div className="w-16 h-1 bg-primary mb-8" />
-              <p className="text-muted-foreground text-base md:text-lg mb-8">
-                I'm currently open to new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
-              </p>
-              
-              <div className="space-y-4">
-                <a 
-                  href={`mailto:${content.contact.email}`} 
-                  className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"
-                >
-                  <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  {content.contact.email}
-                </a>
-                
-                <div className="flex gap-4 mt-8">
-                  <a href={content.contact.socials.github} target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-secondary/50 hover:bg-secondary text-foreground transition-colors">
-                    <Github className="w-5 h-5" />
-                  </a>
-                  <a href={content.contact.socials.linkedin} target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-secondary/50 hover:bg-secondary text-foreground transition-colors">
-                    <Linkedin className="w-5 h-5" />
-                  </a>
-                  <a href={content.contact.socials.leetcode} target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-secondary/50 hover:bg-secondary text-foreground transition-colors">
-                    <Code2 className="w-5 h-5" />
-                  </a>
-                </div>
-              </div>
+    <section id="contact" data-section-theme="zinc" className="section-flow relative overflow-hidden py-24 md:py-32">
+      <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.06)_1px,transparent_1px)] [background-size:100%_48px]" />
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
+        <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mx-auto max-w-6xl border border-white/10 bg-[#08090d]">
+          <div className="grid lg:grid-cols-[1.2fr_.8fr]">
+            <div className="p-7 sm:p-10 lg:p-14">
+              <span className="font-mono text-xs uppercase tracking-[.24em] text-cyan-300">07 / Contact</span>
+              <h2 className="mt-7 max-w-3xl text-4xl font-bold leading-[1.02] sm:text-6xl">Let’s talk about the system you’re building.</h2>
+              <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-300">I’m open to Java/backend and full-stack software engineering opportunities. The fastest way to reach me is by email or LinkedIn.</p>
+              <div className="mt-8 flex flex-wrap gap-4 text-sm text-zinc-300"><span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 text-amber-300"/>Hyderabad, India</span><span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-emerald-400"/>Available for 2026 graduate roles</span></div>
+              <a href={mailto} className="mt-10 inline-flex items-center gap-3 border border-cyan-200/25 bg-cyan-300 px-5 py-3.5 text-sm font-bold text-slate-950 transition hover:bg-cyan-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"><Mail className="h-4 w-4"/>Email Shashank <ArrowUpRight className="h-4 w-4"/></a>
+              <p className="mt-4 break-all font-mono text-xs text-zinc-300">{content.contact.email}</p>
             </div>
-
-            <Card className="bg-secondary/10 border-border/50">
-              <CardContent className="p-6">
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium">Name</label>
-                    <Input id="name" required placeholder="John Doe" className="bg-background/50" />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium">Email</label>
-                    <Input id="email" type="email" required placeholder="john@example.com" className="bg-background/50" />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-medium">Message</label>
-                    <Textarea id="message" required placeholder="Hello, I'd like to discuss..." className="min-h-[150px] bg-background/50" />
-                  </div>
-                  <Button type="submit" className="w-full" disabled={isSubmitting}>
-                    {isSubmitting ? (
-                      "Sending..."
-                    ) : (
-                      <>
-                        Send Message
-                        <Send className="ml-2 w-4 h-4" />
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+            <nav aria-label="Professional profiles" className="border-t border-white/10 lg:border-l lg:border-t-0">
+              {profileLinks.map(({ label, detail, href, icon: Icon }) => <a key={label} href={href} target="_blank" rel="noreferrer" className="group flex min-h-32 items-center gap-5 border-b border-white/10 p-7 transition last:border-b-0 hover:bg-white/[.04] focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-cyan-300"><Icon className="h-6 w-6 text-zinc-300 group-hover:text-cyan-300"/><span className="flex-1"><strong className="block text-lg text-white">{label}</strong><span className="mt-1 block text-sm text-zinc-300">{detail}</span></span><ArrowUpRight className="h-5 w-5 text-zinc-400 transition group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white"/></a>)}
+            </nav>
           </div>
         </motion.div>
       </div>
     </section>
   );
 }
-

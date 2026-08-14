@@ -449,19 +449,6 @@ export const content = {
       ],
       skills: ["Java", "REST APIs", "MySQL", "AuthN/AuthZ", "Microservices"],
     },
-    {
-      id: "exp-2",
-      company: "Freelance Product Development",
-      role: "Full-Stack Developer",
-      period: "2024 - Present",
-      description: [
-        "Built and shipped production-ready web apps including DentraOS and OpsPilot AI.",
-        "Designed service boundaries, scalable APIs, and role-based product workflows end-to-end.",
-        "Implemented real-time systems with WebSockets and performance-driven frontend architecture.",
-        "Handled cloud deployment, environment configuration, and production debugging across full stack.",
-      ],
-      skills: ["React", "Node.js", "WebSockets", "Cloud Deployment", "System Design"],
-    },
   ],
   education: [
     {
@@ -510,22 +497,6 @@ export const content = {
         award: "Winner",
         year: "2025",
         summary: "Won YuKeSong2025 for applied engineering and product execution.",
-      },
-    ],
-    awards: [
-      {
-        title: "Competitive Programming",
-        issuer: "LeetCode",
-        year: "2026",
-        summary: "Solved 470+ problems and reached a 1570 contest rating.",
-      },
-    ],
-    community: [
-      {
-        title: "LeetCode",
-        org: "Problem solving",
-        year: "470+ solved",
-        summary: "Peak rating 1570 across data structures and algorithmic problem solving.",
       },
     ],
   },

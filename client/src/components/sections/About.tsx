@@ -2,18 +2,18 @@ import { motion } from "framer-motion";
 import { content } from "@/content/content";
 
 const profilePillars = [
-  "System design for scalable digital products",
-  "Scalable API and data architecture",
-  "Cloud deployment and reliability engineering",
-  "Performance-focused frontend UX",
+  "Java 17, Spring Boot, and Spring Security",
+  "Role-safe APIs and access control",
+  "Kafka delivery guarantees and Redis caching",
+  "Load testing and measurable performance",
 ];
 
 export function About() {
   const profileProof = [
-    `${content.projects.length}+ full-stack web products shipped`,
-    `${content.androidProjects.length}+ Android apps delivered`,
-    "End-to-end ownership: architecture to deployment",
-    "Cross-domain delivery: healthcare, ops, and commerce",
+    "23 secure REST endpoints",
+    "43 JUnit / Mockito tests",
+    "288 requests / second, zero failures",
+    "470+ LeetCode problems solved",
   ];
 
   return (
@@ -67,7 +67,7 @@ export function About() {
                   Core Strengths
                 </h3>
                 <p className="text-foreground/70 text-sm sm:text-base mb-5 sm:mb-6 max-w-3xl">
-                  Senior-level engineering focus: architecture decisions, reliable delivery, and measurable execution across product surfaces.
+                  Backend engineering grounded in correctness, security, test coverage, and measured behavior under load.
                 </p>
                 <div className="grid sm:grid-cols-2 gap-2.5 sm:gap-3.5 mb-5 sm:mb-6">
                   {profilePillars.map((pillar, idx) => (

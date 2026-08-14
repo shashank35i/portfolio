@@ -1,60 +1,44 @@
-# Professional Software Engineer Portfolio
+# Shashank Preetham — Portfolio
 
-A high-performance, dark-mode portfolio designed for Principal/Senior Engineers. Built with React, Tailwind CSS, Framer Motion, and Three.js.
+Portfolio for Shashank Preetham Pendyala, a Java/backend-focused software engineer. The site highlights OpsPilot-AI and BookMyTicket as detailed engineering case studies and preserves a visual archive of web and Android work.
 
-## 🚀 Quick Start
+## Stack
 
-1.  **Install Dependencies:**
-    ```bash
-    npm install
-    ```
+- React 19, TypeScript, and Vite
+- Tailwind CSS 4 and shadcn/Radix primitives
+- Framer Motion
+- Express production server
 
-2.  **Run Development Server:**
-    ```bash
-    npm run dev
-    ```
+## Local development
 
-3.  **Build for Production:**
-    ```bash
-    npm run build
-    ```
+```bash
+npm install
+npm run dev
+```
 
-## 📝 Content Management
+The client runs through Vite and the server runs with `tsx`.
 
-**All content is managed in a single file:** `client/src/content/content.ts`
+## Verification and production build
 
-You do not need to touch the React components to update text, projects, or skills.
+```bash
+npm run check
+npm run build
+npm start
+```
 
-### How to Edit:
-1.  Open `client/src/content/content.ts`.
-2.  Update the `hero` section with your name and tagline.
-3.  Add your skills in the `skills` arrays.
-4.  Add your projects to the `projects` array.
-    *   **Images:** Place project images in `client/public/assets/` and reference them like `/assets/my-project.jpg`.
-5.  Update your `experience` timeline.
-6.  Update `contact` details.
+`npm run check` performs the TypeScript check. `npm run build` creates the client bundle under `dist/public` and the server bundle at `dist/index.cjs`.
 
-## 🎨 Customization
+## Content and assets
 
-### Theme & Colors
-The design system is defined in `client/src/index.css`.
-*   **Colors:** Modified via CSS variables (HSL format).
-*   **Fonts:** Uses `Space Grotesk` (Headers) and `Inter` (Body).
+- Portfolio data: `client/src/content/content.ts`
+- Page sections: `client/src/components/sections/`
+- Project screenshots and demos: `client/public/projects/`
+- Downloadable resume: `client/public/resume.pdf`
+- Social preview: `client/public/opengraph.jpg`
+- Theme and responsive styles: `client/src/index.css`
 
-### 3D Background
-The Hero background is in `client/src/components/sections/HeroBackground.tsx`.
-*   You can toggle it off by removing `<HeroBackground />` from `client/src/components/sections/Hero.tsx`.
-*   It respects `prefers-reduced-motion`.
+Project claims, experience, education, and recognition should remain aligned with the supplied resume. BookMyTicket intentionally uses a QR/OCR system graphic because no product screenshots are included.
 
-## 📦 Deployment
+## Deployment
 
-This project is optimized for **Vercel**.
-
-1.  Push to GitHub.
-2.  Import project in Vercel.
-3.  Framework Preset: **Vite**.
-4.  Deploy.
-
-## 📄 Resume
-
-Replace the file at `client/public/resume.pdf` with your actual PDF resume.
+Deploy the output of `npm run build` with Node.js 20.19 or newer. Start the production server with `npm start` and provide required environment variables through the hosting platform.

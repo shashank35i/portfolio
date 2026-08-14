@@ -30,7 +30,7 @@ function FlagshipDossier({ kind, onOpen }: { kind: "ops" | "ticket"; onOpen: () 
       <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,.16)_1px,transparent_1px)] [background-size:24px_24px]" />
       <div className="relative grid lg:grid-cols-[1.05fr_.95fr]">
         <div className="p-6 sm:p-9 lg:p-12">
-          <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-4 font-mono text-[10px] uppercase tracking-[.24em] text-zinc-400"><span>Flagship / {ops ? "01" : "02"}</span><span className={ops ? "text-cyan-300" : "text-emerald-300"}>● Production case study</span></div>
+          <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-4 font-mono text-[10px] uppercase tracking-[.24em] text-zinc-400"><span>Flagship / {ops ? "01" : "02"}</span><span className={ops ? "text-cyan-300" : "text-emerald-300"}>● Engineering dossier</span></div>
           <p className={`mb-3 font-mono text-xs uppercase tracking-[.2em] ${ops ? "text-cyan-300" : "text-amber-300"}`}>{ops ? "Incident command · event-driven backend" : "Ticketing · identity · validation"}</p>
           <h3 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">{project.title}</h3>
           <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-300">{project.description}</p>
@@ -70,8 +70,8 @@ function AndroidArchiveCard({ project, index, onOpen }: { project: AndroidProjec
     <motion.article initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .12 }} transition={{ delay: (index % 2) * .08 }} className="group min-w-0">
       <button type="button" onClick={onOpen} className="block w-full text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
         <div className="mb-4 flex items-end justify-between gap-4 px-1">
-          <div><span className="font-mono text-[9px] uppercase tracking-[.22em] text-zinc-500">Android showcase / {String(index + 1).padStart(2, "0")}</span><h3 className="mt-2 text-2xl font-bold text-white sm:text-3xl">{project.title}</h3></div>
-          <ArrowUpRight className="h-5 w-5 shrink-0 text-zinc-500 transition group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white" />
+          <div><span className="font-mono text-[9px] uppercase tracking-[.22em] text-zinc-300">Android showcase / {String(index + 1).padStart(2, "0")}</span><h3 className="mt-2 text-2xl font-bold text-white sm:text-3xl">{project.title}</h3></div>
+          <ArrowUpRight className="h-5 w-5 shrink-0 text-zinc-300 transition group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white" />
         </div>
         <div className="relative h-[430px] overflow-hidden rounded-[2rem] border border-white/15 p-5 shadow-[0_28px_65px_rgba(0,0,0,.42)] sm:h-[500px] sm:p-7" style={{ background: `linear-gradient(145deg, ${project.accent}, color-mix(in_srgb, ${project.accent} 68%, #05070d))` }}>
           <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(rgba(255,255,255,.8)_1px,transparent_1px)] [background-size:22px_22px]" />
@@ -96,7 +96,7 @@ export function Projects() {
     <div className="container mx-auto px-4 sm:px-6">
       <header className="mx-auto mb-12 max-w-6xl"><span className="font-mono text-xs uppercase tracking-[.25em] text-cyan-300">03 / Selected engineering</span><h2 className="mt-4 text-4xl font-bold sm:text-6xl">Flagship systems</h2><p className="mt-4 max-w-2xl text-zinc-400">Two production-minded systems where reliability claims are backed by architecture, tests, and measured outcomes.</p></header>
       <div className="mx-auto grid max-w-6xl gap-8"><FlagshipDossier kind="ops" onOpen={()=>setSelectedProject(opsPilot)} /><FlagshipDossier kind="ticket" onOpen={()=>setSelectedAndroidProject(bookMyTicket)} /></div>
-      <div className="mx-auto mt-24 max-w-6xl border-t border-white/10 pt-12"><div className="mb-8 flex items-end justify-between gap-5"><div><span className="font-mono text-xs uppercase tracking-[.25em] text-zinc-500">04 / Archive</span><h2 className="mt-3 text-3xl font-bold sm:text-4xl">Additional work</h2></div><span className="font-mono text-xs text-zinc-500">09 SYSTEMS</span></div>
+      <div className="mx-auto mt-24 max-w-6xl border-t border-white/10 pt-12"><div className="mb-8 flex items-end justify-between gap-5"><div><span className="font-mono text-xs uppercase tracking-[.25em] text-zinc-300">04 / Project archive</span><h2 className="mt-3 text-3xl font-bold sm:text-4xl">Web & Android builds</h2></div><span className="font-mono text-xs text-zinc-300">09 SYSTEMS</span></div>
         <div className="mb-16"><WebArchiveCard project={additionalWeb[0]} onOpen={()=>setSelectedProject(additionalWeb[0])} /></div>
         <div className="grid min-w-0 gap-x-8 gap-y-16 md:grid-cols-2 lg:gap-x-12 lg:gap-y-20">{additionalMobile.map((project, index)=><AndroidArchiveCard key={project.id} project={project} index={index} onOpen={()=>setSelectedAndroidProject(project)} />)}</div>
       </div>
