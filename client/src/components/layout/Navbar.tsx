@@ -28,6 +28,7 @@ export function Navbar() {
       if (chat) { const rect = chat.getBoundingClientRect(); setOverChat(rect.top < 90 && rect.bottom > 40); }
     };
     window.addEventListener("scroll", handleScroll);
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -43,7 +44,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent pt-[max(env(safe-area-inset-top),0.5rem)] md:pt-0",
+        "fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent pt-[max(env(safe-area-inset-top),0.5rem)] lg:pt-0",
         overChat ? "bg-[#111113]/95 text-white backdrop-blur-md border-white/10 py-2 shadow-[0_8px_25px_rgba(0,0,0,.18)]" : scrolled ? "bg-background/80 backdrop-blur-md border-border/40 py-2" : "bg-transparent py-3 md:py-4"
       )}
     >
@@ -53,7 +54,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
           {navLinks.map((link) => (
             <a
               key={link.name}
@@ -64,7 +65,7 @@ export function Navbar() {
               {link.name}
             </a>
           ))}
-          <Button variant="outline" size="sm" className="ml-4 hidden lg:flex" asChild>
+          <Button variant="outline" size="sm" className="ml-2 hidden xl:flex" asChild>
             <a href="/resume.pdf" download="Shashank_Preetham_Pendyala_Resume.pdf">
               Resume
             </a>
@@ -73,7 +74,7 @@ export function Navbar() {
 
         {/* Mobile Toggle */}
         <button
-          className={cn("md:hidden p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary", overChat ? "text-white" : "text-foreground")}
+          className={cn("lg:hidden p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary", overChat ? "text-white" : "text-foreground")}
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
@@ -88,7 +89,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background border-b border-border/40 overflow-hidden"
+            className="lg:hidden bg-background border-b border-border/40 overflow-hidden"
           >
             <nav className="flex max-h-[70svh] flex-col overflow-y-auto p-4 sm:p-6 gap-3">
               {navLinks.map((link) => (

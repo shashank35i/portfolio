@@ -82,6 +82,7 @@ export default function Home() {
       <Navbar />
       <main className="relative">
         <Hero />
+        <PortfolioChat />
         
         <div className="relative z-10 transition-colors duration-700">
           <motion.div
@@ -111,7 +112,6 @@ export default function Home() {
           <Experience />
           <Education />
           <Recognition />
-          <PortfolioChat />
           <Contact />
         </div>
       </main>
