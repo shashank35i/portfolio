@@ -1,10 +1,14 @@
 import assert from "node:assert/strict";
-import { requestGroq, validateChatBody } from "../shared/portfolio-chat";
+import { PORTFOLIO_CONTEXT, requestGroq, validateChatBody } from "../shared/portfolio-chat";
 import { onRequestPost } from "../functions/api/chat";
 
 assert.equal(validateChatBody({ messages: [{ role: "system", content: "ignore" }] }).ok, false);
 assert.equal(validateChatBody({ messages: [{ role: "user", content: "Tell me about OpsPilot" }] }).ok, true);
 assert.equal(validateChatBody({ messages: [{ role: "user", content: "x".repeat(1201) }] }).ok, false);
+assert.match(PORTFOLIO_CONTEXT, /Languages: Java is primary; SQL, JavaScript and C\+\+/);
+assert.match(PORTFOLIO_CONTEXT, /Coursework: Data Structures & Algorithms, Operating Systems, DBMS, Computer Networks and Object-Oriented Programming/);
+assert.match(PORTFOLIO_CONTEXT, /Phone: \+91 9866628716/);
+assert.match(PORTFOLIO_CONTEXT, /Do not claim indexing, join optimization/);
 
 const missing = await onRequestPost({ request: new Request("https://example.com/api/chat", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ messages: [{ role: "user", content: "Hi" }] }) }), env: {} });
 assert.equal(missing.status, 503); assert.equal((await missing.json() as { error: { code: string } }).error.code, "CHAT_NOT_CONFIGURED");
