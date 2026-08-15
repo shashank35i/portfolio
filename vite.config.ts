@@ -43,6 +43,7 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     allowedHosts: true,
+    proxy: { "/api": "http://127.0.0.1:5000" },
     fs: {
       strict: true,
       deny: ["**/.*"],

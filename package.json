@@ -10,6 +10,7 @@
     "build": "tsx script/build.ts",
     "start": "cross-env NODE_ENV=production node dist/index.cjs",
     "check": "tsc",
+    "test:chat": "tsx script/test-chat.ts",
     "db:push": "drizzle-kit push"
   },
   "dependencies": {

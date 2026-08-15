@@ -12,16 +12,20 @@ const navLinks = [
   { name: "Experience", href: "#experience" },
   { name: "Education", href: "#education" },
   { name: "Recognition", href: "#recognition" },
+  { name: "Chat", href: "#chat" },
   { name: "Contact", href: "#contact" },
 ];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [overChat, setOverChat] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
+      const chat = document.getElementById("chat");
+      if (chat) { const rect = chat.getBoundingClientRect(); setOverChat(rect.top < 90 && rect.bottom > 40); }
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -40,12 +44,12 @@ export function Navbar() {
     <header
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent pt-[max(env(safe-area-inset-top),0.5rem)] md:pt-0",
-        scrolled ? "bg-background/80 backdrop-blur-md border-border/40 py-2" : "bg-transparent py-3 md:py-4"
+        overChat ? "bg-[#111113]/95 text-white backdrop-blur-md border-white/10 py-2 shadow-[0_8px_25px_rgba(0,0,0,.18)]" : scrolled ? "bg-background/80 backdrop-blur-md border-border/40 py-2" : "bg-transparent py-3 md:py-4"
       )}
     >
       <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between gap-3">
         <Link href="/" className="text-xl font-bold font-display tracking-tight hover:opacity-80 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
-          SHASHANK<span className="text-muted-foreground">.DEV</span>
+          SHASHANK<span className={overChat ? "text-zinc-400" : "text-muted-foreground"}>.DEV</span>
         </Link>
 
         {/* Desktop Nav */}
@@ -55,7 +59,7 @@ export function Navbar() {
               key={link.name}
               href={link.href}
               onClick={(e) => scrollToSection(e, link.href)}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+              className={cn("text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary", overChat ? "text-zinc-300 hover:text-white" : "text-muted-foreground hover:text-foreground")}
             >
               {link.name}
             </a>
@@ -69,7 +73,7 @@ export function Navbar() {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden p-2 text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className={cn("md:hidden p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary", overChat ? "text-white" : "text-foreground")}
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >

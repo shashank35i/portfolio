@@ -11,6 +11,7 @@ import { Experience } from "@/components/sections/Experience";
 import { Education } from "@/components/sections/Education";
 import { Recognition } from "@/components/sections/Recognition";
 import { Contact } from "@/components/sections/Contact";
+import { ChatLauncher, PortfolioChat } from "@/components/sections/PortfolioChat";
 
 export default function Home() {
   useEffect(() => {
@@ -110,10 +111,12 @@ export default function Home() {
           <Experience />
           <Education />
           <Recognition />
+          <PortfolioChat />
           <Contact />
         </div>
       </main>
       <Footer />
+      <ChatLauncher />
     </div>
   );
 }
