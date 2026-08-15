@@ -5,7 +5,7 @@ import type { ChatMessage } from "@shared/portfolio-chat";
 const starters = [
   { label: "Java backend fit", prompt: "Why is Shashank a strong Java backend candidate?" },
   { label: "OpsPilot in 30 seconds", prompt: "Explain OpsPilot-AI in 30 seconds." },
-  { label: "9X internship impact", prompt: "What did he improve at 9X IT Solutions?" },
+  { label: "9X internship work", prompt: "What did Shashank work on at 9X IT Solutions?" },
   { label: "Android experience", prompt: "Which projects show Android experience?" },
 ];
 

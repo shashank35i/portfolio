@@ -442,12 +442,11 @@ export const content = {
       role: "Software Engineer Intern",
       period: "Oct 2025 - Mar 2026",
       description: [
-        "Developed and optimized Java-based RESTful microservices handling 1,000+ daily requests.",
-        "Reduced average response time by ~25% using payload simplification, pagination, and controller-level improvements.",
-        "Improved MySQL query performance by ~15-20% via indexing, query refactors, and join optimization.",
-        "Built reusable authentication and authorization modules (token/session checks and role-based access) shared across services.",
+        "Worked on Java-based RESTful microservices and backend application features.",
+        "Built reusable authentication and authorization modules with token/session checks and role-based access.",
+        "Collaborated on service-layer improvements, API reliability, and maintainable backend code.",
       ],
-      skills: ["Java", "REST APIs", "MySQL", "AuthN/AuthZ", "Microservices"],
+      skills: ["Java", "REST APIs", "AuthN/AuthZ", "Microservices"],
     },
   ],
   education: [
