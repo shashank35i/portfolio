@@ -20,7 +20,7 @@ export function Contact() {
               <span className="font-mono text-xs uppercase tracking-[.24em] text-cyan-300">07 / Contact</span>
               <h2 className="mt-7 max-w-3xl text-4xl font-bold leading-[1.02] sm:text-6xl">Let’s talk about the system you’re building.</h2>
               <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-300">I’m open to Java/backend and full-stack software engineering opportunities. The fastest way to reach me is by email or LinkedIn.</p>
-              <div className="mt-8 flex flex-wrap gap-4 text-sm text-zinc-300"><span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 text-amber-300"/>Hyderabad, India</span><span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-emerald-400"/>Available for 2026 graduate roles</span></div>
+              <div className="mt-8 flex flex-wrap gap-4 text-sm text-zinc-300"><span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 text-amber-300"/>Hyderabad, India</span><span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-emerald-400"/>Available for software engineering roles</span></div>
               <a href={mailto} className="mt-10 inline-flex items-center gap-3 border border-cyan-200/25 bg-cyan-300 px-5 py-3.5 text-sm font-bold text-slate-950 transition hover:bg-cyan-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"><Mail className="h-4 w-4"/>Email Shashank <ArrowUpRight className="h-4 w-4"/></a>
               <p className="mt-4 break-all font-mono text-xs text-zinc-300">{content.contact.email}</p>
             </div>
