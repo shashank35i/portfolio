@@ -442,11 +442,13 @@ export const content = {
       role: "Software Engineer Intern",
       period: "Oct 2025 - Mar 2026",
       description: [
-        "Worked on Java-based RESTful microservices and backend application features.",
-        "Built reusable authentication and authorization modules with token/session checks and role-based access.",
-        "Collaborated on service-layer improvements, API reliability, and maintainable backend code.",
+        "Migrated Spring Boot REST APIs from session-based authentication to stateless JWT with protected-request token validation.",
+        "Centralized user, moderator, and admin RBAC in Spring Security authorization rules, eliminating duplicated controller-level access checks.",
+        "Optimized Admin Dashboard queries with DTO projections, reducing API response payload size by 23%.",
+        "Added pagination to the admin user API and benchmarked updated APIs with JMeter after analyzing MySQL EXPLAIN plans.",
+        "Reduced average response time by ~25% and increased throughput by ~20%.",
       ],
-      skills: ["Java", "REST APIs", "AuthN/AuthZ", "Microservices"],
+      skills: ["Java", "Spring Boot", "Spring Security", "JWT", "RBAC", "MySQL", "JMeter"],
     },
   ],
   education: [
