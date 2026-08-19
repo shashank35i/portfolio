@@ -62,6 +62,36 @@ Certifications and achievements:
 - Adobe India Hackathon by Adobe: Finalist.
 `;
 
+const RESUME_FALLBACK_SECTIONS = {
+  contact: `Shashank Preetham Pendyala is based in Hyderabad, India. Email: shashankpendyala3549@gmail.com. Phone: +91 9866628716. GitHub: https://github.com/shashank35i . LinkedIn: https://www.linkedin.com/in/shashank35i/ . LeetCode: https://leetcode.com/u/shashank3549/ with 470+ solved and a 1570 rating.`,
+  skills: `Shashank's resume skills include Java as his primary language, plus SQL, JavaScript and C++. Backend: Spring Boot, Spring Security with JWT/RBAC, REST APIs, Apache Kafka, Redis and WebSockets. Frontend: React, Vite, HTML5, CSS3 and Tailwind CSS. Databases and cloud: MySQL, Firebase Realtime Database, AWS EC2, RDS, S3, CloudFront and Docker. DevOps and tools: Git, GitHub Actions CI/CD, JMeter and Postman.`,
+  experience: `At 9X IT Solutions in Hyderabad, Shashank worked as a Software Engineer Intern from Oct 2025 to Mar 2026. He migrated Spring Boot REST APIs from session-based authentication to stateless JWT, reconfigured Spring Security token validation, centralized user/moderator/admin RBAC rules, optimized Admin Dashboard queries with DTO projections to reduce payload size by 23%, added pagination to the admin user API, analyzed MySQL EXPLAIN plans and benchmarked APIs with JMeter, reducing average response time by about 25% and increasing throughput by about 20%. His resume does not claim indexing, join optimization or undocumented database schema changes for 9X.`,
+  opspilot: `OpsPilot-AI is Shashank's incident response platform built with Java, Spring Boot, Spring Security, Apache Kafka, Redis, AWS and MySQL. It includes 23 REST endpoints, RBAC across Reporter, Responder and Admin roles, Redis cache-aside caching and JWT revocation blacklisting, 86.9% fewer repeated database reads, 82% lower dashboard latency, a 15,000-request load test with 50 concurrent clients at 288 requests/sec and zero failures, an at-least-once Kafka notification pipeline using transactional outbox, retries, DLT handling, event deduplication and WebSocket/STOMP delivery, plus 43 JUnit/Mockito tests and GitHub Actions deployment to EC2, RDS, S3 and CloudFront. Repository: https://github.com/shashank35i/OpsPilot-AI .`,
+  bookmyticket: `BookMyTicket is Shashank's Android ticketing and parking validation app built with Java, Android and Firebase. It supports Tourist, Place Admin and Parking Admin roles, Razorpay payments, one-time QR validation, Firebase Realtime Database models for tickets, payments, visitor groups, parking records, payouts and validation data, idempotent payment processing with Firebase Cloud Functions and Realtime Database transactions, and ML Kit OCR with 93.0% exact-match vehicle registration accuracy across 500 labeled plate images. Repository: https://github.com/shashank35i/BookMyTicket .`,
+  education: `Shashank graduated with a B.E. in Computer Science and Engineering from Saveetha School of Engineering, Chennai, in June 2026 with a CGPA of 8.5/10. He completed Intermediate MPC at Krishnaveni Junior College, Kothagudem, in May 2022 with a CGPA of 9.4/10. Coursework: Data Structures & Algorithms, Operating Systems, DBMS, Computer Networks and Object-Oriented Programming.`,
+  certifications: `Shashank's resume lists Oracle Certified Java SE 17 Developer, exam 1Z0-829; AWS Certified Cloud Practitioner; YuKeSong2025 on Devpost as Winner, International Hackathon; and Adobe India Hackathon by Adobe as Finalist.`,
+};
+
+export function getResumeFallbackAnswer(messages: ChatMessage[]): string {
+  const latest = [...messages].reverse().find((message) => message.role === "user")?.content.toLowerCase() ?? "";
+  const parts: string[] = [];
+  const add = (section: keyof typeof RESUME_FALLBACK_SECTIONS) => { if (!parts.includes(RESUME_FALLBACK_SECTIONS[section])) parts.push(RESUME_FALLBACK_SECTIONS[section]); };
+
+  if (/9x|intern|experience|jwt|rbac|jmeter|explain|index|join/.test(latest)) add("experience");
+  if (/opspilot|incident|kafka|redis|websocket|stomp|load|288|43|cache/.test(latest)) add("opspilot");
+  if (/bookmyticket|ticket|parking|android|firebase|razorpay|ocr|qr|ml kit/.test(latest)) add("bookmyticket");
+  if (/skill|tech|stack|language|backend|frontend|cloud|tool|postman|docker|aws/.test(latest)) add("skills");
+  if (/education|college|cgpa|course|graduate|degree|school|intermediate/.test(latest)) add("education");
+  if (/cert|achievement|hackathon|oracle|aws|adobe|yukesong|leetcode/.test(latest)) add("certifications");
+  if (/contact|email|phone|github|linkedin|portfolio|location|hyderabad/.test(latest)) add("contact");
+  if (/project|resume|profile|about|summary|fit|candidate|hire|java/.test(latest) && parts.length === 0) {
+    add("skills"); add("experience"); add("opspilot"); add("bookmyticket");
+  }
+
+  if (parts.length > 0) return parts.join("\n\n");
+  return "I only have Shashank's resume and portfolio context. Ask about his skills, 9X internship, OpsPilot-AI, BookMyTicket, education, certifications, achievements or contact details.";
+}
+
 export function validateChatBody(body: unknown): { ok: true; messages: ChatMessage[] } | { ok: false; code: string; message: string } {
   if (!body || typeof body !== "object" || !Array.isArray((body as { messages?: unknown }).messages)) return { ok: false, code: "INVALID_REQUEST", message: "Send a messages array." };
   const input = (body as { messages: unknown[] }).messages;

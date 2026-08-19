@@ -10,8 +10,11 @@ assert.match(PORTFOLIO_CONTEXT, /Coursework: Data Structures & Algorithms, Opera
 assert.match(PORTFOLIO_CONTEXT, /Phone: \+91 9866628716/);
 assert.match(PORTFOLIO_CONTEXT, /Do not claim indexing, join optimization/);
 
-const missing = await onRequestPost({ request: new Request("https://example.com/api/chat", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ messages: [{ role: "user", content: "Hi" }] }) }), env: {} });
-assert.equal(missing.status, 503); assert.equal((await missing.json() as { error: { code: string } }).error.code, "CHAT_NOT_CONFIGURED");
+const missing = await onRequestPost({ request: new Request("https://example.com/api/chat", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ messages: [{ role: "user", content: "List Shashank's skills" }] }) }), env: {} });
+assert.equal(missing.status, 200);
+const missingBody = await missing.json() as { answer: string; model: string };
+assert.equal(missingBody.model, "resume-context");
+assert.match(missingBody.answer, /Java as his primary language/);
 
 const fakeFetch: typeof fetch = async (_input, init) => {
   const payload = JSON.parse(String(init?.body)) as { messages: Array<{ role: string }> };
@@ -20,4 +23,10 @@ const fakeFetch: typeof fetch = async (_input, init) => {
 };
 const mocked = await requestGroq([{ role: "user", content: "Why Java?" }], "test-only", undefined, fakeFetch);
 assert.equal(mocked.ok, true); if (mocked.ok) assert.match(mocked.answer, /Java/);
-console.log("chat validation, missing-config, and mocked upstream tests passed");
+
+const failingFetch: typeof fetch = async () => new Response(JSON.stringify({ error: "bad upstream" }), { status: 502, headers: { "content-type": "application/json" } });
+const failed = await requestGroq([{ role: "user", content: "Tell me about 9X" }], "test-only", undefined, failingFetch);
+assert.equal(failed.ok, false);
+if (!failed.ok) assert.equal(failed.code, "UPSTREAM_ERROR");
+
+console.log("chat validation, resume fallback, and mocked upstream tests passed");
