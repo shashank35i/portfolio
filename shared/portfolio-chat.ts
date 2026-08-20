@@ -79,7 +79,7 @@ export function validateChatBody(body: unknown): { ok: true; messages: ChatMessa
   return { ok: true, messages };
 }
 
-export async function requestGroq(messages: ChatMessage[], apiKey: string, model = "llama-3.3-70b-versatile", fetcher: typeof fetch = fetch) {
+export async function requestGroq(messages: ChatMessage[], apiKey: string, model = "openai/gpt-oss-120b", fetcher: typeof fetch = fetch) {
   const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), 15000);
   try {
     const response = await fetcher("https://api.groq.com/openai/v1/chat/completions", { method: "POST", headers: { "content-type": "application/json", authorization: `Bearer ${apiKey}` }, body: JSON.stringify({ model, temperature: .25, max_completion_tokens: 650, messages: [{ role: "system", content: PORTFOLIO_CONTEXT }, ...messages] }), signal: controller.signal });
