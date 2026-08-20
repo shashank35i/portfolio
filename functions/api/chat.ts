@@ -1,4 +1,4 @@
-import { getResumeFallbackAnswer, requestGroq, validateChatBody } from "../../shared/portfolio-chat";
+import { requestGroq, validateChatBody } from "../../shared/portfolio-chat";
 
 type Env = { GROQ_API_KEY?: string; GROQ_MODEL?: string };
 type PagesContext = { request: Request; env: Env };
@@ -12,9 +12,9 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
   visits.set(ip, !current || current.reset <= now ? { count: 1, reset: now + 60000 } : { ...current, count: current.count + 1 });
   let body: unknown; try { body = await context.request.json(); } catch { return Response.json({ error: { code: "INVALID_JSON", message: "Request body must be JSON." } }, { status: 400 }); }
   const valid = validateChatBody(body); if (!valid.ok) return Response.json({ error: { code: valid.code, message: valid.message } }, { status: 400 });
-  if (!context.env.GROQ_API_KEY) return Response.json({ answer: getResumeFallbackAnswer(valid.messages), model: "resume-context" });
+  if (!context.env.GROQ_API_KEY) return Response.json({ error: { code: "CHAT_NOT_CONFIGURED", message: "Portfolio chat is not configured yet." } }, { status: 503 });
   const result = await requestGroq(valid.messages, context.env.GROQ_API_KEY, context.env.GROQ_MODEL);
-  if (!result.ok) return Response.json({ answer: getResumeFallbackAnswer(valid.messages), model: "resume-context", fallback: result.code });
+  if (!result.ok) return Response.json({ error: { code: result.code, message: result.message } }, { status: result.status, headers: result.retryAfter ? { "retry-after": result.retryAfter } : undefined });
   return Response.json({ answer: result.answer, model: result.model });
 }
 
