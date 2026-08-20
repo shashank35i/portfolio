@@ -79,11 +79,22 @@ export function validateChatBody(body: unknown): { ok: true; messages: ChatMessa
   return { ok: true, messages };
 }
 
-export async function requestGroq(messages: ChatMessage[], apiKey: string, model = "llama-3.1-8b-instant", fetcher: typeof fetch = fetch) {
+export async function requestGroq(messages: ChatMessage[], apiKey: string, model = "openai/gpt-oss-120b", fetcher: typeof fetch = fetch) {
   const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), 15000);
   try {
-    const response = await fetcher("https://api.groq.com/openai/v1/chat/completions", { method: "POST", headers: { "content-type": "application/json", authorization: `Bearer ${apiKey}` }, body: JSON.stringify({ model, temperature: .25, max_completion_tokens: 650, messages: [{ role: "system", content: PORTFOLIO_CONTEXT }, ...messages] }), signal: controller.signal });
-    if (!response.ok) return { ok: false as const, status: response.status === 429 ? 429 : 502, code: response.status === 429 ? "RATE_LIMITED" : "UPSTREAM_ERROR", message: response.status === 429 ? "The assistant is busy. Please try again shortly." : "The assistant is temporarily unavailable.", retryAfter: response.headers.get("retry-after") };
+    const response = await fetcher("https://api.groq.com/openai/v1/chat/completions", { method: "POST", headers: { "content-type": "application/json", authorization: `Bearer ${apiKey}` }, body: JSON.stringify({ model, service_tier: "auto", temperature: .25, max_completion_tokens: 650, messages: [{ role: "system", content: PORTFOLIO_CONTEXT }, ...messages] }), signal: controller.signal });
+    if (!response.ok) {
+      const upstreamText = await response.text().catch(() => "");
+      return {
+        ok: false as const,
+        status: response.status === 429 ? 429 : 502,
+        code: response.status === 429 ? "RATE_LIMITED" : "UPSTREAM_ERROR",
+        message: response.status === 429 ? "The assistant is busy. Please try again shortly." : "The assistant is temporarily unavailable.",
+        retryAfter: response.headers.get("retry-after"),
+        upstreamStatus: response.status,
+        upstreamBody: upstreamText.slice(0, 500),
+      };
+    }
     const data = await response.json() as { choices?: Array<{ message?: { content?: string } }> }; const answer = data.choices?.[0]?.message?.content?.trim();
     if (!answer) return { ok: false as const, status: 502, code: "UPSTREAM_ERROR", message: "The assistant returned an empty response." };
     return { ok: true as const, answer, model };
