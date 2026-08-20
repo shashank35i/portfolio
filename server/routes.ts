@@ -20,7 +20,7 @@ export async function registerRoutes(
     rate.set(key, !current || current.reset <= now ? { count: 1, reset: now + 60000 } : { ...current, count: current.count + 1 });
     const valid = validateChatBody(req.body); if (!valid.ok) return res.status(400).json({ error: { code: valid.code, message: valid.message } });
     const apiKey = process.env.GROQ_API_KEY; if (!apiKey) return res.status(503).json({ error: { code: "CHAT_NOT_CONFIGURED", message: "Portfolio chat is not configured yet." } });
-    const result = await requestGroq(valid.messages, apiKey, process.env.GROQ_MODEL); if (!result.ok) return res.status(result.status).json({ error: { code: result.code, message: result.message } });
+    const result = await requestGroq(valid.messages, apiKey); if (!result.ok) return res.status(result.status).json({ error: { code: result.code, message: result.message } });
     return res.json({ answer: result.answer, model: result.model });
   });
   return httpServer;

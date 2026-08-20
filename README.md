@@ -73,4 +73,4 @@ To disable deployment again:
 gh variable set ENABLE_CLOUDFLARE_DEPLOY --body false --repo shashank35i/portfolio
 ```
 
-GitHub Secrets are deployment inputs. The workflow securely pipes `GROQ_API_KEY` into Cloudflare Pages' encrypted runtime secret, then deploys `dist/public` together with `functions/` to the existing `portfolio` project (served at `portfolio-2yo.pages.dev`). `GROQ_MODEL` is a non-secret variable configured in `wrangler.toml`.
+GitHub Secrets are deployment inputs. The workflow securely pipes `GROQ_API_KEY` into Cloudflare Pages' encrypted runtime secret, then deploys `dist/public` together with `functions/` to the existing `portfolio` project (served at `portfolio-2yo.pages.dev`). The Groq model is pinned in `shared/portfolio-chat.ts` so stale Cloudflare variables cannot override it.

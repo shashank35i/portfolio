@@ -1,6 +1,6 @@
 import { requestGroq, validateChatBody } from "../../shared/portfolio-chat";
 
-type Env = { GROQ_API_KEY?: string; GROQ_MODEL?: string };
+type Env = { GROQ_API_KEY?: string };
 type PagesContext = { request: Request; env: Env };
 const visits = new Map<string, { count: number; reset: number }>();
 
@@ -13,8 +13,8 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
   let body: unknown; try { body = await context.request.json(); } catch { return Response.json({ error: { code: "INVALID_JSON", message: "Request body must be JSON." } }, { status: 400 }); }
   const valid = validateChatBody(body); if (!valid.ok) return Response.json({ error: { code: valid.code, message: valid.message } }, { status: 400 });
   if (!context.env.GROQ_API_KEY) return Response.json({ error: { code: "CHAT_NOT_CONFIGURED", message: "Portfolio chat is not configured yet." } }, { status: 503 });
-  const result = await requestGroq(valid.messages, context.env.GROQ_API_KEY, context.env.GROQ_MODEL);
-  if (!result.ok) return Response.json({ error: { code: result.code, message: result.message, diagnostic: "chat-api-20260820", upstreamStatus: result.upstreamStatus, upstreamBody: result.upstreamBody } }, { status: result.status, headers: result.retryAfter ? { "retry-after": result.retryAfter } : undefined });
+  const result = await requestGroq(valid.messages, context.env.GROQ_API_KEY);
+  if (!result.ok) return Response.json({ error: { code: result.code, message: result.message } }, { status: result.status, headers: result.retryAfter ? { "retry-after": result.retryAfter } : undefined });
   return Response.json({ answer: result.answer, model: result.model });
 }
 
