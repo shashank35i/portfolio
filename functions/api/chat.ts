@@ -14,7 +14,7 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
   const valid = validateChatBody(body); if (!valid.ok) return Response.json({ error: { code: valid.code, message: valid.message } }, { status: 400 });
   if (!context.env.GROQ_API_KEY) return Response.json({ error: { code: "CHAT_NOT_CONFIGURED", message: "Portfolio chat is not configured yet." } }, { status: 503 });
   const result = await requestGroq(valid.messages, context.env.GROQ_API_KEY, context.env.GROQ_MODEL);
-  if (!result.ok) return Response.json({ error: { code: result.code, message: result.message } }, { status: result.status, headers: result.retryAfter ? { "retry-after": result.retryAfter } : undefined });
+  if (!result.ok) return Response.json({ error: { code: result.code, message: result.message, upstreamStatus: result.upstreamStatus, upstreamBody: result.upstreamBody } }, { status: result.status, headers: result.retryAfter ? { "retry-after": result.retryAfter } : undefined });
   return Response.json({ answer: result.answer, model: result.model });
 }
 
