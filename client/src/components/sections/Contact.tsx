@@ -5,7 +5,7 @@ import { content } from "@/content/content";
 const profileLinks = [
   { label: "GitHub", detail: "Code & repositories", href: content.contact.socials.github, icon: Github },
   { label: "LinkedIn", detail: "Experience & network", href: content.contact.socials.linkedin, icon: Linkedin },
-  { label: "LeetCode", detail: "470+ problems solved", href: content.contact.socials.leetcode, icon: Code2 },
+  { label: "LeetCode", detail: "Knight · 531 solved", href: content.contact.socials.leetcode, icon: Code2 },
 ];
 
 export function Contact() {

@@ -499,6 +499,12 @@ export const content = {
         year: "2025",
         summary: "Won YuKeSong2025 for applied engineering and product execution.",
       },
+      {
+        title: "LeetCode Knight",
+        award: "1915 rating · Top 4.24%",
+        year: "2026",
+        summary: "Earned the LeetCode Knight badge with 531 problems solved.",
+      },
     ],
   },
   contact: {

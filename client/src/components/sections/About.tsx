@@ -13,7 +13,7 @@ export function About() {
     "23 secure REST endpoints",
     "43 JUnit / Mockito tests",
     "288 requests / second, zero failures",
-    "470+ LeetCode problems solved",
+    "531 LeetCode problems solved",
   ];
 
   return (
