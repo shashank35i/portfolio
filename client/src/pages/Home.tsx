@@ -11,7 +11,7 @@ import { Experience } from "@/components/sections/Experience";
 import { Education } from "@/components/sections/Education";
 import { Recognition } from "@/components/sections/Recognition";
 import { Contact } from "@/components/sections/Contact";
-import { ChatLauncher, PortfolioChat } from "@/components/sections/PortfolioChat";
+import { ChatLauncher } from "@/components/sections/PortfolioChat";
 
 export default function Home() {
   useEffect(() => {
@@ -82,8 +82,6 @@ export default function Home() {
       <Navbar />
       <main className="relative">
         <Hero />
-        <PortfolioChat />
-        
         <div className="relative z-10 transition-colors duration-700">
           <motion.div
             initial={{ opacity: 0 }}

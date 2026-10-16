@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Link } from "wouter";
-import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "wouter";
+import { ArrowLeft, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,25 +12,29 @@ const navLinks = [
   { name: "Experience", href: "#experience" },
   { name: "Education", href: "#education" },
   { name: "Recognition", href: "#recognition" },
-  { name: "Chat", href: "#chat" },
+  { name: "Chat", href: "/chat", isRoute: true },
   { name: "Contact", href: "#contact" },
 ];
 
 export function Navbar() {
+  const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [overChat, setOverChat] = useState(false);
+  const isChatPage = location === "/chat";
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-      const chat = document.getElementById("chat");
-      if (chat) { const rect = chat.getBoundingClientRect(); setOverChat(rect.top < 90 && rect.bottom > 40); }
+      if (!isChatPage) {
+        const chat = document.getElementById("chat");
+        if (chat) { const rect = chat.getBoundingClientRect(); setOverChat(rect.top < 90 && rect.bottom > 40); }
+      }
     };
     window.addEventListener("scroll", handleScroll);
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isChatPage]);
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -40,6 +44,23 @@ export function Navbar() {
       setIsOpen(false);
     }
   };
+
+  if (isChatPage) {
+    return (
+      <header className="fixed top-0 z-50 w-full border-b border-black/10 bg-[#f3f1eb]/95 text-[#191816] backdrop-blur-md pt-[max(env(safe-area-inset-top),0.5rem)] lg:pt-0">
+        <div className="container mx-auto flex h-16 items-center justify-between gap-3 px-4 sm:h-[72px] sm:px-6">
+          <Link href="/" className="font-display text-base font-bold tracking-tight transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f04b23] sm:text-xl">
+            SHASHANK<span className="text-black/45">.DEV</span>
+          </Link>
+          <span className="hidden font-mono text-[10px] font-bold uppercase tracking-[.18em] text-[#b93617] sm:inline">Portfolio assistant</span>
+          <Link href="/" className="inline-flex items-center gap-2 border border-black/15 bg-white px-3 py-2 text-xs font-bold transition hover:border-[#f04b23]/60 hover:text-[#b83216] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#f04b23] sm:px-4 sm:text-sm">
+            <ArrowLeft className="h-4 w-4" />
+            <span>Portfolio</span>
+          </Link>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header
@@ -55,15 +76,10 @@ export function Navbar() {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={(e) => scrollToSection(e, link.href)}
-              className={cn("text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary", overChat ? "text-zinc-300 hover:text-white" : "text-muted-foreground hover:text-foreground")}
-            >
-              {link.name}
-            </a>
+          {navLinks.map((link) => link.isRoute ? (
+            <Link key={link.name} href={link.href} className={cn("text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary", overChat ? "text-zinc-300 hover:text-white" : "text-muted-foreground hover:text-foreground")}>{link.name}</Link>
+          ) : (
+            <a key={link.name} href={link.href} onClick={(e) => scrollToSection(e, link.href)} className={cn("text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary", overChat ? "text-zinc-300 hover:text-white" : "text-muted-foreground hover:text-foreground")}>{link.name}</a>
           ))}
           <Button variant="outline" size="sm" className="ml-2 hidden xl:flex" asChild>
             <a href="/resume.pdf" download="Shashank_Preetham_Pendyala_Resume.pdf">
@@ -92,15 +108,10 @@ export function Navbar() {
             className="lg:hidden bg-background border-b border-border/40 overflow-hidden"
           >
             <nav className="flex max-h-[70svh] flex-col overflow-y-auto p-4 sm:p-6 gap-3">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => scrollToSection(e, link.href)}
-                  className="text-base font-medium text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                >
-                  {link.name}
-                </a>
+              {navLinks.map((link) => link.isRoute ? (
+                <Link key={link.name} href={link.href} onClick={() => setIsOpen(false)} className="text-base font-medium text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">{link.name}</Link>
+              ) : (
+                <a key={link.name} href={link.href} onClick={(e) => scrollToSection(e, link.href)} className="text-base font-medium text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">{link.name}</a>
               ))}
               <Button variant="outline" className="w-full mt-2" asChild>
                 <a href="/resume.pdf" download="Shashank_Preetham_Pendyala_Resume.pdf">
