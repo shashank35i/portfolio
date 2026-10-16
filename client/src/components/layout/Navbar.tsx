@@ -21,7 +21,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [overChat, setOverChat] = useState(false);
-  const isChatPage = location === "/chat";
+  const isChatPage = /^\/chat\/?$/.test(location);
 
   useEffect(() => {
     const handleScroll = () => {

@@ -1,6 +1,6 @@
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
-import { rm, readFile } from "fs/promises";
+import { rm, readFile, mkdir, copyFile } from "fs/promises";
 
 // server deps to bundle to reduce openat(2) syscalls
 // which helps cold start times
@@ -37,6 +37,10 @@ async function buildAll() {
 
   console.log("building client...");
   await viteBuild();
+
+  // Give Pages a physical route entry so direct chat visits survive redirects.
+  await mkdir("dist/public/chat", { recursive: true });
+  await copyFile("dist/public/index.html", "dist/public/chat/index.html");
 
   console.log("building server...");
   const pkg = JSON.parse(await readFile("package.json", "utf-8"));
