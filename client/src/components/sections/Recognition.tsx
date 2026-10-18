@@ -1,16 +1,60 @@
-import { motion } from "framer-motion";
-import { Award, BadgeCheck } from "lucide-react";
+﻿import { motion } from "framer-motion";
 import { content } from "@/content/content";
 
+const fade = (delay = 0) => ({
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.65, delay, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+});
+
 export function Recognition() {
-  const credentials = [
-    ...content.recognition.certifications.map(item => ({ ...item, result: item.issuer, kind: "Certification" })),
-    ...content.recognition.hackathons.map(item => ({ title: item.title, year: item.year, result: item.award, kind: "Achievement" })),
-  ];
-  return <section id="recognition" data-section-theme="stone" className="section-flow py-20 md:py-28">
-    <div className="container mx-auto px-4 sm:px-6">
-      <header className="mx-auto mb-12 max-w-6xl"><span className="font-mono text-xs uppercase tracking-[.24em] text-amber-300">06 / Credentials</span><div className="mt-4 grid items-end gap-5 md:grid-cols-2"><h2 className="text-4xl font-bold sm:text-6xl">Shashank’s certifications<br/><span className="text-zinc-300">and hackathon results.</span></h2><p className="max-w-xl text-zinc-300">Java and cloud foundations, backed by competitive engineering outcomes.</p></div></header>
-      <div className="mx-auto grid max-w-6xl border-l border-t border-white/10 md:grid-cols-2">{credentials.map((item, index) => <motion.article key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * .05 }} className="relative min-h-52 border-b border-r border-white/10 bg-black/15 p-7 sm:p-9"><div className="flex items-start justify-between gap-5"><span className="font-mono text-[10px] uppercase tracking-[.2em] text-zinc-300">{item.kind} / {String(index + 1).padStart(2,"0")}</span>{item.kind === "Certification" ? <BadgeCheck className="h-6 w-6 text-cyan-300"/> : <Award className="h-6 w-6 text-amber-300"/>}</div><h3 className="mt-8 max-w-md text-xl font-bold leading-tight text-white sm:text-2xl">{item.title}</h3><div className="mt-5 flex items-center justify-between gap-4 border-t border-white/10 pt-4 text-sm"><span className="font-semibold text-zinc-200">{item.result}</span><span className="font-mono text-xs text-zinc-300">{item.year}</span></div></motion.article>)}</div>
-    </div>
-  </section>;
+  const certs = content.recognition.certifications;
+  const hacks = content.recognition.hackathons;
+  return (
+    <section id="recognition" data-section-theme="stone" className="bg-[#f9f8f6] py-20 md:py-28">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="mx-auto max-w-5xl">
+          <motion.p {...fade(0)} className="mb-10 font-mono text-[10.5px] uppercase tracking-[0.26em] text-[#f04b23]">
+            06 / Recognition
+          </motion.p>
+
+          <div className="grid gap-14 md:grid-cols-2 md:gap-20">
+            {/* Certifications */}
+            <div>
+              <motion.p {...fade(0.06)} className="mb-6 font-mono text-[10px] uppercase tracking-[0.2em] text-[#bbb]">
+                Certifications
+              </motion.p>
+              <div className="divide-y divide-black/[0.07]">
+                {certs.map((c, i) => (
+                  <motion.div key={c.title} {...fade(0.06 + i * 0.07)} className="py-5 first:pt-0">
+                    <p className="text-[14.5px] font-semibold leading-snug text-[#0f0f0f]">{c.title}</p>
+                    <p className="mt-1 text-[12px] text-[#aaa]">{c.issuer} &middot; {c.year}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Achievements */}
+            <div>
+              <motion.p {...fade(0.06)} className="mb-6 font-mono text-[10px] uppercase tracking-[0.2em] text-[#bbb]">
+                Achievements
+              </motion.p>
+              <div className="divide-y divide-black/[0.07]">
+                {hacks.map((h, i) => (
+                  <motion.div key={h.title} {...fade(0.06 + i * 0.07)} className="py-5 first:pt-0">
+                    <div className="flex items-start justify-between gap-4">
+                      <p className="text-[14.5px] font-semibold leading-snug text-[#0f0f0f]">{h.title}</p>
+                      <span className="shrink-0 font-mono text-[10.5px] text-[#bbb]">{h.year}</span>
+                    </div>
+                    <p className="mt-0.5 text-[12px] font-semibold text-[#f04b23]">{h.award}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

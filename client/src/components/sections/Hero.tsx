@@ -1,167 +1,145 @@
-import { useRef } from "react";
+﻿import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Download, Github, Linkedin, Code2, ChevronDown } from "lucide-react";
+import { ArrowRight, Download, Github, Linkedin, Code2 } from "lucide-react";
 import { content } from "@/content/content";
-import { HeroBackground } from "./HeroBackground";
+import { useLocation } from "wouter";
+
+const proof = [
+  { value: "288 req/s", label: "Load tested" },
+  { value: "531",       label: "LeetCode solved" },
+  { value: "Oracle",    label: "Java 17 certified" },
+  { value: "AWS",       label: "Cloud certified" },
+];
 
 export function Hero() {
+  const [, navigate] = useLocation();
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
+  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
+  const y       = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
 
   return (
     <section
       ref={containerRef}
       data-section-theme="zinc"
-      className="relative min-h-[100svh] md:min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-[#0a0a0a]"
     >
-      <HeroBackground />
-      
-      <motion.div 
-        style={{ y, opacity, scale }}
-        className="container mx-auto px-4 sm:px-6 relative z-10 text-center pt-24 md:pt-24 pb-6 md:pb-0"
-      >
-        <div className="max-w-4xl mx-auto">
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xs uppercase tracking-[0.28em] text-primary/85 mb-5"
-          >
-            {content.hero.name}
-          </motion.p>
+      {/* single warm glow only — no dot grid */}
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-[60%] rounded-full bg-[#f04b23]/[0.06] blur-[140px]" />
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+      <motion.div style={{ y, opacity }} className="container relative z-10 mx-auto px-4 sm:px-6 pt-32 pb-16 text-center">
+        <div className="mx-auto max-w-4xl">
+
+          {/* availability — plain text, no pill */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold font-display tracking-tighter mb-6 md:mb-8 leading-[0.94] md:leading-[0.92]"
+            transition={{ duration: 0.6, delay: 0.05 }}
+            className="mb-5 flex items-center justify-center gap-2"
           >
-            {content.hero.title}
-          </motion.h1>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            <span className="h-[6px] w-[6px] rounded-full bg-emerald-400" />
+            <span className="font-mono text-[10.5px] uppercase tracking-[0.26em] text-white/40">
+              Open to backend &amp; full-stack roles
+            </span>
+          </motion.div>
+
+          {/* headline — pure typography, no decorations */}
+          <motion.h1
+            initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-xl mx-auto mb-8 md:mb-12 leading-relaxed"
+            transition={{ duration: 0.9, delay: 0.1 }}
+            className="mb-7 text-[clamp(3rem,9vw,6rem)] font-bold leading-[0.95] tracking-tighter text-white"
+          >
+            Java &amp; Backend<br />
+            <span className="text-white/20">Software Engineer</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.18 }}
+            className="mx-auto mb-10 max-w-md text-[15px] leading-[1.7] text-white/40"
           >
             {content.hero.tagline}
           </motion.p>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col min-[520px]:flex-row items-stretch min-[520px]:items-center justify-center gap-4 sm:gap-6"
-          >
-            <Button
-              size="lg"
-              className="w-full min-[520px]:w-auto rounded-full text-base h-12 md:h-14 px-8 md:px-10 group bg-white text-zinc-900 hover:bg-white/90"
-              asChild
-            >
-              <a href="#projects">
-                {content.hero.cta.primary}
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="w-full min-[520px]:w-auto rounded-full text-base h-12 md:h-14 px-8 md:px-10 group border-white/25 bg-white/5 hover:bg-white/10"
-              asChild
-            >
-              <a href="/resume.pdf" download="Shashank_Preetham_Pendyala_Resume.pdf">
-                {content.hero.cta.secondary}
-                <Download className="ml-2 w-5 h-5 group-hover:translate-y-1 transition-transform" />
-              </a>
-            </Button>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 flex items-center justify-center gap-3"
-          >
-            <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-              Profiles
-            </span>
-            <div className="h-4 w-px bg-border/60" />
-            <a
-              href={content.contact.socials.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-full bg-secondary/30 hover:bg-secondary text-foreground transition-colors"
-              aria-label="GitHub"
-            >
-              <Github className="w-4 h-4" />
-            </a>
-            <a
-              href={content.contact.socials.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-full bg-secondary/30 hover:bg-secondary text-foreground transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="w-4 h-4" />
-            </a>
-            <a
-              href={content.contact.socials.leetcode}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-full bg-secondary/30 hover:bg-secondary text-foreground transition-colors"
-              aria-label="LeetCode"
-            >
-              <Code2 className="w-4 h-4" />
-            </a>
-          </motion.div>
-
+          {/* CTAs — three distinct weights, no icons except arrow */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.46 }}
-            className="mx-auto mt-6 grid max-w-2xl grid-cols-3 divide-x divide-white/10 border-y border-white/10 bg-black/20 py-4 backdrop-blur-sm"
+            transition={{ duration: 0.8, delay: 0.26 }}
+            className="mb-12 flex flex-wrap items-center justify-center gap-3"
           >
-            {[['Java 17', 'Oracle certified'], ['AWS', 'Cloud certified'], ['Knight', 'LeetCode · 531 solved']].map(([value, label]) => (
-              <div key={value} className="px-2 sm:px-5">
-                <div className="font-display text-lg font-bold text-white sm:text-2xl">{value}</div>
-                <div className="mt-1 text-[9px] uppercase tracking-[0.12em] text-zinc-400 sm:text-[10px]">{label}</div>
+            <a href="#projects"
+              className="group inline-flex h-11 items-center gap-2 rounded-full bg-white px-6 text-[13.5px] font-semibold text-[#0a0a0a] transition hover:bg-white/90"
+            >
+              View flagship work
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+            </a>
+
+            {/* Chat — plain, no sparkles icon */}
+            <button
+              type="button"
+              onClick={() => navigate("/chat")}
+              className="inline-flex h-11 items-center rounded-full border border-[#f04b23]/35 px-6 text-[13.5px] font-medium text-[#f98060] transition hover:border-[#f04b23]/65 hover:bg-[#f04b23]/10"
+            >
+              Chat with my AI
+            </button>
+
+            <a href="/resume.pdf" download="Shashank_Preetham_Pendyala_Resume.pdf"
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-white/10 px-6 text-[13.5px] font-medium text-white/45 transition hover:border-white/20 hover:text-white/70"
+            >
+              <Download className="h-3.5 w-3.5" />
+              Resume
+            </a>
+          </motion.div>
+
+          {/* proof — minimal horizontal bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.36 }}
+            className="mx-auto mb-10 flex max-w-md flex-wrap justify-center divide-x divide-white/[0.08]"
+          >
+            {proof.map(({ value, label }) => (
+              <div key={value} className="px-5 py-2 text-center first:pl-0 last:pr-0">
+                <div className="text-[17px] font-bold text-white">{value}</div>
+                <div className="text-[10px] uppercase tracking-[0.12em] text-white/25">{label}</div>
               </div>
             ))}
           </motion.div>
 
-          <motion.a
-            href="#about"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-5 inline-flex md:hidden items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/75"
-            aria-label="Scroll to About section"
-          >
-            Swipe to explore
-            <ChevronDown className="h-3.5 w-3.5 animate-bounce text-primary" />
-          </motion.a>
-
+          {/* socials */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-4 hidden md:flex flex-col items-center gap-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.46, duration: 0.6 }}
+            className="flex items-center justify-center gap-2.5"
           >
-            <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-              Scroll
-            </span>
-            <div className="w-[1px] h-10 bg-gradient-to-b from-primary to-transparent" />
+            {[
+              { href: content.contact.socials.github,   Icon: Github,   label: "GitHub" },
+              { href: content.contact.socials.linkedin,  Icon: Linkedin,  label: "LinkedIn" },
+              { href: content.contact.socials.leetcode,  Icon: Code2,     label: "LeetCode" },
+            ].map(({ href, Icon, label }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.09] text-white/30 transition hover:border-white/20 hover:text-white/60"
+              >
+                <Icon className="h-3.5 w-3.5" />
+              </a>
+            ))}
           </motion.div>
         </div>
+      </motion.div>
+
+      {/* scroll line */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.1, duration: 0.8 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      >
+        <span className="font-mono text-[9px] uppercase tracking-[0.26em] text-white/15">Scroll</span>
+        <div className="h-10 w-px bg-gradient-to-b from-white/15 to-transparent" />
       </motion.div>
     </section>
   );

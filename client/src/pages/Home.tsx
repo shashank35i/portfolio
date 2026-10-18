@@ -1,8 +1,9 @@
+﻿import { useEffect } from "react";
+import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { Sparkles } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { MouseDotsOverlay } from "@/components/layout/MouseDotsOverlay";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
@@ -13,6 +14,38 @@ import { Recognition } from "@/components/sections/Recognition";
 import { Contact } from "@/components/sections/Contact";
 import { ChatLauncher } from "@/components/sections/PortfolioChat";
 
+function AIChatStrip() {
+  const [, navigate] = useLocation();
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+      className="bg-[#f9f8f6] px-4 py-8 sm:px-6"
+    >
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-6 rounded-2xl border border-[#f04b23]/15 bg-white px-6 py-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)]">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f04b23]/10">
+            <Sparkles className="h-4 w-4 text-[#f04b23]" />
+          </div>
+          <div>
+            <p className="text-[13.5px] font-semibold text-[#0f0f0f]">Ask AI about Shashank</p>
+            <p className="text-[12px] text-[#999]">Get instant answers about projects, skills and experience</p>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={() => navigate("/chat")}
+          className="shrink-0 rounded-xl bg-[#0f0f0f] px-4 py-2 text-[12.5px] font-semibold text-white transition hover:bg-[#222]"
+        >
+          Try it
+        </button>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Home() {
   useEffect(() => {
     document.documentElement.setAttribute("data-section-theme", "zinc");
@@ -22,100 +55,43 @@ export default function Home() {
     const themedSections = Array.from(
       document.querySelectorAll<HTMLElement>("[data-section-theme]")
     );
-
-    if (themedSections.length === 0) {
-      return;
-    }
-
+    if (themedSections.length === 0) return;
     const entriesMap = new Map<Element, IntersectionObserverEntry>();
-    const getViewportCenter = () => window.innerHeight / 2;
-
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          entriesMap.set(entry.target, entry);
-        });
-
-        let bestScore = Number.POSITIVE_INFINITY;
+        entries.forEach(e => entriesMap.set(e.target, e));
+        let bestScore = Infinity;
         let bestTheme = "zinc";
-
-        const viewportCenter = getViewportCenter();
-
-        entriesMap.forEach((entry, element) => {
-          if (!entry.isIntersecting || entry.intersectionRatio < 0.1) {
-            return;
-          }
-          const rect = entry.boundingClientRect;
-          const elementCenter = rect.top + rect.height / 2;
-          const distance = Math.abs(elementCenter - viewportCenter);
-          if (distance < bestScore) {
-            bestScore = distance;
-            bestTheme =
-              (element as HTMLElement).getAttribute("data-section-theme") ??
-              "zinc";
-          }
+        const center = window.innerHeight / 2;
+        entriesMap.forEach((entry, el) => {
+          if (!entry.isIntersecting || entry.intersectionRatio < 0.1) return;
+          const dist = Math.abs(entry.boundingClientRect.top + entry.boundingClientRect.height / 2 - center);
+          if (dist < bestScore) { bestScore = dist; bestTheme = (el as HTMLElement).getAttribute("data-section-theme") ?? "zinc"; }
         });
         document.documentElement.setAttribute("data-section-theme", bestTheme);
       },
-      {
-        root: null,
-        rootMargin: "-20% 0px -20% 0px",
-        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
-      }
+      { root: null, rootMargin: "-20% 0px -20% 0px", threshold: [0, 0.1, 0.25, 0.5, 0.75, 1] }
     );
-
-    themedSections.forEach((section) => observer.observe(section));
-
+    themedSections.forEach(s => observer.observe(s));
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-700 selection:bg-primary selection:text-primary-foreground">
-      <div
-        className="pointer-events-none fixed inset-0 z-[30]"
-        style={{
-          background:
-            "radial-gradient(140% 95% at 50% 44%, rgba(12,10,36,0) 42%, rgba(5,3,18,0.42) 74%, rgba(2,1,10,0.68) 100%)",
-        }}
-      />
-      <MouseDotsOverlay />
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-700 selection:bg-[#f04b23] selection:text-white">
       <Navbar />
-      <main className="relative">
+      <main>
         <Hero />
-        <div className="relative z-10 transition-colors duration-700">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            <About />
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            <Skills />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            <Projects />
-          </motion.div>
-
-          <Experience />
-          <Education />
-          <Recognition />
-          <Contact />
-        </div>
+        <About />
+        <Skills />
+        <AIChatStrip />
+        <Projects />
+        <Experience />
+        <Education />
+        <Recognition />
+        <Contact />
       </main>
       <Footer />
       <ChatLauncher />
     </div>
   );
 }
-

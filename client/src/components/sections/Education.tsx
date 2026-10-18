@@ -1,42 +1,42 @@
-import { motion } from "framer-motion";
+﻿import { motion } from "framer-motion";
 import { content } from "@/content/content";
+
+const fade = (delay = 0) => ({
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.65, delay, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+});
 
 export function Education() {
   return (
-    <section id="education" data-section-theme="slate" className="section-flow py-20 md:py-24">
+    <section id="education" data-section-theme="stone" className="bg-[#f9f8f6] py-20 md:py-24">
       <div className="container mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-4xl mx-auto mb-10 md:mb-12"
-        >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-display mb-5 md:mb-6">Education</h2>
-          <div className="w-16 h-1 bg-primary" />
-        </motion.div>
+        <div className="mx-auto max-w-5xl">
+          <motion.p {...fade(0)} className="mb-10 font-mono text-[10.5px] uppercase tracking-[0.26em] text-[#f04b23]">
+            05 / Education
+          </motion.p>
 
-        <div className="max-w-4xl mx-auto space-y-8">
-          {content.education.map((edu) => (
-            <div key={edu.id} className="glass-card rounded-2xl p-6 md:p-8">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="divide-y divide-black/[0.07]">
+            {content.education.map((edu, idx) => (
+              <motion.div key={edu.id} {...fade(idx * 0.08)}
+                className="grid py-8 first:pt-0 last:pb-0 md:grid-cols-[220px_1fr] md:gap-16"
+              >
+                <p className="mb-2 font-mono text-[11px] text-[#bbb] md:mb-0">{edu.period}</p>
                 <div>
-                  <div className="text-xl font-semibold">{edu.degree}</div>
-                  <div className="text-muted-foreground">{edu.school}</div>
+                  <h3 className="text-[18px] font-bold tracking-tight text-[#0f0f0f]">{edu.degree}</h3>
+                  <p className="mb-3 text-[13px] text-[#888]">{edu.school}</p>
+                  <div className="flex flex-wrap gap-x-6 gap-y-1">
+                    {edu.details.map(d => (
+                      <span key={d} className="text-[12.5px] text-[#666]">{d}</span>
+                    ))}
+                  </div>
                 </div>
-                <div className="text-sm font-mono text-muted-foreground">{edu.period}</div>
-              </div>
-              <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                {edu.details.map((item) => (
-                  <li key={item} className="pl-4 relative before:content-[''] before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-border">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
-
