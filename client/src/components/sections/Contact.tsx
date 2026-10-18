@@ -13,7 +13,7 @@ const fade = (delay = 0) => ({ initial: { opacity: 0, y: 22 }, whileInView: { op
 
 export function Contact() {
   const [, navigate] = useLocation();
-  const mailto = `mailto:${content.contact.email}?subject=${encodeURIComponent("Backend engineering opportunity")}`;
+  const emailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(content.contact.email)}&su=${encodeURIComponent("Backend engineering opportunity")}`;
   return <section id="contact" data-section-theme="zinc" className="relative overflow-hidden bg-[#0b0b0a] py-24 text-[#f5f1e9] md:py-32">
     <div className="pointer-events-none absolute right-[8%] top-0 hidden h-full w-px bg-white/[.07] lg:block" />
     <div className="container relative mx-auto px-5 sm:px-8 lg:px-12"><div className="mx-auto max-w-6xl">
@@ -25,7 +25,7 @@ export function Contact() {
       <div className="grid gap-12 lg:grid-cols-[1.15fr_.85fr] lg:gap-20">
         <motion.div {...fade(.08)}>
           <p className="max-w-xl text-[14px] leading-7 text-white/60">I'm open to Java / backend and full-stack software engineering roles. The fastest way to reach me is by email or LinkedIn.</p>
-          <a href={mailto} className="group mt-8 flex max-w-2xl items-center justify-between border-y border-white/20 py-5 text-white transition hover:border-[#f26946] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f26946]">
+          <a href={emailComposeUrl} target="_blank" rel="noopener noreferrer" aria-label={`Compose an email to ${content.contact.email} in Gmail`} className="group mt-8 flex max-w-2xl items-center justify-between border-y border-white/20 py-5 text-white transition hover:border-[#f26946] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f26946]">
             <span className="flex min-w-0 items-center gap-3"><Mail className="h-4 w-4 shrink-0 text-[#f26946]"/><span className="truncate text-[14px] font-medium sm:text-lg">{content.contact.email}</span></span><ArrowRight className="ml-4 h-5 w-5 shrink-0 text-white/40 transition group-hover:translate-x-1 group-hover:text-[#f26946]" />
           </a>
           <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3 font-mono text-[10px] uppercase tracking-[.16em] text-white/40"><span>Hyderabad, India</span><span>Java · Backend · Full-stack</span></div>
