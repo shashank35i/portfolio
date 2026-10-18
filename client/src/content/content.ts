@@ -66,7 +66,7 @@ export const content = {
     name: "Shashank Preetham",
     title: "Java & Backend Software Engineer",
     tagline:
-      "I build resilient Spring Boot APIs and event-driven systems—measured, tested, and ready for production.",
+      "I build Java and Spring Boot backends, from JWT-protected APIs to Kafka event processing and Redis caching, with performance verified through tests and load benchmarks.",
     cta: {
       primary: "View flagship work",
       secondary: "Download Resume",
@@ -74,11 +74,11 @@ export const content = {
   },
   about: {
     paragraphs: [
-      "I’m a backend-focused software engineer who turns complex workflows into reliable Java systems, from API contracts and data models to caching, messaging, testing, and deployment.",
-      "My core strength is engineering multi-role products where correctness, security, idempotency, and observable performance matter—not just the happy path.",
-      "I also build thoughtful React and Android interfaces, giving me the end-to-end context to make better backend decisions.",
+      "I’m a Java-focused software engineer. I graduated in June 2026 with a B.E. in Computer Science and Engineering from Saveetha School of Engineering (CGPA 8.5).",
+      "At 9X IT Solutions, I migrated Spring Boot APIs to stateless JWT authentication, centralized role-based authorization, and improved admin APIs with DTO projections and pagination. JMeter testing showed about 25% lower average response time and 20% higher throughput.",
+      "For OpsPilot AI, I built a 23-endpoint incident-response backend with a Kafka transactional outbox and at-least-once delivery, plus Redis caching. BookMyTicket brings my work to Android, with Razorpay payments, QR entry validation, and OCR that reached 93% exact match across 500 labeled plate images.",
     ],
-    now: "Currently focused on Spring Boot, Kafka delivery guarantees, Redis caching, and API performance under realistic load.",
+    now: "Recent work spans a 9X IT Solutions software engineering internship and OpsPilot AI, a Spring Boot incident-response platform with measured load-test results.",
   },
   skills: {
     categories: [

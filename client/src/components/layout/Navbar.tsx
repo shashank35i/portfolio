@@ -18,6 +18,7 @@ const navLinks = [
 export function Navbar() {
   const [location] = useLocation();
   const [isOpen,   setIsOpen]   = useState(false);
+  const [pendingSection, setPendingSection] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [isLight,  setIsLight]  = useState(false);   // true when over white sections
 
@@ -45,10 +46,32 @@ export function Navbar() {
     return () => obs.disconnect();
   }, []);
 
+  const scrollToTarget = (href: string) => {
+    const target = document.querySelector<HTMLElement>(href);
+    if (!target) return;
+    const header = document.querySelector<HTMLElement>("header");
+    const headerOffset = header?.getBoundingClientRect().height ?? 0;
+    const top = window.scrollY + target.getBoundingClientRect().top - headerOffset;
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+    window.scrollTo({ top, behavior });
+  };
+
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    const el = document.querySelector(href);
-    if (el) { el.scrollIntoView({ behavior: "smooth" }); setIsOpen(false); }
+    if (!document.querySelector(href)) return;
+    if (isOpen) {
+      setPendingSection(href);
+      setIsOpen(false);
+      return;
+    }
+    scrollToTarget(href);
+  };
+
+  const handleMobileMenuExit = () => {
+    if (!pendingSection) return;
+    const target = pendingSection;
+    setPendingSection(null);
+    requestAnimationFrame(() => scrollToTarget(target));
   };
 
   const textCls    = isLight ? "text-[#333] hover:text-[#0f0f0f]" : "text-white/60 hover:text-white";
@@ -124,7 +147,7 @@ export function Navbar() {
       </div>
 
       {/* Mobile nav */}
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={handleMobileMenuExit}>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}

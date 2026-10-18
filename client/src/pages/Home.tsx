@@ -26,16 +26,16 @@ function AIChatStrip() {
     >
       <div className="mx-auto flex max-w-5xl flex-col gap-5 border-y border-black/[0.12] py-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:py-7">
         <div>
-          <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#f04b23]">A closer look</p>
-          <p className="text-[17px] font-semibold tracking-tight text-[#0f0f0f] sm:text-[19px]">Ask about my work, projects, and experience.</p>
-          <p className="mt-1 text-[13px] text-[#777]">A direct conversation about the engineering behind this portfolio.</p>
+          <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#f04b23]">Questions for Shashank?</p>
+          <p className="text-[17px] font-semibold tracking-tight text-[#0f0f0f] sm:text-[19px]">Ask about the 9X internship, OpsPilot AI, BookMyTicket, or technical skills.</p>
+          <p className="mt-1 text-[13px] text-[#777]">Get details on the work, tools, and measured results.</p>
         </div>
         <button
           type="button"
           onClick={() => navigate("/chat")}
           className="group inline-flex min-h-11 shrink-0 items-center justify-center gap-2 self-start border border-[#0f0f0f]/20 px-5 text-[13px] font-semibold text-[#0f0f0f] transition hover:border-[#f04b23] hover:text-[#c53a18] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f04b23] sm:self-auto"
         >
-          Open the chat <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          Ask a question <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </button>
       </div>
     </motion.div>

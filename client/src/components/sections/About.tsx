@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { content } from "@/content/content";
 
 const stats = [
-  { value: "23", label: "Secure REST endpoints" },
-  { value: "43", label: "JUnit / Mockito tests" },
-  { value: "288/s", label: "Requests under load" },
+  { value: "23", label: "OpsPilot AI REST endpoints" },
+  { value: "43", label: "OpsPilot AI unit and integration tests" },
+  { value: "288/s", label: "Requests sustained in load test" },
   { value: "531", label: "LeetCode problems solved" },
 ];
 
@@ -22,10 +22,10 @@ export function About() {
     <div className="pointer-events-none absolute right-0 top-0 h-full w-[30%] border-l border-black/[.06]" />
     <div className="container relative mx-auto px-5 sm:px-8 lg:px-12">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-14 flex items-center gap-4"><span className="font-mono text-[10px] uppercase tracking-[.27em] text-[#bd472b]">01 / Profile</span><span className="h-px flex-1 bg-black/15" /><span className="hidden font-mono text-[10px] uppercase tracking-[.17em] text-black/40 sm:block">The approach</span></div>
+        <div className="mb-14 flex items-center gap-4"><span className="font-mono text-[10px] uppercase tracking-[.27em] text-[#bd472b]">About</span><span className="h-px flex-1 bg-black/15" /><span className="hidden font-mono text-[10px] uppercase tracking-[.17em] text-black/55 sm:block">Java · Spring Boot · Backend engineering</span></div>
         <div className="grid gap-12 lg:grid-cols-[.84fr_1.16fr] lg:gap-20">
           <div className="relative">
-            <motion.h2 {...fade(.04)} className="max-w-xl text-[clamp(3.2rem,7vw,6.4rem)] font-semibold leading-[.87] tracking-[-.075em]">Make the<br /><span className="font-serif font-medium italic text-[#bd472b]">hard parts</span><br />dependable.</motion.h2>
+            <motion.h2 {...fade(.04)} className="max-w-xl text-[clamp(3.2rem,7vw,6.4rem)] font-semibold leading-[.87] tracking-[-.075em]">Secure APIs.<br /><span className="font-serif font-medium italic text-[#bd472b]">Measured performance.</span></motion.h2>
             <motion.p {...fade(.1)} className="mt-7 max-w-sm border-l-2 border-[#bd472b] pl-4 text-[14px] leading-7 text-[#57544f]">{content.about.now}</motion.p>
           </div>
           <motion.div {...fade(.12)} className="space-y-5 pt-1 text-[15px] leading-[1.85] text-[#484640] sm:text-[16px]">
@@ -40,12 +40,12 @@ export function About() {
         </motion.div>
 
         <div className="mt-12 grid gap-5 lg:grid-cols-[.55fr_1.45fr] lg:gap-14">
-          <motion.p {...fade(.2)} className="font-mono text-[10px] uppercase tracking-[.24em] text-[#9c4a34]">Where I add value</motion.p>
-          <motion.ol {...fade(.24)} className="grid divide-y divide-black/10 border-y border-black/15 sm:grid-cols-2 sm:divide-y-0 sm:divide-x">
+          <motion.p {...fade(.2)} className="font-mono text-[10px] uppercase tracking-[.24em] text-[#9c4a34]">Core strengths</motion.p>
+          <motion.ul {...fade(.24)} className="grid divide-y divide-black/10 border-y border-black/15 sm:grid-cols-2 sm:divide-y-0 sm:divide-x">
             {strengths.map((strength, index) => <li key={strength} className={`flex min-h-[74px] items-center gap-4 py-4 sm:px-5 ${index > 1 ? "sm:border-t sm:border-black/10" : ""} ${index % 2 === 0 ? "sm:pl-0" : ""}`}>
-              <span className="font-mono text-[10px] text-[#bd472b]">0{index + 1}</span><span className="text-[13px] font-medium text-[#393833]">{strength}</span>
+              <span className="h-1.5 w-1.5 shrink-0 bg-[#bd472b]"/><span className="text-[13px] font-medium text-[#393833]">{strength}</span>
             </li>)}
-          </motion.ol>
+          </motion.ul>
         </div>
       </div>
     </div>
