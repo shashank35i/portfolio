@@ -65,7 +65,7 @@ export function Navbar() {
           <Link href="/" className="font-display text-base font-bold tracking-tight transition-opacity hover:opacity-60 sm:text-xl">
             SHASHANK<span className="text-black/30">.DEV</span>
           </Link>
-          <span className="hidden font-mono text-[10px] font-bold uppercase tracking-[.18em] text-[#777] sm:inline">Engineering profile · chat</span>
+          <span className="hidden font-mono text-[10px] font-bold uppercase tracking-[.18em] text-[#c84b1f]/70 sm:inline">Portfolio assistant</span>
           <Link href="/"
             className="inline-flex items-center gap-1.5 rounded-lg border border-black/[0.09] bg-white px-3 py-2 text-xs font-medium text-[#444] shadow-sm transition hover:border-black/[0.16] hover:text-[#111] sm:px-4 sm:text-sm"
           >

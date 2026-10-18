@@ -1,145 +1,76 @@
-﻿import { useRef } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Download, Github, Linkedin, Code2 } from "lucide-react";
+import { ArrowDownRight, ArrowRight, Download, Github, Linkedin, Code2 } from "lucide-react";
 import { content } from "@/content/content";
 import { useLocation } from "wouter";
 
 const proof = [
-  { value: "288 req/s", label: "Load tested" },
-  { value: "531",       label: "LeetCode solved" },
-  { value: "Oracle",    label: "Java 17 certified" },
-  { value: "AWS",       label: "Cloud certified" },
+  { value: "23", label: "secure REST endpoints" },
+  { value: "288/s", label: "load-tested throughput" },
+  { value: "531", label: "problems solved" },
 ];
+
+const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 export function Hero() {
   const [, navigate] = useLocation();
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
-  const y       = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0.25]);
 
   return (
-    <section
-      ref={containerRef}
-      data-section-theme="zinc"
-      className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-[#0a0a0a]"
-    >
-      {/* single warm glow only — no dot grid */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-[60%] rounded-full bg-[#f04b23]/[0.06] blur-[140px]" />
-
-      <motion.div style={{ y, opacity }} className="container relative z-10 mx-auto px-4 sm:px-6 pt-32 pb-16 text-center">
-        <div className="mx-auto max-w-4xl">
-
-          {/* availability — plain text, no pill */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.05 }}
-            className="mb-5 flex items-center justify-center gap-2"
-          >
-            <span className="h-[6px] w-[6px] rounded-full bg-emerald-400" />
-            <span className="font-mono text-[10.5px] uppercase tracking-[0.26em] text-white/40">
-              Open to backend &amp; full-stack roles
-            </span>
+    <section ref={containerRef} data-section-theme="zinc" className="relative isolate min-h-[100svh] overflow-hidden bg-[#0b0b0a] text-[#f5f1e9]">
+      <div className="pointer-events-none absolute inset-y-0 left-[8.3%] hidden w-px bg-white/[0.07] lg:block" />
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-[42%] border-l border-white/[0.045] bg-[linear-gradient(160deg,rgba(240,75,35,.08),transparent_48%)]" />
+      <motion.div style={{ y, opacity }} className="relative mx-auto grid min-h-[100svh] max-w-[1440px] grid-cols-1 items-center gap-12 px-5 pb-20 pt-32 sm:px-10 lg:grid-cols-[minmax(0,1.45fr)_minmax(260px,.55fr)] lg:gap-16 lg:px-20 lg:pb-24 lg:pt-28">
+        <div className="relative z-10 lg:pl-10">
+          <motion.div initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .65, ease }} className="mb-8 flex items-center gap-4">
+            <span className="font-mono text-[10px] uppercase tracking-[.3em] text-[#f26946]">Portfolio · 2026</span>
+            <span className="h-px w-12 bg-[#f26946]/70" />
+            <span className="font-mono text-[10px] uppercase tracking-[.18em] text-white/45">Hyderabad, India</span>
           </motion.div>
 
-          {/* headline — pure typography, no decorations */}
-          <motion.h1
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.1 }}
-            className="mb-7 text-[clamp(3rem,9vw,6rem)] font-bold leading-[0.95] tracking-tighter text-white"
-          >
-            Java &amp; Backend<br />
-            <span className="text-white/45">Software Engineer</span>
+          <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .05, ease }} className="mb-4 font-display text-sm font-semibold uppercase tracking-[.24em] text-white/65">
+            {content.hero.name} Pendyala
+          </motion.p>
+          <motion.h1 initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, delay: .1, ease }} className="max-w-5xl text-[clamp(3.8rem,9.4vw,8.7rem)] font-bold leading-[.82] tracking-[-.085em] text-[#f8f5ef]">
+            Java, built<br />to <span className="font-serif font-medium italic tracking-[-.075em] text-[#f26946]">hold up.</span>
           </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.18 }}
-            className="mx-auto mb-10 max-w-md text-[15px] leading-[1.7] text-white/40"
-          >
+          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8, delay: .2, ease }} className="mt-8 max-w-xl text-[15px] leading-7 text-white/58 sm:text-[17px] sm:leading-8">
             {content.hero.tagline}
           </motion.p>
 
-          {/* CTAs — three distinct weights, no icons except arrow */}
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.26 }}
-            className="mb-12 flex flex-wrap items-center justify-center gap-3"
-          >
-            <a href="#projects"
-              className="group inline-flex h-11 items-center gap-2 rounded-full bg-white px-6 text-[13.5px] font-semibold text-[#0a0a0a] transition hover:bg-white/90"
-            >
-              View flagship work
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, delay: .28, ease }} className="mt-9 flex flex-wrap items-center gap-3">
+            <a href="#projects" className="group inline-flex h-12 items-center gap-3 bg-[#f5f1e9] px-5 text-[13px] font-semibold text-[#111] transition hover:bg-[#f26946] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f26946]">
+              Selected engineering <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
-
-            {/* Chat — plain, no sparkles icon */}
-            <button
-              type="button"
-              onClick={() => navigate("/chat")}
-              className="inline-flex h-11 items-center rounded-full border border-[#f04b23]/35 px-6 text-[13.5px] font-medium text-[#f98060] transition hover:border-[#f04b23]/65 hover:bg-[#f04b23]/10"
-            >
-              Ask me about my work
+            <button type="button" onClick={() => navigate("/chat")} className="inline-flex h-12 items-center border border-white/20 px-5 text-[13px] font-medium text-white/80 transition hover:border-[#f26946] hover:text-[#ff9a7d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f26946]">
+              Start a conversation
             </button>
-
-            <a href="/resume.pdf" download="Shashank_Preetham_Pendyala_Resume.pdf"
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-white/10 px-6 text-[13.5px] font-medium text-white/45 transition hover:border-white/20 hover:text-white/70"
-            >
-              <Download className="h-3.5 w-3.5" />
-              Resume
-            </a>
+            <a href="/resume.pdf" download="Shashank_Preetham_Pendyala_Resume.pdf" aria-label="Download resume" className="inline-flex h-12 w-12 items-center justify-center border border-white/20 text-white/65 transition hover:border-white/50 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f26946]"><Download className="h-4 w-4" /></a>
           </motion.div>
 
-          {/* proof — minimal horizontal bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.36 }}
-            className="mx-auto mb-10 flex max-w-md flex-wrap justify-center divide-x divide-white/[0.08]"
-          >
-            {proof.map(({ value, label }) => (
-              <div key={value} className="px-5 py-2 text-center first:pl-0 last:pr-0">
-                <div className="text-[17px] font-bold text-white">{value}</div>
-                <div className="text-[10px] uppercase tracking-[0.12em] text-white/25">{label}</div>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* socials */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.46, duration: 0.6 }}
-            className="flex items-center justify-center gap-2.5"
-          >
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .7, delay: .4 }} className="mt-10 flex items-center gap-4">
             {[
-              { href: content.contact.socials.github,   Icon: Github,   label: "GitHub" },
-              { href: content.contact.socials.linkedin,  Icon: Linkedin,  label: "LinkedIn" },
-              { href: content.contact.socials.leetcode,  Icon: Code2,     label: "LeetCode" },
-            ].map(({ href, Icon, label }) => (
-              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.09] text-white/30 transition hover:border-white/20 hover:text-white/60"
-              >
-                <Icon className="h-3.5 w-3.5" />
-              </a>
-            ))}
+              { href: content.contact.socials.github, Icon: Github, label: "GitHub" },
+              { href: content.contact.socials.linkedin, Icon: Linkedin, label: "LinkedIn" },
+              { href: content.contact.socials.leetcode, Icon: Code2, label: "LeetCode" },
+            ].map(({ href, Icon, label }) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="text-white/45 transition hover:text-[#f26946] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f26946]"><Icon className="h-4 w-4" /></a>)}
           </motion.div>
         </div>
-      </motion.div>
 
-      {/* scroll line */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.1, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
-        <span className="font-mono text-[9px] uppercase tracking-[0.26em] text-white/15">Scroll</span>
-        <div className="h-10 w-px bg-gradient-to-b from-white/15 to-transparent" />
+        <motion.aside initial={{ opacity: 0, x: 22 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .85, delay: .24, ease }} className="relative z-10 self-end border-t border-white/20 pt-5 lg:mb-12 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+          <div className="mb-9 flex items-center justify-between font-mono text-[10px] uppercase tracking-[.2em] text-white/40"><span>Selected evidence</span><span>01—03</span></div>
+          <div className="space-y-0">
+            {proof.map(({ value, label }, index) => <div key={value} className="grid grid-cols-[70px_1fr] items-baseline gap-4 border-t border-white/[.12] py-5 first:border-t-0 first:pt-0 lg:grid-cols-1 lg:gap-1 lg:py-6">
+              <span className="font-display text-3xl font-semibold tracking-tight text-[#f26946] sm:text-4xl">{value}</span>
+              <span className="text-[12px] text-white/58 sm:text-[13px]">{label}</span>
+              <span className="sr-only">Evidence {index + 1}</span>
+            </div>)}
+          </div>
+          <a href="#about" className="group mt-5 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[.22em] text-white/45 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f26946]">Explore profile <ArrowDownRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:translate-y-1" /></a>
+        </motion.aside>
       </motion.div>
     </section>
   );
