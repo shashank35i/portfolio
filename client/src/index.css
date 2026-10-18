@@ -92,6 +92,11 @@ body {
   overflow-x: clip;
 }
 
+/* Keep a real, unobstructed gutter for the desktop section selector. */
+@media (min-width: 1280px) {
+  .portfolio-main { padding-right: 9rem; }
+}
+
 .section-flow {
   position: relative;
   isolation: isolate;

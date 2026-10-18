@@ -75,8 +75,8 @@ export function SectionRail() {
   return (
     <nav
       aria-label="Portfolio sections"
-      className="fixed top-1/2 z-40 hidden -translate-y-1/2 min-[1440px]:block"
-      style={{ right: "max(1.25rem, calc((100vw - 1440px) / 2 - 144px))" }}
+      className="fixed top-1/2 z-40 hidden -translate-y-1/2 min-[1280px]:block"
+      style={{ right: "1.25rem" }}
     >
       <ul className="flex flex-col gap-1">
         {sections.map(({ id, label }) => {

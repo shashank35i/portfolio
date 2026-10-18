@@ -129,7 +129,7 @@ export function Navbar() {
             Resume
           </a>
           <button
-            className={cn("p-2 min-[1440px]:hidden", isLight ? "text-[#0f0f0f]" : "text-white")}
+            className={cn("p-2 min-[1280px]:hidden", isLight ? "text-[#0f0f0f]" : "text-white")}
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? "Close section menu" : "Open section menu"}
             aria-expanded={isOpen}
@@ -149,7 +149,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className={cn("min-[1440px]:hidden overflow-hidden border-t", isLight ? "bg-white border-black/[0.07]" : "bg-[#0a0a0a] border-white/[0.07]")}
+            className={cn("min-[1280px]:hidden overflow-hidden border-t", isLight ? "bg-white border-black/[0.07]" : "bg-[#0a0a0a] border-white/[0.07]")}
           >
             <nav className="flex max-h-[70svh] flex-col overflow-y-auto p-4 sm:p-5 gap-1">
               {navLinks.map(link => link.isRoute ? (

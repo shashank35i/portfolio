@@ -76,7 +76,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-700 selection:bg-[#f04b23] selection:text-white">
       <Navbar />
-      <main>
+      <main className="portfolio-main">
         <Hero />
         <About />
         <Skills />
