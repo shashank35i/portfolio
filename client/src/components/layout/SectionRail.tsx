@@ -67,7 +67,7 @@ export function SectionRail() {
 
     setActiveId(id);
     const headerHeight = document.querySelector<HTMLElement>("header")?.getBoundingClientRect().height ?? 0;
-    const top = window.scrollY + target.getBoundingClientRect().top - headerHeight - 12;
+    const top = window.scrollY + target.getBoundingClientRect().top - headerHeight;
     const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
     window.scrollTo({ top, behavior });
   };
