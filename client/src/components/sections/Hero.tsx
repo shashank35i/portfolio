@@ -51,7 +51,7 @@ export function Hero() {
             className="mb-7 text-[clamp(3rem,9vw,6rem)] font-bold leading-[0.95] tracking-tighter text-white"
           >
             Java &amp; Backend<br />
-            <span className="text-white/20">Software Engineer</span>
+            <span className="text-white/45">Software Engineer</span>
           </motion.h1>
 
           <motion.p
@@ -83,7 +83,7 @@ export function Hero() {
               onClick={() => navigate("/chat")}
               className="inline-flex h-11 items-center rounded-full border border-[#f04b23]/35 px-6 text-[13.5px] font-medium text-[#f98060] transition hover:border-[#f04b23]/65 hover:bg-[#f04b23]/10"
             >
-              Chat with my AI
+              Ask me about my work
             </button>
 
             <a href="/resume.pdf" download="Shashank_Preetham_Pendyala_Resume.pdf"

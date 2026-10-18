@@ -27,7 +27,6 @@ function FlagshipDossier({ kind, onOpen }: { kind: "ops" | "ticket"; onOpen: () 
   const demo = ops ? opsPilot.links.demo : undefined;
   return (
     <motion.article initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} className={`group relative overflow-hidden border ${ops ? "border-cyan-300/20 bg-[#081426]" : "border-amber-300/20 bg-[#171309]"}`}>
-      <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,.16)_1px,transparent_1px)] [background-size:24px_24px]" />
       <div className="relative grid lg:grid-cols-[1.05fr_.95fr]">
         <div className="p-6 sm:p-9 lg:p-12">
           <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-4 font-mono text-[10px] uppercase tracking-[.24em] text-zinc-400"><span>Flagship / {ops ? "01" : "02"}</span><span className={ops ? "text-cyan-300" : "text-emerald-300"}>● Engineering dossier</span></div>
@@ -74,7 +73,6 @@ function AndroidArchiveCard({ project, index, onOpen }: { project: AndroidProjec
           <ArrowUpRight className="h-5 w-5 shrink-0 text-zinc-300 transition group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white" />
         </div>
         <div className="relative h-[430px] overflow-hidden rounded-[2rem] border border-white/15 p-5 shadow-[0_28px_65px_rgba(0,0,0,.42)] sm:h-[500px] sm:p-7" style={{ background: `linear-gradient(145deg, ${project.accent}, color-mix(in_srgb, ${project.accent} 68%, #05070d))` }}>
-          <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(rgba(255,255,255,.8)_1px,transparent_1px)] [background-size:22px_22px]" />
           <p className="relative z-20 max-w-md text-sm font-semibold leading-6 text-white/95 sm:text-base">{project.description}</p>
           <div className="absolute inset-x-0 bottom-[-18%] top-[30%] sm:top-[27%]">
             {screens.map((screen, screenIndex) => {
@@ -94,7 +92,7 @@ export function Projects() {
   const [selectedAndroidProject, setSelectedAndroidProject] = useState<AndroidProject | null>(null);
   return <section id="projects" className="section-flow relative z-10 py-20 md:py-28">
     <div className="container mx-auto px-4 sm:px-6">
-      <header className="mx-auto mb-12 max-w-6xl"><span className="font-mono text-xs uppercase tracking-[.25em] text-cyan-300">03 / Selected engineering</span><h2 className="mt-4 text-4xl font-bold sm:text-6xl">Flagship systems</h2><p className="mt-4 max-w-2xl text-zinc-400">Two production-minded systems where reliability claims are backed by architecture, tests, and measured outcomes.</p></header>
+      <header className="mx-auto mb-12 max-w-6xl border-b border-white/10 pb-7 sm:mb-16 sm:pb-9"><span className="font-mono text-xs uppercase tracking-[.25em] text-cyan-200">03 / Selected engineering</span><div className="mt-4 grid items-end gap-5 md:grid-cols-[1fr_.72fr]"><h2 className="text-4xl font-bold tracking-tight sm:text-6xl">Flagship systems</h2><p className="max-w-2xl text-sm leading-6 text-zinc-300 sm:text-base">Two production-minded systems where reliability claims are backed by architecture, tests, and measured outcomes.</p></div></header>
       <div className="mx-auto grid max-w-6xl gap-8"><FlagshipDossier kind="ops" onOpen={()=>setSelectedProject(opsPilot)} /><FlagshipDossier kind="ticket" onOpen={()=>setSelectedAndroidProject(bookMyTicket)} /></div>
       <div className="mx-auto mt-24 max-w-6xl border-t border-white/10 pt-12"><div className="mb-8 flex items-end justify-between gap-5"><div><span className="font-mono text-xs uppercase tracking-[.25em] text-zinc-300">04 / Project archive</span><h2 className="mt-3 text-3xl font-bold sm:text-4xl">Web & Android builds</h2></div><span className="font-mono text-xs text-zinc-300">09 SYSTEMS</span></div>
         <div className="mb-16"><WebArchiveCard project={additionalWeb[0]} onOpen={()=>setSelectedProject(additionalWeb[0])} /></div>

@@ -19,6 +19,10 @@ export function Recognition() {
             06 / Recognition
           </motion.p>
 
+          <motion.div {...fade(0.03)} className="mb-10 border-b border-black/[0.12] pb-7 sm:mb-12">
+            <h2 className="text-3xl font-bold tracking-tight text-[#0f0f0f] sm:text-4xl">Credentials earned through practice</h2>
+          </motion.div>
+
           <div className="grid gap-14 md:grid-cols-2 md:gap-20">
             {/* Certifications */}
             <div>

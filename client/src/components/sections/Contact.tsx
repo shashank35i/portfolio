@@ -1,5 +1,5 @@
 ﻿import { motion } from "framer-motion";
-import { ArrowUpRight, Code2, Github, Linkedin, Mail, MapPin, Sparkles } from "lucide-react";
+import { ArrowUpRight, Code2, Github, Linkedin, Mail, MapPin } from "lucide-react";
 import { content } from "@/content/content";
 import { useLocation } from "wouter";
 
@@ -29,14 +29,14 @@ export function Contact() {
             <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.24em] text-[#f04b23]">07 / Contact</p>
             <h2 className="text-3xl font-bold tracking-tight text-[#0f0f0f] sm:text-4xl md:text-5xl">
               Let's talk about<br />
-              <span className="text-[#0f0f0f]/25">what you're building.</span>
+              <span className="text-[#0f0f0f]/45">what you're building.</span>
             </h2>
           </motion.div>
 
           <div className="grid gap-6 lg:grid-cols-[1fr_0.85fr]">
 
             {/* left — email card */}
-            <motion.div {...fade(0.08)} className="rounded-2xl border border-black/[0.07] bg-white p-7 shadow-[0_2px_16px_rgba(0,0,0,0.05)] sm:p-9">
+            <motion.div {...fade(0.08)} className="border-y border-black/[0.12] bg-white p-6 sm:p-9 lg:border lg:border-black/[0.09]">
               <p className="mb-4 text-[14px] leading-relaxed text-[#555]">
                 I'm open to Java / backend and full-stack software engineering roles.<br />
                 The fastest way to reach me is by email or LinkedIn.
@@ -60,17 +60,17 @@ export function Contact() {
               <p className="mt-3 font-mono text-[11px] text-[#bbb]">{content.contact.email}</p>
 
               {/* AI chat highlight */}
-              <div className="mt-8 rounded-xl border border-[#f04b23]/15 bg-[#fff8f6] p-4">
-                <p className="mb-2 text-[12px] font-semibold text-[#f04b23]">🤖 AI Portfolio Assistant</p>
-                <p className="mb-3 text-[12px] leading-relaxed text-[#777]">
-                  Get instant answers about my projects, skills, and experience — no need to scroll.
+              <div className="mt-8 border-t border-black/[0.09] pt-5">
+                <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#f04b23]">Portfolio conversation</p>
+                <p className="mb-3 text-[13px] leading-relaxed text-[#666]">
+                  Ask a question about the projects, tools, or decisions behind my work.
                 </p>
                 <button
                   type="button"
                   onClick={() => navigate("/chat")}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-[#f04b23]/25 bg-white px-3 py-1.5 text-[12px] font-medium text-[#c84b1f] transition hover:border-[#f04b23]/50 hover:bg-[#fff4f1]"
+                  className="group inline-flex min-h-10 items-center gap-2 border-b border-[#f04b23]/50 pb-1 text-[13px] font-semibold text-[#c84b1f] transition hover:border-[#c84b1f] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f04b23]"
                 >
-                  <Sparkles className="h-3 w-3" /> Ask AI about Shashank
+                  Open the chat <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </button>
               </div>
             </motion.div>
@@ -79,9 +79,9 @@ export function Contact() {
             <motion.div {...fade(0.14)} className="flex flex-col gap-3">
               {profileLinks.map(({ label, detail, href, icon: Icon }) => (
                 <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                  className="group flex items-center gap-4 rounded-2xl border border-black/[0.07] bg-white p-4 shadow-[0_1px_4px_rgba(0,0,0,0.04)] transition hover:border-[#f04b23]/25 hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)] sm:p-5"
+                  className="group flex min-h-[82px] items-center gap-4 border-b border-black/[0.1] bg-transparent py-4 transition hover:border-[#f04b23]/50 sm:min-h-[92px]"
                 >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-black/[0.06] bg-[#f9f8f6] transition group-hover:border-[#f04b23]/20 group-hover:bg-[#fff8f6]">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-black/[0.1] bg-white transition group-hover:border-[#f04b23]/30">
                     <Icon className="h-4.5 w-4.5 text-[#666] transition group-hover:text-[#f04b23]" />
                   </div>
                   <div className="flex-1">

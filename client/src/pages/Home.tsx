@@ -1,7 +1,7 @@
 ﻿import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
@@ -22,24 +22,20 @@ function AIChatStrip() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-      className="bg-[#f9f8f6] px-4 py-8 sm:px-6"
+      className="bg-[#f9f8f6] px-4 py-10 sm:px-6 md:py-14"
     >
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-6 rounded-2xl border border-[#f04b23]/15 bg-white px-6 py-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)]">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f04b23]/10">
-            <Sparkles className="h-4 w-4 text-[#f04b23]" />
-          </div>
-          <div>
-            <p className="text-[13.5px] font-semibold text-[#0f0f0f]">Ask AI about Shashank</p>
-            <p className="text-[12px] text-[#999]">Get instant answers about projects, skills and experience</p>
-          </div>
+      <div className="mx-auto flex max-w-5xl flex-col gap-5 border-y border-black/[0.12] py-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:py-7">
+        <div>
+          <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#f04b23]">A closer look</p>
+          <p className="text-[17px] font-semibold tracking-tight text-[#0f0f0f] sm:text-[19px]">Ask about my work, projects, and experience.</p>
+          <p className="mt-1 text-[13px] text-[#777]">A direct conversation about the engineering behind this portfolio.</p>
         </div>
         <button
           type="button"
           onClick={() => navigate("/chat")}
-          className="shrink-0 rounded-xl bg-[#0f0f0f] px-4 py-2 text-[12.5px] font-semibold text-white transition hover:bg-[#222]"
+          className="group inline-flex min-h-11 shrink-0 items-center justify-center gap-2 self-start border border-[#0f0f0f]/20 px-5 text-[13px] font-semibold text-[#0f0f0f] transition hover:border-[#f04b23] hover:text-[#c53a18] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f04b23] sm:self-auto"
         >
-          Try it
+          Open the chat <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </button>
       </div>
     </motion.div>

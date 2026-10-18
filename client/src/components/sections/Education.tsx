@@ -17,12 +17,16 @@ export function Education() {
             05 / Education
           </motion.p>
 
-          <div className="divide-y divide-black/[0.07]">
+          <motion.div {...fade(0.03)} className="mb-10 border-b border-black/[0.12] pb-7 sm:mb-12">
+            <h2 className="text-3xl font-bold tracking-tight text-[#0f0f0f] sm:text-4xl">Education & credentials</h2>
+          </motion.div>
+
+          <div className="divide-y divide-black/[0.1]">
             {content.education.map((edu, idx) => (
               <motion.div key={edu.id} {...fade(idx * 0.08)}
                 className="grid py-8 first:pt-0 last:pb-0 md:grid-cols-[220px_1fr] md:gap-16"
               >
-                <p className="mb-2 font-mono text-[11px] text-[#bbb] md:mb-0">{edu.period}</p>
+                <p className="mb-2 font-mono text-[11px] text-[#777] md:mb-0">{edu.period}</p>
                 <div>
                   <h3 className="text-[18px] font-bold tracking-tight text-[#0f0f0f]">{edu.degree}</h3>
                   <p className="mb-3 text-[13px] text-[#888]">{edu.school}</p>

@@ -17,7 +17,12 @@ export function Experience() {
             04 / Experience
           </motion.p>
 
-          <div className="divide-y divide-black/[0.07]">
+          <motion.div {...fade(0.03)} className="mb-10 flex flex-col justify-between gap-3 border-b border-black/[0.12] pb-7 sm:mb-12 sm:flex-row sm:items-end">
+            <h2 className="text-3xl font-bold tracking-tight text-[#0f0f0f] sm:text-4xl">Engineering in practice</h2>
+            <p className="max-w-sm text-[13px] leading-6 text-[#777]">Building dependable backend features with a focus on access, APIs, and maintainability.</p>
+          </motion.div>
+
+          <div className="divide-y divide-black/[0.1]">
             {content.experience.map((job, idx) => (
               <motion.div
                 key={job.id}
@@ -26,7 +31,7 @@ export function Experience() {
               >
                 {/* left meta */}
                 <div className="mb-4 md:mb-0">
-                  <p className="font-mono text-[11px] text-[#bbb]">{job.period}</p>
+                  <p className="font-mono text-[11px] text-[#777]">{job.period}</p>
                   <p className="mt-1 text-[13px] font-semibold text-[#f04b23]">{job.company}</p>
                 </div>
 

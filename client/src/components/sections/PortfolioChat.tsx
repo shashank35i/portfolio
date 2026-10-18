@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useLocation } from "wouter";
-import { ArrowUp, MessageCircle, RotateCcw, Sparkles, Briefcase, Code2, Zap, BookOpen } from "lucide-react";
+import { ArrowUp, MessageCircle, RotateCcw, Briefcase, Code2, Zap, BookOpen } from "lucide-react";
 import { compactChatHistory, type ChatMessage } from "@shared/portfolio-chat";
 
 const starters = [
@@ -40,14 +40,9 @@ function SafeText({ text }: { text: string }) {
   );
 }
 
-function ThinkingDots() {
+function ThinkingLine() {
   return (
-    <span className="inline-flex items-center gap-[3px] py-0.5">
-      {[0, 160, 320].map(d => (
-        <span key={d} className="block h-[5px] w-[5px] rounded-full bg-[#c84b1f]/40 animate-bounce"
-          style={{ animationDelay: `${d}ms`, animationDuration: "1.1s" }} />
-      ))}
-    </span>
+    <span className="mt-2 block h-[2px] w-12 origin-left animate-pulse bg-[#f04b23]/70" aria-label="Writing a reply" />
   );
 }
 
@@ -119,36 +114,34 @@ export function PortfolioChat({ standalone = false }: { standalone?: boolean }) 
   const isExpanded = focused || !isEmpty;
 
   return (
-    <div className={`flex flex-col items-center justify-center ${standalone ? "min-h-[calc(100svh-72px)]" : "h-[calc(100svh-72px)]"} bg-white px-4`}>
+    <div className={`relative flex flex-col items-center justify-center ${standalone ? "min-h-[calc(100svh-72px)]" : "h-[calc(100svh-72px)]"} overflow-hidden bg-[#f9f8f6] px-4 pb-8 pt-6 sm:px-6`}>
+      <div className="pointer-events-none absolute left-0 top-0 h-px w-full bg-black/[0.08]" />
+      <div className="pointer-events-none absolute left-0 top-0 h-[2px] w-24 bg-[#f04b23]" />
 
       {/* message log */}
       {!isEmpty && (
-        <div ref={logRef} className="w-full max-w-[680px] flex-1 overflow-y-auto py-8" style={{ scrollbarWidth: "none" }}>
-          <div className="space-y-5 pb-4">
+        <div ref={logRef} className="w-full max-w-[760px] flex-1 overflow-y-auto py-8" style={{ scrollbarWidth: "none" }} aria-live="polite">
+          <div className="space-y-7 border-b border-black/[0.1] pb-8">
             {messages.map((msg, i) =>
               msg.role === "user" ? (
                 <div key={i} className="flex justify-end">
-                  <div className="max-w-[72%] rounded-2xl rounded-br-md bg-[#f4f4f4] px-4 py-2.5 text-[13.5px] leading-relaxed text-[#111] ring-1 ring-black/[0.06]">
+                  <div className="max-w-[82%] border border-black/[0.07] bg-white px-4 py-3 text-[13.5px] leading-relaxed text-[#111] shadow-[0_2px_8px_rgba(0,0,0,.025)] sm:max-w-[72%]">
                     {msg.content}
                   </div>
                 </div>
               ) : (
-                <div key={i} className="flex items-start gap-3">
-                  <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#fef2ee] ring-1 ring-[#c84b1f]/20">
-                    <Sparkles className="h-[11px] w-[11px] text-[#c84b1f]" />
-                  </div>
-                  <div className="flex-1 pt-0.5">
+                <div key={i} className="flex items-start gap-3 sm:gap-5">
+                  <span className="mt-1 w-[88px] shrink-0 font-mono text-[9px] uppercase leading-5 tracking-[0.13em] text-[#c84b1f] sm:w-[108px]">Shashank<br className="sm:hidden" /> / Profile</span>
+                  <div className="min-w-0 flex-1 pt-0.5">
                     <SafeText text={msg.content} />
                   </div>
                 </div>
               )
             )}
             {loading && (
-              <div className="flex items-start gap-3">
-                <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#fef2ee] ring-1 ring-[#c84b1f]/20">
-                  <Sparkles className="h-[11px] w-[11px] text-[#c84b1f]" />
-                </div>
-                <ThinkingDots />
+              <div className="flex items-start gap-3 sm:gap-5" role="status" aria-label="Assistant is writing">
+                <span className="mt-1 w-[88px] shrink-0 font-mono text-[9px] uppercase leading-5 tracking-[0.13em] text-[#c84b1f] sm:w-[108px]">Shashank<br className="sm:hidden" /> / Profile</span>
+                <ThinkingLine />
               </div>
             )}
             {error && (
@@ -178,26 +171,23 @@ export function PortfolioChat({ standalone = false }: { standalone?: boolean }) 
 
       {/* headline */}
       {isEmpty && (
-        <div className={`mb-8 text-center transition-all duration-500 ${isExpanded ? "mb-6" : "mb-10"}`}>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#bbb]">Portfolio assistant</p>
-          <h1 className={`mt-2 font-semibold tracking-tight text-[#111] transition-all duration-500 ${isExpanded ? "text-[26px]" : "text-[34px] sm:text-[42px]"}`}>
-            Ask me anything
+        <div className={`mb-8 w-full max-w-[760px] text-center transition-all duration-500 ${isExpanded ? "mb-6" : "mb-10"}`}>
+          <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#c84b1f]">Shashank Preetham Pendyala · Engineering</p>
+          <h1 className={`mt-3 font-semibold tracking-tight text-[#111] transition-all duration-500 ${isExpanded ? "text-[26px]" : "text-[34px] sm:text-[48px]"}`}>
+            A conversation about the work.
           </h1>
+          {!isExpanded && <p className="mx-auto mt-3 max-w-lg text-[14px] leading-6 text-[#777]">Ask about my backend projects, Android apps, experience, or the choices behind them.</p>}
         </div>
       )}
 
       {/* input + suggestions */}
-      <div className="w-full max-w-[680px]">
-        {/* gradient border wrapper */}
+      <div className="w-full max-w-[760px]">
+        {/* restrained focus frame */}
         <div
           onClick={() => { if (!isExpanded) { setFocused(true); textareaRef.current?.focus(); } }}
-          className={`rounded-[22px] p-[1.5px] transition-all duration-300 ${
-            isExpanded
-              ? "bg-gradient-to-r from-[#f04b23] via-[#e05cc0] to-[#7c6ef5] shadow-[0_6px_32px_rgba(240,75,35,0.22),0_2px_10px_rgba(0,0,0,0.07)]"
-              : "bg-gradient-to-r from-[#f04b23]/30 via-[#e05cc0]/20 to-[#7c6ef5]/30 shadow-[0_4px_24px_rgba(0,0,0,0.08)] hover:from-[#f04b23]/70 hover:via-[#e05cc0]/60 hover:to-[#7c6ef5]/70 hover:shadow-[0_6px_32px_rgba(240,75,35,0.18)] cursor-text"
-          }`}
+          className="group border border-black/[0.14] bg-white shadow-[0_5px_28px_rgba(15,15,15,.06)] transition-colors duration-200 focus-within:border-[#f04b23]/70 hover:border-black/25"
         >
-          <div className="flex items-end gap-2 rounded-[20.5px] bg-white px-4 py-3">
+          <div className="flex items-end gap-2 px-4 py-3">
             <textarea
               ref={textareaRef}
               value={input}
@@ -207,7 +197,7 @@ export function PortfolioChat({ standalone = false }: { standalone?: boolean }) 
               onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
               rows={1}
               aria-label="Ask about Shashank"
-              placeholder={isExpanded ? "Ask a follow-up..." : "Ask about Shashank's work, projects, skills..."}
+              placeholder={isExpanded ? "Ask a follow-up..." : "Write a question about my work..."}
               className="max-h-[140px] min-h-[26px] flex-1 resize-none bg-transparent text-[14px] leading-relaxed text-[#111] outline-none placeholder:text-[#b0b0b0]"
             />
             <button
@@ -217,8 +207,8 @@ export function PortfolioChat({ standalone = false }: { standalone?: boolean }) 
               aria-label="Send"
               className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-[11px] transition-all duration-200 ${
                 input.trim() && !loading
-                  ? "bg-gradient-to-br from-[#f04b23] to-[#c83a14] text-white shadow-[0_3px_12px_rgba(240,75,35,0.4)] hover:shadow-[0_4px_16px_rgba(240,75,35,0.55)] hover:scale-[1.04] active:scale-95"
-                  : "bg-[#f2f2f2] text-[#c0c0c0]"
+                  ? "bg-[#f04b23] text-white transition hover:bg-[#d63e1c] active:scale-95"
+                  : "bg-[#f1f0ee] text-[#b9b6b1]"
               }`}
             >
               <ArrowUp className="h-4 w-4" strokeWidth={2.3} />
@@ -233,9 +223,9 @@ export function PortfolioChat({ standalone = false }: { standalone?: boolean }) 
               const Icon = item.icon;
               return (
                 <button key={item.label} type="button" onClick={() => send(item.prompt)} disabled={loading}
-                  className="group flex items-center gap-1.5 rounded-full border border-black/[0.08] bg-white px-3 py-[5px] text-[11.5px] font-medium text-[#555] shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-150 hover:border-transparent hover:bg-gradient-to-r hover:from-[#fff4f1] hover:to-[#fdf1fb] hover:text-[#c84b1f] hover:shadow-[0_1px_8px_rgba(240,75,35,0.12)] disabled:opacity-40"
+                  className="group flex min-h-9 items-center gap-1.5 border border-black/[0.09] bg-white px-3 py-1.5 text-[11.5px] font-medium text-[#555] transition-colors duration-150 hover:border-[#f04b23]/35 hover:bg-[#fff8f5] hover:text-[#c84b1f] disabled:opacity-40"
                 >
-                  <Icon className="h-[11px] w-[11px] text-[#ccc] transition group-hover:text-[#c84b1f]" />
+                  <Icon className="h-[11px] w-[11px] text-[#999] transition group-hover:text-[#c84b1f]" />
                   {item.label}
                 </button>
               );
