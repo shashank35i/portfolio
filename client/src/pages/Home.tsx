@@ -13,6 +13,7 @@ import { Education } from "@/components/sections/Education";
 import { Recognition } from "@/components/sections/Recognition";
 import { Contact } from "@/components/sections/Contact";
 import { ChatLauncher } from "@/components/sections/PortfolioChat";
+import { SectionRail } from "@/components/layout/SectionRail";
 
 function AIChatStrip() {
   const [, navigate] = useLocation();
@@ -88,6 +89,7 @@ export default function Home() {
       </main>
       <Footer />
       <ChatLauncher />
+      <SectionRail />
     </div>
   );
 }

@@ -20,13 +20,13 @@ export function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0.25]);
 
   return (
-    <section ref={containerRef} data-section-theme="zinc" className="relative isolate min-h-[100svh] overflow-hidden bg-[#0b0b0a] text-[#f5f1e9]">
+    <section id="top" ref={containerRef} data-section-theme="zinc" className="relative isolate min-h-[100svh] overflow-hidden bg-[#0b0b0a] text-[#f5f1e9]">
       <div className="pointer-events-none absolute inset-y-0 left-[8.3%] hidden w-px bg-white/[0.07] lg:block" />
       <div className="pointer-events-none absolute right-0 top-0 h-full w-[42%] border-l border-white/[0.045] bg-[linear-gradient(160deg,rgba(240,75,35,.08),transparent_48%)]" />
       <motion.div style={{ y, opacity }} className="relative mx-auto grid min-h-[100svh] max-w-[1440px] grid-cols-1 items-center gap-10 px-5 pb-16 pt-28 sm:px-10 lg:grid-cols-[minmax(0,1.45fr)_minmax(260px,.55fr)] lg:gap-14 lg:px-20 lg:pb-12 lg:pt-24">
         <div className="relative z-10 lg:pl-10">
           <motion.div initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .65, ease }} className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2">
-            <span className="font-mono text-[10px] uppercase tracking-[.3em] text-[#f26946]">Java · Spring Boot · Backend</span>
+            <span className="font-mono text-[10px] uppercase tracking-[.3em] text-[#f26946]">Java · Spring Boot · Microservices</span>
             <span className="h-px w-12 bg-[#f26946]/70" />
             <span className="font-mono text-[10px] uppercase tracking-[.18em] text-white/55">Hyderabad, India</span>
           </motion.div>
@@ -45,7 +45,7 @@ export function Hero() {
             <a href="#projects" className="group inline-flex h-11 items-center gap-3 bg-[#f5f1e9] px-5 text-[13px] font-semibold text-[#111] transition hover:bg-[#f26946] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f26946]">
               View projects <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
-            <a href="/resume.pdf" download="Shashank_Preetham_Pendyala_Resume.pdf" className="inline-flex h-11 items-center gap-2 border border-white/25 px-4 text-[13px] font-medium text-white/85 transition hover:border-white/60 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f26946]"><Download className="h-4 w-4" /> Download résumé</a>
+            <a href="/resume.pdf" download="Shashank_Preetham_Pendyala_Resume.pdf" className="inline-flex h-11 items-center gap-2 border border-white/25 px-4 text-[13px] font-medium text-white/85 transition hover:border-white/60 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f26946]"><Download className="h-4 w-4" /> Download resume</a>
             <button type="button" onClick={() => navigate("/chat")} className="inline-flex h-11 items-center border border-white/20 px-4 text-[13px] font-medium text-white/70 transition hover:border-[#f26946] hover:text-[#ff9a7d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f26946]">
               Start a conversation
             </button>
