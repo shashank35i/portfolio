@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useLocation } from "wouter";
 import { ArrowUp, MessageCircle, RotateCcw, Sparkles, Briefcase, Code2, Zap, BookOpen } from "lucide-react";
-import type { ChatMessage } from "@shared/portfolio-chat";
+import { compactChatHistory, type ChatMessage } from "@shared/portfolio-chat";
 
 const starters = [
   { icon: Briefcase, label: "Java backend fit", prompt: "Why is Shashank a strong Java backend candidate?" },
@@ -95,13 +95,17 @@ export function PortfolioChat({ standalone = false }: { standalone?: boolean }) 
     ta.style.height = Math.min(ta.scrollHeight, 160) + "px";
   }, [input]);
 
-  const send = useCallback(async (prompt = input) => {
+  const send = useCallback(async (prompt = input, retry = false) => {
     const clean = prompt.trim();
     if (!clean || loading || clean.length > limit) return;
-    const next: ChatMessage[] = [...messages, { role: "user", content: clean } as ChatMessage].slice(-10);
-    setMessages(next); setInput(""); setError(null); setLoading(true);
+    const conversation = retry
+      ? messages
+      : [...messages, { role: "user", content: clean } as ChatMessage];
+    const requestMessages = compactChatHistory(conversation);
+    if (!retry) setMessages(conversation);
+    setInput(""); setError(null); setLoading(true);
     try {
-      const res  = await fetch("/api/chat", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ messages: next }) });
+      const res  = await fetch("/api/chat", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ messages: requestMessages }) });
       const data = await res.json() as { answer?: string; error?: { code?: string; message?: string } };
       if (!res.ok || !data.answer) throw Object.assign(new Error(data.error?.message || "Unavailable."), { code: data.error?.code || "CHAT_ERROR" });
       setMessages(cur => [...cur, { role: "assistant", content: data.answer! }]);
@@ -159,7 +163,7 @@ export function PortfolioChat({ standalone = false }: { standalone?: boolean }) 
                     </>
                   ) : (
                     <button type="button"
-                      onClick={() => { setError(null); const last = [...messages].reverse().find(m => m.role === "user"); if (last) send(last.content); }}
+                      onClick={() => { const last = [...messages].reverse().find(m => m.role === "user"); if (last) send(last.content, true); }}
                       className="inline-flex items-center gap-1.5 font-medium text-[#c84b1f]"
                     >
                       <RotateCcw className="h-3 w-3" /> Retry
