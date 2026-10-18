@@ -927,3 +927,10 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.14em;
 }
+
+/* Keep the desktop section rail in its own gutter at 1440–1719px. */
+@media (min-width: 1440px) and (max-width: 1719px) {
+  .hero-layout {
+    padding-right: 10rem;
+  }
+}

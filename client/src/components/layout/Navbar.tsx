@@ -112,21 +112,15 @@ export function Navbar() {
           SHASHANK<span className={isLight ? "text-black/30" : "text-white/30"}>.DEV</span>
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-5 xl:gap-6">
-          {navLinks.map(link => link.isRoute ? (
-            <Link key={link.name} href={link.href} className={cn("text-sm font-medium transition-colors", textCls)}>
-              {link.name}
-            </Link>
-          ) : (
-            <a key={link.name} href={link.href} onClick={e => scrollToSection(e, link.href)}
-              className={cn("text-sm font-medium transition-colors", textCls)}>
-              {link.name}
-            </a>
-          ))}
+        {/* Keep section navigation in the right-side rail (wide screens) or menu. */}
+        <div className="flex items-center gap-2">
+          <Link href="/chat" className={cn("hidden px-2 py-2 text-sm font-medium transition-colors sm:inline-flex", isOpen && "sm:hidden", textCls)}>
+            Chat
+          </Link>
           <a href="/resume.pdf" download="Shashank_Preetham_Pendyala_Resume.pdf"
             className={cn(
-              "ml-1 rounded-full px-4 py-2 text-sm font-semibold transition",
+              "hidden rounded-full px-4 py-2 text-sm font-semibold transition sm:inline-flex",
+              isOpen && "sm:hidden",
               isLight
                 ? "border border-black/[0.12] bg-white text-[#0f0f0f] hover:bg-[#f3f3f3]"
                 : "border border-white/15 bg-white/[0.06] text-white hover:bg-white/[0.12]"
@@ -134,26 +128,28 @@ export function Navbar() {
           >
             Resume
           </a>
-        </nav>
+          <button
+            className={cn("p-2 min-[1440px]:hidden", isLight ? "text-[#0f0f0f]" : "text-white")}
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close section menu" : "Open section menu"}
+            aria-expanded={isOpen}
+            aria-controls="portfolio-mobile-menu"
+          >
+            {isOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
 
         {/* Mobile toggle */}
-        <button
-          className={cn("lg:hidden p-2", isLight ? "text-[#0f0f0f]" : "text-white")}
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
       </div>
 
       {/* Mobile nav */}
       <AnimatePresence onExitComplete={handleMobileMenuExit}>
         {isOpen && (
-          <motion.div
+          <motion.div id="portfolio-mobile-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className={cn("lg:hidden overflow-hidden border-t", isLight ? "bg-white border-black/[0.07]" : "bg-[#0a0a0a]/95 border-white/[0.07]")}
+            className={cn("min-[1440px]:hidden overflow-hidden border-t", isLight ? "bg-white border-black/[0.07]" : "bg-[#0a0a0a] border-white/[0.07]")}
           >
             <nav className="flex max-h-[70svh] flex-col overflow-y-auto p-4 sm:p-5 gap-1">
               {navLinks.map(link => link.isRoute ? (

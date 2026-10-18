@@ -66,7 +66,7 @@ export const content = {
     name: "Shashank Preetham",
     title: "Java & Backend Software Engineer",
     tagline:
-      "My focus is microservices, system design, and distributed systems. I build Java and Spring Boot backends with JWT-secured APIs, Kafka event processing, and Redis caching—and verify performance with tests and load benchmarks.",
+      "I build Java and Spring Boot microservices with Kafka, Redis, and JWT-based security. My system design work connects reliable event flows, caching, and API performance—validated with automated tests and load benchmarks.",
     cta: {
       primary: "View flagship work",
       secondary: "Download Resume",
