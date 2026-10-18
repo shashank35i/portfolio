@@ -1,49 +1,253 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useLocation } from "wouter";
-import { ArrowUp, Bot, MessageCircle, RotateCcw } from "lucide-react";
+import { ArrowUp, MessageCircle, RotateCcw, Sparkles, Briefcase, Code2, Zap, BookOpen } from "lucide-react";
 import type { ChatMessage } from "@shared/portfolio-chat";
 
 const starters = [
-  { label: "Java backend fit", prompt: "Why is Shashank a strong Java backend candidate?" },
-  { label: "OpsPilot in 30 seconds", prompt: "Explain OpsPilot-AI in 30 seconds." },
-  { label: "9X internship work", prompt: "What did Shashank work on at 9X IT Solutions?" },
-  { label: "Android experience", prompt: "Which projects show Android experience?" },
+  { icon: Briefcase, label: "Java backend fit", prompt: "Why is Shashank a strong Java backend candidate?" },
+  { icon: Zap,       label: "OpsPilot AI",      prompt: "Explain OpsPilot-AI in 30 seconds." },
+  { icon: BookOpen,  label: "9X internship",     prompt: "What did Shashank work on at 9X IT Solutions?" },
+  { icon: Code2,     label: "Android projects",  prompt: "Which projects show Android experience?" },
 ];
 
 function SafeText({ text }: { text: string }) {
-  const inline = (content: string) => content.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g).map((part, index) => {
-    if (part.startsWith("**") && part.endsWith("**")) return <strong key={index}>{part.slice(2, -2)}</strong>;
-    const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-    if (link) { try { const url = new URL(link[2]); if (!["http:", "https:", "mailto:"].includes(url.protocol)) throw new Error(); const external = url.protocol !== "mailto:"; return <a key={index} href={url.href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} className="font-semibold text-[#b83216] underline decoration-[#f04b23]/40 underline-offset-2 hover:decoration-[#f04b23] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f04b23]">{link[1]}</a>; } catch { return <span key={index}>{part}</span>; } }
-    return <span key={index}>{part}</span>;
-  });
-  return <div className="space-y-2">{text.split("\n").map((line, index) => { const bullet = /^[-*]\s+/.test(line); const content = line.replace(/^[-*]\s+/, ""); return bullet ? <div key={index} className="flex gap-2"><span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[#f04b23]"/><p>{inline(content)}</p></div> : line ? <p key={index}>{inline(content)}</p> : <div key={index} className="h-1"/>; })}</div>;
+  const inline = (content: string) =>
+    content.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g).map((part, i) => {
+      if (part.startsWith("**") && part.endsWith("**"))
+        return <strong key={i} className="font-semibold text-[#111]">{part.slice(2, -2)}</strong>;
+      const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      if (link) {
+        try {
+          const url = new URL(link[2]);
+          if (!["http:", "https:", "mailto:"].includes(url.protocol)) throw new Error();
+          return <a key={i} href={url.href} target="_blank" rel="noopener noreferrer"
+            className="text-[#c84b1f] underline underline-offset-2 decoration-[#c84b1f]/30 hover:decoration-[#c84b1f] transition-all">{link[1]}</a>;
+        } catch { return <span key={i}>{part}</span>; }
+      }
+      return <span key={i}>{part}</span>;
+    });
+  return (
+    <div className="space-y-1.5 text-[13.5px] leading-[1.65] text-[#333]">
+      {text.split("\n").map((line, i) => {
+        const bullet = /^[-*]\s+/.test(line);
+        const content = line.replace(/^[-*]\s+/, "");
+        return bullet
+          ? <div key={i} className="flex items-start gap-2"><span className="mt-[7px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#c84b1f]/50" /><p>{inline(content)}</p></div>
+          : line ? <p key={i}>{inline(content)}</p>
+          : <div key={i} className="h-1" />;
+      })}
+    </div>
+  );
+}
+
+function ThinkingDots() {
+  return (
+    <span className="inline-flex items-center gap-[3px] py-0.5">
+      {[0, 160, 320].map(d => (
+        <span key={d} className="block h-[5px] w-[5px] rounded-full bg-[#c84b1f]/40 animate-bounce"
+          style={{ animationDelay: `${d}ms`, animationDuration: "1.1s" }} />
+      ))}
+    </span>
+  );
 }
 
 export function ChatLauncher() {
   const [, navigate] = useLocation();
-  const activate = () => {
-    navigate("/chat");
-    window.setTimeout(() => window.dispatchEvent(new Event("portfolio-chat-focus")), 100);
-  };
-
-  return <button type="button" onClick={activate} aria-label="Ask about Shashank" title="Ask about Shashank" className="group fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 z-[70] grid h-[54px] w-[54px] place-items-center rounded-[20px] bg-[#f04b23] text-white shadow-[0_12px_28px_rgba(73,35,21,.28)] transition duration-200 hover:-translate-y-1 hover:bg-[#dc401d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f04b23] sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))] sm:right-6 sm:h-[60px] sm:w-[60px] sm:rounded-[22px]"><MessageCircle strokeWidth={1.9} className="h-6 w-6 sm:h-7 sm:w-7"/><span className="pointer-events-none absolute right-full mr-3 hidden whitespace-nowrap rounded-md border border-black/10 bg-white px-3 py-2 text-xs font-bold text-[#171717] shadow-lg sm:group-hover:block">Ask about Shashank</span></button>;
+  return (
+    <button type="button"
+      onClick={() => { navigate("/chat"); setTimeout(() => window.dispatchEvent(new Event("portfolio-chat-focus")), 100); }}
+      aria-label="Ask about Shashank"
+      className="group fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 z-[70] flex h-[52px] w-[52px] items-center justify-center rounded-2xl bg-white text-[#333] shadow-[0_4px_24px_rgba(0,0,0,.14)] ring-1 ring-black/[0.07] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(0,0,0,.18)] sm:bottom-6 sm:right-6 sm:h-[56px] sm:w-[56px]"
+    >
+      <MessageCircle strokeWidth={1.6} className="h-5 w-5" />
+      <span className="pointer-events-none absolute right-full mr-3 hidden whitespace-nowrap rounded-lg border border-black/[0.07] bg-white px-3 py-1.5 text-[11px] font-medium text-[#444] shadow-lg sm:group-hover:block">
+        Ask about Shashank
+      </span>
+    </button>
+  );
 }
 
 export function PortfolioChat({ standalone = false }: { standalone?: boolean }) {
-  const [messages, setMessages] = useState<ChatMessage[]>([]), [input, setInput] = useState(""), [loading, setLoading] = useState(false), [error, setError] = useState<{ code: string; message: string } | null>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null), logRef = useRef<HTMLDivElement>(null), limit = 1200;
-  useEffect(() => { const focus = () => textareaRef.current?.focus({ preventScroll: true }); window.addEventListener("portfolio-chat-focus", focus); return () => window.removeEventListener("portfolio-chat-focus", focus); }, []);
-  useEffect(() => { logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: "smooth" }); }, [messages, loading, error]);
-  const send = async (prompt = input) => { const clean = prompt.trim(); if (!clean || loading || clean.length > limit) return; const next: ChatMessage[] = [...messages, { role: "user", content: clean } as ChatMessage].slice(-10); setMessages(next); setInput(""); setError(null); setLoading(true); try { const response = await fetch("/api/chat", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ messages: next }) }); const data = await response.json() as { answer?: string; error?: { code?: string; message?: string } }; if (!response.ok || !data.answer) throw Object.assign(new Error(data.error?.message || "The assistant is unavailable."), { code: data.error?.code || "CHAT_ERROR" }); setMessages(current => [...current, { role: "assistant", content: data.answer! }]); } catch (caught) { const failure = caught as Error & { code?: string }; setError({ code: failure.code || "NETWORK_ERROR", message: failure.message || "Could not reach the assistant." }); } finally { setLoading(false); } };
-  const empty = messages.length === 0 && !error;
-  return <section id="chat" data-section-theme="zinc" className={`relative scroll-mt-20 overflow-hidden border-t-2 border-[#f04b23] bg-[#f3f1eb] pb-10 pt-24 text-[#191816] md:py-20 ${standalone ? "min-h-[calc(100svh-1px)] md:pt-28" : ""}`}>
-    <div className="pointer-events-none absolute inset-0 opacity-[.16] [background-image:linear-gradient(rgba(25,24,22,.12)_1px,transparent_1px),linear-gradient(90deg,rgba(25,24,22,.12)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:linear-gradient(to_right,black,transparent_72%)]"/>
-    <div className="container relative z-10 mx-auto px-4 sm:px-6"><div className="mx-auto max-w-6xl"><header className="mb-5 flex flex-col justify-between gap-3 border-b border-black/15 pb-5 sm:mb-8 sm:flex-row sm:items-end sm:gap-5 sm:pb-6"><div><span className="font-mono text-[10px] font-bold uppercase tracking-[.22em] text-[#b93617]">AI portfolio assistant</span><h2 className="mt-2 max-w-2xl text-4xl font-bold leading-[1.02] tracking-tight sm:mt-3 sm:text-5xl lg:text-6xl">What would you like to know?</h2></div><span className="inline-flex w-fit items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[.14em] text-black/55"><i className="h-2 w-2 rounded-full bg-emerald-600"/>Online · Portfolio knowledge</span></header>
-      <div className="grid overflow-hidden border border-black/15 bg-[#e9e6df] shadow-[0_24px_70px_rgba(50,38,29,.13)] lg:grid-cols-[280px_1fr]"><aside className="border-b border-black/10 bg-[#edeae3] p-3 sm:p-5 lg:border-b-0 lg:border-r lg:p-6"><p className="mb-4 hidden text-xs font-bold uppercase tracking-[.12em] text-black/50 lg:block">Recruiter shortcuts</p><div className="grid grid-cols-2 gap-2 lg:grid-cols-1">{starters.map((item, index) => <button key={item.label} type="button" onClick={() => send(item.prompt)} disabled={loading} className="group min-h-12 border border-black/10 bg-[#f7f5f0] p-2 text-left transition hover:border-[#f04b23]/60 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f04b23] disabled:opacity-50 sm:min-h-16 sm:p-3"><span className="font-mono text-[8px] text-[#b93617] sm:text-[9px]">0{index + 1}</span><span className="mt-0.5 block text-[11px] font-bold leading-4 sm:mt-1 sm:text-sm">{item.label}</span></button>)}</div></aside>
-        <div className="min-w-0 bg-white"><div ref={logRef} role="log" aria-live="polite" aria-label="Conversation" className={`${empty ? "h-[210px]" : "h-[300px]"} overflow-y-auto p-4 transition-[height] sm:h-[390px] sm:p-7 lg:h-[430px] lg:p-9`}>{empty ? <div className="flex h-full items-center"><div className="max-w-lg"><span className="grid h-9 w-9 place-items-center rounded-xl border border-[#f04b23]/25 bg-[#fff4ef] text-[#d53c19] sm:h-10 sm:w-10"><MessageCircle className="h-4 w-4 sm:h-5 sm:w-5"/></span><h3 className="mt-3 text-lg font-bold sm:mt-4 sm:text-2xl">Ask about experience, projects, or technical fit.</h3><p className="mt-1.5 text-xs leading-5 text-black/55 sm:mt-2 sm:text-sm sm:leading-6">Choose a shortcut or write your own question below.</p></div></div> : <div className="space-y-5">{messages.map((message,index) => <div key={`${message.role}-${index}`} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}><div className={`max-w-[90%] px-4 py-3 text-sm leading-6 sm:max-w-[76%] ${message.role === "user" ? "rounded-[1rem_1rem_.2rem_1rem] bg-[#1d1c1a] text-white" : "border-l-2 border-[#f04b23] bg-[#f6f3ed] text-black/80"}`}>{message.role === "assistant" && <span className="mb-2 flex items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-[.12em] text-[#b93617]"><Bot className="h-3.5 w-3.5"/>Shashank’s portfolio</span>}<SafeText text={message.content}/></div></div>)}{loading && <div className="flex items-center gap-3 text-sm text-black/55"><span className="flex gap-1"><i className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#f04b23]"/><i className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#f04b23] [animation-delay:120ms]"/><i className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#f04b23] [animation-delay:240ms]"/></span>Reviewing Shashank’s portfolio…</div>}</div>}{error && <div role="alert" className="mt-5 border border-[#f04b23]/30 bg-[#fff4ef] p-4 text-sm"><strong className="block text-[#b83216]">{error.code === "CHAT_NOT_CONFIGURED" ? "Assistant unavailable" : "Response interrupted"}</strong><p className="mt-1 text-black/65">{error.code === "CHAT_NOT_CONFIGURED" ? "Chat has not been enabled on this deployment. You can still contact Shashank directly by email or LinkedIn." : error.message}</p>{error.code === "CHAT_NOT_CONFIGURED" ? <div className="mt-3 flex gap-4"><a href="mailto:shashankpendyala3549@gmail.com" className="font-bold text-[#b83216] underline underline-offset-2">Email</a><a href="https://www.linkedin.com/in/shashank35i/" target="_blank" rel="noopener noreferrer" className="font-bold text-[#b83216] underline underline-offset-2">LinkedIn</a></div> : <button type="button" onClick={() => { setError(null); const last = [...messages].reverse().find(item => item.role === "user"); if (last) send(last.content); }} className="mt-3 inline-flex items-center gap-2 font-bold text-[#b83216]"><RotateCcw className="h-4 w-4"/>Retry</button>}</div>}</div>
-          <div className="border-t border-black/10 bg-[#faf9f6] p-3 sm:p-4"><div className="flex items-end gap-2 rounded-2xl border border-black/15 bg-white p-2 shadow-[0_8px_26px_rgba(45,34,26,.08)] focus-within:border-[#f04b23] focus-within:shadow-[0_0_0_3px_rgba(240,75,35,.1)]"><textarea ref={textareaRef} value={input} maxLength={limit} onChange={event => setInput(event.target.value)} onKeyDown={event => { if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); send(); } }} rows={1} aria-label="Ask about Shashank" placeholder="Ask about Shashank’s work…" className="max-h-32 min-h-11 flex-1 resize-none bg-transparent px-3 py-2.5 text-sm leading-6 outline-none placeholder:text-black/35"/><button type="button" onClick={() => send()} disabled={!input.trim() || loading} aria-label="Send message" className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#f04b23] text-white transition hover:bg-[#dc401d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f04b23] disabled:opacity-35"><ArrowUp className="h-5 w-5"/></button></div><div className="mt-2 flex justify-between px-2 text-[9px] text-black/45"><span>AI responses may be imperfect.</span><span>{input.length}/{limit}</span></div></div></div>
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [input, setInput]       = useState("");
+  const [loading, setLoading]   = useState(false);
+  const [error, setError]       = useState<{ code: string; message: string } | null>(null);
+  const [focused, setFocused]   = useState(false);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const logRef      = useRef<HTMLDivElement>(null);
+  const limit = 1200;
+
+  useEffect(() => {
+    const focus = () => { setFocused(true); textareaRef.current?.focus({ preventScroll: true }); };
+    window.addEventListener("portfolio-chat-focus", focus);
+    return () => window.removeEventListener("portfolio-chat-focus", focus);
+  }, []);
+
+  useEffect(() => {
+    logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: "smooth" });
+  }, [messages, loading, error]);
+
+  useEffect(() => {
+    const ta = textareaRef.current;
+    if (!ta) return;
+    ta.style.height = "auto";
+    ta.style.height = Math.min(ta.scrollHeight, 160) + "px";
+  }, [input]);
+
+  const send = useCallback(async (prompt = input) => {
+    const clean = prompt.trim();
+    if (!clean || loading || clean.length > limit) return;
+    const next: ChatMessage[] = [...messages, { role: "user", content: clean } as ChatMessage].slice(-10);
+    setMessages(next); setInput(""); setError(null); setLoading(true);
+    try {
+      const res  = await fetch("/api/chat", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ messages: next }) });
+      const data = await res.json() as { answer?: string; error?: { code?: string; message?: string } };
+      if (!res.ok || !data.answer) throw Object.assign(new Error(data.error?.message || "Unavailable."), { code: data.error?.code || "CHAT_ERROR" });
+      setMessages(cur => [...cur, { role: "assistant", content: data.answer! }]);
+    } catch (e) {
+      const f = e as Error & { code?: string };
+      setError({ code: f.code || "NETWORK_ERROR", message: f.message || "Could not reach the assistant." });
+    } finally { setLoading(false); }
+  }, [input, loading, messages]);
+
+  const isEmpty    = messages.length === 0 && !error;
+  const isExpanded = focused || !isEmpty;
+
+  return (
+    <div className={`flex flex-col items-center justify-center ${standalone ? "min-h-[calc(100svh-72px)]" : "h-[calc(100svh-72px)]"} bg-white px-4`}>
+
+      {/* message log */}
+      {!isEmpty && (
+        <div ref={logRef} className="w-full max-w-[680px] flex-1 overflow-y-auto py-8" style={{ scrollbarWidth: "none" }}>
+          <div className="space-y-5 pb-4">
+            {messages.map((msg, i) =>
+              msg.role === "user" ? (
+                <div key={i} className="flex justify-end">
+                  <div className="max-w-[72%] rounded-2xl rounded-br-md bg-[#f4f4f4] px-4 py-2.5 text-[13.5px] leading-relaxed text-[#111] ring-1 ring-black/[0.06]">
+                    {msg.content}
+                  </div>
+                </div>
+              ) : (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#fef2ee] ring-1 ring-[#c84b1f]/20">
+                    <Sparkles className="h-[11px] w-[11px] text-[#c84b1f]" />
+                  </div>
+                  <div className="flex-1 pt-0.5">
+                    <SafeText text={msg.content} />
+                  </div>
+                </div>
+              )
+            )}
+            {loading && (
+              <div className="flex items-start gap-3">
+                <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#fef2ee] ring-1 ring-[#c84b1f]/20">
+                  <Sparkles className="h-[11px] w-[11px] text-[#c84b1f]" />
+                </div>
+                <ThinkingDots />
+              </div>
+            )}
+            {error && (
+              <div role="alert" className="rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-[13px]">
+                <strong className="block text-red-600">{error.code === "CHAT_NOT_CONFIGURED" ? "Assistant unavailable" : "Something went wrong"}</strong>
+                <p className="mt-0.5 text-[#666]">{error.code === "CHAT_NOT_CONFIGURED" ? "Chat is not enabled on this deployment." : error.message}</p>
+                <div className="mt-2 flex gap-4 text-[12px]">
+                  {error.code === "CHAT_NOT_CONFIGURED" ? (
+                    <>
+                      <a href="mailto:shashankpendyala3549@gmail.com" className="font-medium text-[#c84b1f] underline underline-offset-2">Email</a>
+                      <a href="https://www.linkedin.com/in/shashank35i/" target="_blank" rel="noopener noreferrer" className="font-medium text-[#c84b1f] underline underline-offset-2">LinkedIn</a>
+                    </>
+                  ) : (
+                    <button type="button"
+                      onClick={() => { setError(null); const last = [...messages].reverse().find(m => m.role === "user"); if (last) send(last.content); }}
+                      className="inline-flex items-center gap-1.5 font-medium text-[#c84b1f]"
+                    >
+                      <RotateCcw className="h-3 w-3" /> Retry
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* headline */}
+      {isEmpty && (
+        <div className={`mb-8 text-center transition-all duration-500 ${isExpanded ? "mb-6" : "mb-10"}`}>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#bbb]">Portfolio assistant</p>
+          <h1 className={`mt-2 font-semibold tracking-tight text-[#111] transition-all duration-500 ${isExpanded ? "text-[26px]" : "text-[34px] sm:text-[42px]"}`}>
+            Ask me anything
+          </h1>
+        </div>
+      )}
+
+      {/* input + suggestions */}
+      <div className="w-full max-w-[680px]">
+        {/* gradient border wrapper */}
+        <div
+          onClick={() => { if (!isExpanded) { setFocused(true); textareaRef.current?.focus(); } }}
+          className={`rounded-[22px] p-[1.5px] transition-all duration-300 ${
+            isExpanded
+              ? "bg-gradient-to-r from-[#f04b23] via-[#e05cc0] to-[#7c6ef5] shadow-[0_6px_32px_rgba(240,75,35,0.22),0_2px_10px_rgba(0,0,0,0.07)]"
+              : "bg-gradient-to-r from-[#f04b23]/30 via-[#e05cc0]/20 to-[#7c6ef5]/30 shadow-[0_4px_24px_rgba(0,0,0,0.08)] hover:from-[#f04b23]/70 hover:via-[#e05cc0]/60 hover:to-[#7c6ef5]/70 hover:shadow-[0_6px_32px_rgba(240,75,35,0.18)] cursor-text"
+          }`}
+        >
+          <div className="flex items-end gap-2 rounded-[20.5px] bg-white px-4 py-3">
+            <textarea
+              ref={textareaRef}
+              value={input}
+              maxLength={limit}
+              onChange={e => setInput(e.target.value)}
+              onFocus={() => setFocused(true)}
+              onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
+              rows={1}
+              aria-label="Ask about Shashank"
+              placeholder={isExpanded ? "Ask a follow-up..." : "Ask about Shashank's work, projects, skills..."}
+              className="max-h-[140px] min-h-[26px] flex-1 resize-none bg-transparent text-[14px] leading-relaxed text-[#111] outline-none placeholder:text-[#b0b0b0]"
+            />
+            <button
+              type="button"
+              onClick={e => { e.stopPropagation(); send(); }}
+              disabled={!input.trim() || loading}
+              aria-label="Send"
+              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-[11px] transition-all duration-200 ${
+                input.trim() && !loading
+                  ? "bg-gradient-to-br from-[#f04b23] to-[#c83a14] text-white shadow-[0_3px_12px_rgba(240,75,35,0.4)] hover:shadow-[0_4px_16px_rgba(240,75,35,0.55)] hover:scale-[1.04] active:scale-95"
+                  : "bg-[#f2f2f2] text-[#c0c0c0]"
+              }`}
+            >
+              <ArrowUp className="h-4 w-4" strokeWidth={2.3} />
+            </button>
+          </div>
+        </div>
+
+        {/* suggestions */}
+        <div className={`overflow-hidden transition-all duration-300 ease-out ${isExpanded && isEmpty ? "mt-3 max-h-[60px] opacity-100" : "max-h-0 opacity-0 pointer-events-none"}`}>
+          <div className="flex flex-wrap gap-1.5">
+            {starters.map(item => {
+              const Icon = item.icon;
+              return (
+                <button key={item.label} type="button" onClick={() => send(item.prompt)} disabled={loading}
+                  className="group flex items-center gap-1.5 rounded-full border border-black/[0.08] bg-white px-3 py-[5px] text-[11.5px] font-medium text-[#555] shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-150 hover:border-transparent hover:bg-gradient-to-r hover:from-[#fff4f1] hover:to-[#fdf1fb] hover:text-[#c84b1f] hover:shadow-[0_1px_8px_rgba(240,75,35,0.12)] disabled:opacity-40"
+                >
+                  <Icon className="h-[11px] w-[11px] text-[#ccc] transition group-hover:text-[#c84b1f]" />
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* char counter */}
+        {isExpanded && input.length > 0 && (
+          <div className="mt-1.5 flex justify-end px-1">
+            <span className={`text-[10px] tabular-nums ${input.length > limit * 0.9 ? "text-orange-500" : "text-[#ccc]"}`}>
+              {input.length}/{limit}
+            </span>
+          </div>
+        )}
       </div>
-    </div></div>
-  </section>;
+    </div>
+  );
 }

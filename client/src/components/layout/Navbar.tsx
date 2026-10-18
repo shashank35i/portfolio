@@ -47,14 +47,14 @@ export function Navbar() {
 
   if (isChatPage) {
     return (
-      <header className="fixed top-0 z-50 w-full border-b border-black/10 bg-[#f3f1eb]/95 text-[#191816] backdrop-blur-md pt-[max(env(safe-area-inset-top),0.5rem)] lg:pt-0">
+      <header className="fixed top-0 z-50 w-full border-b border-black/[0.07] bg-white/95 text-[#111] backdrop-blur-md pt-[max(env(safe-area-inset-top),0.5rem)] lg:pt-0">
         <div className="container mx-auto flex h-16 items-center justify-between gap-3 px-4 sm:h-[72px] sm:px-6">
-          <Link href="/" className="font-display text-base font-bold tracking-tight transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f04b23] sm:text-xl">
-            SHASHANK<span className="text-black/45">.DEV</span>
+          <Link href="/" className="font-display text-base font-bold tracking-tight transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c84b1f] sm:text-xl">
+            SHASHANK<span className="text-black/30">.DEV</span>
           </Link>
-          <span className="hidden font-mono text-[10px] font-bold uppercase tracking-[.18em] text-[#b93617] sm:inline">Portfolio assistant</span>
-          <Link href="/" className="inline-flex items-center gap-2 border border-black/15 bg-white px-3 py-2 text-xs font-bold transition hover:border-[#f04b23]/60 hover:text-[#b83216] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#f04b23] sm:px-4 sm:text-sm">
-            <ArrowLeft className="h-4 w-4" />
+          <span className="hidden font-mono text-[10px] font-bold uppercase tracking-[.18em] text-[#c84b1f]/70 sm:inline">Portfolio assistant</span>
+          <Link href="/" className="inline-flex items-center gap-1.5 rounded-lg border border-black/[0.09] bg-white px-3 py-2 text-xs font-medium text-[#444] shadow-sm transition hover:border-black/[0.16] hover:text-[#111] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#c84b1f] sm:px-4 sm:text-sm">
+            <ArrowLeft className="h-3.5 w-3.5" />
             <span>Portfolio</span>
           </Link>
         </div>
