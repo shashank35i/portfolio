@@ -25,7 +25,7 @@ export function About() {
         <div className="mb-14 flex items-center gap-4"><span className="font-mono text-[10px] uppercase tracking-[.27em] text-[#bd472b]">About</span><span className="h-px flex-1 bg-black/15" /><span className="hidden font-mono text-[10px] uppercase tracking-[.17em] text-black/55 sm:block">Java · Spring Boot · Backend engineering</span></div>
         <div className="grid gap-12 lg:grid-cols-[.84fr_1.16fr] lg:gap-20">
           <div className="relative">
-            <motion.p {...fade(.02)} className="mb-5 text-[15px] font-medium tracking-[-.02em] text-[#484640] sm:text-[17px]">Shashank Preetham Pendyala</motion.p>
+            <motion.p {...fade(.02)} className="mb-5 text-xl font-medium tracking-[-.03em] text-[#393833] sm:text-2xl">Shashank Preetham Pendyala</motion.p>
             <motion.h2 {...fade(.04)} className="max-w-xl text-[clamp(3.2rem,7vw,6.4rem)] font-semibold leading-[.87] tracking-[-.075em]">Secure APIs.<br /><span className="font-serif font-medium italic text-[#bd472b]">Measured performance.</span></motion.h2>
             <motion.p {...fade(.1)} className="mt-7 max-w-sm border-l-2 border-[#bd472b] pl-4 text-[14px] leading-7 text-[#57544f]">{content.about.now}</motion.p>
           </div>

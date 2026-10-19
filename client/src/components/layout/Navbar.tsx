@@ -1,5 +1,6 @@
 ﻿import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
+import { useRef } from "react";
 import { ArrowLeft, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,6 +22,7 @@ export function Navbar() {
   const [pendingSection, setPendingSection] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [isLight,  setIsLight]  = useState(false);   // true when over white sections
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
 
   const isChatPage = /^\/chat\/?$/.test(location);
 
@@ -45,6 +47,18 @@ export function Navbar() {
     obs.observe(document.documentElement, { attributes: true, attributeFilter: ["data-section-theme"] });
     return () => obs.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleMenuKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setPendingSection(null);
+      setIsOpen(false);
+      menuToggleRef.current?.focus();
+    };
+    document.addEventListener("keydown", handleMenuKeyDown);
+    return () => document.removeEventListener("keydown", handleMenuKeyDown);
+  }, [isOpen]);
 
   const scrollToTarget = (href: string) => {
     const target = document.querySelector<HTMLElement>(href);
@@ -129,6 +143,7 @@ export function Navbar() {
             Resume
           </a>
           <button
+            ref={menuToggleRef}
             className={cn("p-2 min-[1280px]:hidden", isLight ? "text-[#0f0f0f]" : "text-white")}
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? "Close section menu" : "Open section menu"}

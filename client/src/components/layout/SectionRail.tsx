@@ -16,12 +16,23 @@ const sections = [
 
 export function SectionRail() {
   const [activeId, setActiveId] = useState("top");
+  const [rollDirection, setRollDirection] = useState<1 | -1>(1);
   const [isLight, setIsLight] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const rootRef = useRef<HTMLElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const activeIndexRef = useRef(0);
+
+  const setCurrentSection = (id: string) => {
+    const nextIndex = sections.findIndex((section) => section.id === id);
+    if (nextIndex >= 0 && nextIndex !== activeIndexRef.current) {
+      setRollDirection(nextIndex > activeIndexRef.current ? 1 : -1);
+      activeIndexRef.current = nextIndex;
+    }
+    setActiveId(id);
+  };
 
   useEffect(() => {
     const updateActiveSection = () => {
@@ -34,7 +45,7 @@ export function SectionRail() {
       if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
         current = sections[sections.length - 1].id;
       }
-      setActiveId(current);
+      setCurrentSection(current);
     };
 
     let frame = 0;
@@ -90,15 +101,19 @@ export function SectionRail() {
   const scrollToSection = (id: string) => {
     const target = document.getElementById(id);
     if (!target) return;
-    setActiveId(id);
+    setCurrentSection(id);
     setIsOpen(false);
+    triggerRef.current?.focus();
     window.history.replaceState(null, "", `#${id}`);
     const headerHeight = document.querySelector<HTMLElement>("header")?.getBoundingClientRect().height ?? 0;
     const top = window.scrollY + target.getBoundingClientRect().top - headerHeight;
     window.scrollTo({ top, behavior: shouldReduceMotion ? "auto" : "smooth" });
   };
 
-  const activeLabel = sections.find(({ id }) => id === activeId)?.label ?? "Home";
+  const activeIndex = sections.findIndex(({ id }) => id === activeId);
+  const activeLabel = sections[activeIndex]?.label ?? "Home";
+  const previousLabel = sections[activeIndex - 1]?.label ?? "";
+  const nextLabel = sections[activeIndex + 1]?.label ?? "";
   const colors = isLight
     ? "border-black/10 bg-[#f8f6f0] text-[#181715] shadow-[0_10px_30px_rgba(24,23,21,.12)]"
     : "border-white/15 bg-[#171614] text-[#f5f1e9] shadow-[0_12px_34px_rgba(0,0,0,.3)]";
@@ -122,12 +137,28 @@ export function SectionRail() {
           whileHover={shouldReduceMotion ? undefined : { x: -3 }}
           whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
           className={cn(
-            "group inline-flex min-h-11 items-center gap-3 border px-4 text-sm font-medium transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#bd472b]",
+            "group inline-flex min-h-[76px] items-center gap-3 border px-3 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#bd472b]",
             colors,
           )}
         >
-          <span aria-live="polite" className="min-w-[5.5rem] text-left">{activeLabel}</span>
-          <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", isOpen && "rotate-180")} aria-hidden="true" />
+          <span className="relative flex h-[58px] w-[104px] flex-col justify-center overflow-hidden text-left">
+            <AnimatePresence initial={false} custom={rollDirection} mode="popLayout">
+              <motion.span
+                key={activeId}
+                custom={rollDirection}
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: rollDirection > 0 ? 16 : -16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: rollDirection > 0 ? -16 : 16 }}
+                transition={{ duration: shouldReduceMotion ? 0.08 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0 flex flex-col items-start justify-center"
+              >
+                <span aria-hidden="true" className={cn("h-4 text-[10px] leading-4 transition-opacity", isLight ? "text-[#77736b]/60" : "text-white/40")}>{previousLabel || "\u00a0"}</span>
+                <span aria-live="polite" className="h-5 text-[14px] font-semibold leading-5">{activeLabel}</span>
+                <span aria-hidden="true" className={cn("h-4 text-[10px] leading-4 transition-opacity", isLight ? "text-[#77736b]/60" : "text-white/40")}>{nextLabel || "\u00a0"}</span>
+              </motion.span>
+            </AnimatePresence>
+          </span>
+          <ChevronDown className={cn("h-4 w-4 shrink-0 transition-transform duration-200", isOpen && "rotate-180")} aria-hidden="true" />
         </motion.button>
 
         <AnimatePresence>
