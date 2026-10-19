@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const sections = [
@@ -153,36 +153,32 @@ export function SectionRail() {
 
           return (
             <li key={offset} className="relative flex h-9 shrink-0 items-center justify-end">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.button
-                  key={item.id}
-                  type="button"
-                  aria-current={active ? "location" : undefined}
-                  aria-label={active ? `${item.label}, current section` : `Go to ${item.label} section`}
-                  onClick={() => scrollToIndex(activeIndex + offset)}
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: offset < 0 ? -12 : 12, rotateX: offset < 0 ? 12 : -12 }}
-                  animate={{ opacity: active ? 1 : distance === 1 ? 0.68 : 0.36, y: 0, rotateX: 0, scale: active ? 1.08 : distance === 1 ? 0.94 : 0.86 }}
-                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: offset < 0 ? 12 : -12, rotateX: offset < 0 ? -12 : 12 }}
-                  transition={{ duration: shouldReduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+              <motion.button
+                type="button"
+                aria-current={active ? "location" : undefined}
+                aria-label={active ? `${item.label}, current section` : `Go to ${item.label} section`}
+                onClick={() => scrollToIndex(activeIndex + offset)}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: offset < 0 ? -12 : 12, rotateX: offset < 0 ? 12 : -12 }}
+                animate={{ opacity: active ? 1 : distance === 1 ? 0.68 : 0.36, y: 0, rotateX: 0, scale: active ? 1.08 : distance === 1 ? 0.94 : 0.86 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+                className={cn(
+                  "group relative inline-flex min-h-9 items-center justify-end bg-transparent px-1 text-right font-medium tracking-[-0.025em] focus-visible:outline-none focus-visible:text-[#bd472b] focus-visible:after:absolute focus-visible:after:-bottom-0.5 focus-visible:after:right-0 focus-visible:after:h-[2px] focus-visible:after:w-7 focus-visible:after:bg-[#bd472b]",
+                  active
+                    ? "text-[16px] font-semibold text-[#bd472b]"
+                    : isLight
+                      ? "text-[14px] text-[#514d46] hover:text-[#bd472b]"
+                      : "text-[14px] text-white/80 hover:text-[#ff704d]",
+                )}
+              >
+                <span
+                  aria-hidden="true"
                   className={cn(
-                    "group relative inline-flex min-h-9 items-center justify-end bg-transparent px-1 text-right font-medium tracking-[-0.025em] focus-visible:outline-none focus-visible:text-[#bd472b] focus-visible:after:absolute focus-visible:after:-bottom-0.5 focus-visible:after:right-0 focus-visible:after:h-[2px] focus-visible:after:w-7 focus-visible:after:bg-[#bd472b]",
-                    active
-                      ? "text-[16px] font-semibold text-[#bd472b]"
-                      : isLight
-                        ? "text-[14px] text-[#514d46] hover:text-[#bd472b]"
-                        : "text-[14px] text-white/80 hover:text-[#ff704d]",
+                    "absolute -left-4 top-1/2 h-px w-0 -translate-y-1/2 bg-[#bd472b] transition-[width] duration-200",
+                    active ? "w-3" : "group-hover:w-2 group-focus-visible:w-2",
                   )}
-                >
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      "absolute -left-4 top-1/2 h-px w-0 -translate-y-1/2 bg-[#bd472b] transition-[width] duration-200",
-                      active ? "w-3" : "group-hover:w-2 group-focus-visible:w-2",
-                    )}
-                  />
-                  {item.label}
-                </motion.button>
-              </AnimatePresence>
+                />
+                {item.label}
+              </motion.button>
             </li>
           );
         })}
