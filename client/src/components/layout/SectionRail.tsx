@@ -114,16 +114,14 @@ export function SectionRail() {
   const activeLabel = sections[activeIndex]?.label ?? "Home";
   const previousLabel = sections[activeIndex - 1]?.label ?? "";
   const nextLabel = sections[activeIndex + 1]?.label ?? "";
-  const colors = isLight
-    ? "border-black/10 bg-[#f8f6f0] text-[#181715] shadow-[0_10px_30px_rgba(24,23,21,.12)]"
-    : "border-white/15 bg-[#171614] text-[#f5f1e9] shadow-[0_12px_34px_rgba(0,0,0,.3)]";
-  const menuColors = isLight ? "border-black/10 bg-[#fbfaf7]" : "border-white/12 bg-[#171614]";
+  const primaryText = isLight ? "text-[#201d19]" : "text-[#fffaf2]";
+  const secondaryText = isLight ? "text-[#514d46]/65" : "text-white/55";
 
   return (
     <nav
       ref={rootRef}
       aria-label="Portfolio section selector"
-      className="fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 min-[1280px]:block"
+      className="fixed right-7 top-1/2 z-40 hidden -translate-y-1/2 min-[1280px]:block"
     >
       <div className="relative flex flex-col items-end">
         <motion.button
@@ -137,11 +135,11 @@ export function SectionRail() {
           whileHover={shouldReduceMotion ? undefined : { x: -3 }}
           whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
           className={cn(
-            "group inline-flex min-h-[76px] items-center gap-3 border px-3 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#bd472b]",
-            colors,
+            "group inline-flex min-h-[76px] items-center gap-3 bg-transparent py-2 pl-3 text-right transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#bd472b]",
+            primaryText,
           )}
         >
-          <span className="relative flex h-[58px] w-[104px] flex-col justify-center overflow-hidden text-left">
+          <span className="relative flex h-[58px] w-[112px] flex-col justify-center overflow-hidden text-right [text-shadow:0_1px_8px_rgba(0,0,0,.28)]">
             <AnimatePresence initial={false} custom={rollDirection} mode="popLayout">
               <motion.span
                 key={activeId}
@@ -150,11 +148,14 @@ export function SectionRail() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: rollDirection > 0 ? -16 : 16 }}
                 transition={{ duration: shouldReduceMotion ? 0.08 : 0.24, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-0 flex flex-col items-start justify-center"
+                className="absolute inset-0 flex flex-col items-end justify-center"
               >
-                <span aria-hidden="true" className={cn("h-4 text-[10px] leading-4 transition-opacity", isLight ? "text-[#77736b]/60" : "text-white/40")}>{previousLabel || "\u00a0"}</span>
-                <span aria-live="polite" className="h-5 text-[14px] font-semibold leading-5">{activeLabel}</span>
-                <span aria-hidden="true" className={cn("h-4 text-[10px] leading-4 transition-opacity", isLight ? "text-[#77736b]/60" : "text-white/40")}>{nextLabel || "\u00a0"}</span>
+                <span aria-hidden="true" className={cn("h-4 text-[11px] leading-4 transition-opacity", secondaryText)}>{previousLabel || "\u00a0"}</span>
+                <span aria-live="polite" className="flex h-5 items-center gap-2 text-[15px] font-semibold leading-5">
+                  <span className="h-[2px] w-4 bg-[#bd472b] transition-transform duration-300 group-hover:w-6" aria-hidden="true" />
+                  {activeLabel}
+                </span>
+                <span aria-hidden="true" className={cn("h-4 text-[11px] leading-4 transition-opacity", secondaryText)}>{nextLabel || "\u00a0"}</span>
               </motion.span>
             </AnimatePresence>
           </span>
@@ -171,7 +172,7 @@ export function SectionRail() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -5, scale: 0.985 }}
               transition={{ duration: shouldReduceMotion ? 0.08 : 0.18, ease: "easeOut" }}
-              className={cn("absolute right-0 top-[calc(100%+0.55rem)] w-52 origin-top-right border p-1.5", menuColors)}
+              className="absolute right-0 top-[calc(100%+0.6rem)] w-max min-w-40 origin-top-right py-1 text-right [text-shadow:0_1px_8px_rgba(0,0,0,.38)]"
             >
               {sections.map(({ id, label }, index) => {
                 const active = activeId === id;
@@ -185,14 +186,14 @@ export function SectionRail() {
                     aria-current={active ? "location" : undefined}
                     onClick={() => scrollToSection(id)}
                     className={cn(
-                      "flex min-h-10 w-full items-center justify-between px-3 text-left text-[13px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#bd472b]",
+                      "flex min-h-10 w-full items-center justify-end gap-3 bg-transparent pl-4 text-right text-[13px] transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#bd472b]",
                       active
-                        ? isLight ? "bg-[#eee9df] text-[#181715]" : "bg-white/10 text-white"
-                        : isLight ? "text-[#625f59] hover:bg-black/[.045] hover:text-[#181715]" : "text-white/65 hover:bg-white/[.06] hover:text-white",
+                        ? "font-semibold text-[#bd472b]"
+                        : isLight ? "text-[#514d46]/70 hover:translate-x-[-3px] hover:text-[#201d19]" : "text-white/65 hover:translate-x-[-3px] hover:text-white",
                     )}
                   >
-                    <span>{label}</span>
                     {active && <Check className="h-3.5 w-3.5 text-[#bd472b]" aria-hidden="true" />}
+                    <span>{label}</span>
                   </button>
                 );
               })}
