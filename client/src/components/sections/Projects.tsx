@@ -72,7 +72,7 @@ function AndroidArchiveCard({ project, index, onOpen }: { project: AndroidProjec
           <div><span className="font-mono text-[9px] uppercase tracking-[.22em] text-zinc-300">Android application</span><h3 className="mt-2 text-2xl font-bold text-white sm:text-3xl">{project.title}</h3></div>
           <ArrowUpRight className="h-5 w-5 shrink-0 text-zinc-300 transition group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white" />
         </div>
-        <div className="relative h-[430px] overflow-hidden rounded-[2rem] border border-white/15 p-5 shadow-[0_28px_65px_rgba(0,0,0,.42)] sm:h-[500px] sm:p-7" style={{ background: `linear-gradient(145deg, ${project.accent}, color-mix(in_srgb, ${project.accent} 68%, #05070d))` }}>
+        <div className="relative h-[350px] overflow-hidden rounded-[2rem] border border-white/15 p-5 shadow-[0_28px_65px_rgba(0,0,0,.42)] sm:h-[500px] sm:p-7" style={{ background: `linear-gradient(145deg, ${project.accent}, color-mix(in_srgb, ${project.accent} 68%, #05070d))` }}>
           <p className="relative z-20 max-w-md text-sm font-semibold leading-6 text-white/95 sm:text-base">{project.description}</p>
           <div className="absolute inset-x-0 bottom-[-18%] top-[30%] sm:top-[27%]">
             {screens.map((screen, screenIndex) => {
