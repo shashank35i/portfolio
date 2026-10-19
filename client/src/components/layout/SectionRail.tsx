@@ -121,7 +121,7 @@ export function SectionRail() {
     <nav
       ref={rootRef}
       aria-label="Portfolio section selector"
-      className="fixed right-7 top-1/2 z-40 hidden -translate-y-1/2 min-[1280px]:block"
+      className="fixed right-3 top-1/2 z-40 hidden -translate-y-1/2 min-[1280px]:block"
     >
       <div className="relative flex flex-col items-end">
         <motion.button
@@ -135,11 +135,11 @@ export function SectionRail() {
           whileHover={shouldReduceMotion ? undefined : { x: -3 }}
           whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
           className={cn(
-            "group inline-flex min-h-[76px] items-center gap-3 bg-transparent py-2 pl-3 text-right transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#bd472b]",
+            "group relative inline-flex min-h-[66px] items-center gap-2 bg-transparent py-1 pl-2 text-right transition-colors duration-200 after:absolute after:bottom-0 after:right-0 after:h-[2px] after:w-0 after:bg-[#bd472b] after:transition-[width] after:duration-200 focus-visible:text-[#bd472b] focus-visible:after:w-8 focus-visible:after:h-[3px]",
             primaryText,
           )}
         >
-          <span className="relative flex h-[58px] w-[112px] flex-col justify-center overflow-hidden text-right [text-shadow:0_1px_8px_rgba(0,0,0,.28)]">
+          <span className="relative flex h-[52px] w-[82px] flex-col justify-center overflow-hidden text-right [text-shadow:0_1px_8px_rgba(0,0,0,.28)]">
             <AnimatePresence initial={false} custom={rollDirection} mode="popLayout">
               <motion.span
                 key={activeId}
@@ -150,12 +150,12 @@ export function SectionRail() {
                 transition={{ duration: shouldReduceMotion ? 0.08 : 0.24, ease: [0.22, 1, 0.36, 1] }}
                 className="absolute inset-0 flex flex-col items-end justify-center"
               >
-                <span aria-hidden="true" className={cn("h-4 text-[11px] leading-4 transition-opacity", secondaryText)}>{previousLabel || "\u00a0"}</span>
-                <span aria-live="polite" className="flex h-5 items-center gap-2 text-[15px] font-semibold leading-5">
-                  <span className="h-[2px] w-4 bg-[#bd472b] transition-transform duration-300 group-hover:w-6" aria-hidden="true" />
+                <span aria-hidden="true" className={cn("h-3.5 text-[10px] leading-[14px] transition-opacity", secondaryText)}>{previousLabel || "\u00a0"}</span>
+                <span aria-live="polite" className="flex h-5 items-center gap-1.5 text-[13px] font-semibold leading-5">
+                  <span className="h-[2px] w-3 bg-[#bd472b] transition-transform duration-300 group-hover:w-4" aria-hidden="true" />
                   {activeLabel}
                 </span>
-                <span aria-hidden="true" className={cn("h-4 text-[11px] leading-4 transition-opacity", secondaryText)}>{nextLabel || "\u00a0"}</span>
+                <span aria-hidden="true" className={cn("h-3.5 text-[10px] leading-[14px] transition-opacity", secondaryText)}>{nextLabel || "\u00a0"}</span>
               </motion.span>
             </AnimatePresence>
           </span>
