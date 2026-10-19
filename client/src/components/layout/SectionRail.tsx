@@ -135,7 +135,7 @@ export function SectionRail() {
           whileHover={shouldReduceMotion ? undefined : { x: -3 }}
           whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
           className={cn(
-            "group relative inline-flex min-h-[66px] items-center gap-2 bg-transparent py-1 pl-2 text-right transition-colors duration-200 after:absolute after:bottom-0 after:right-0 after:h-[2px] after:w-0 after:bg-[#bd472b] after:transition-[width] after:duration-200 focus-visible:text-[#bd472b] focus-visible:after:w-8 focus-visible:after:h-[3px]",
+            "group relative inline-flex min-h-[66px] items-center gap-2 bg-transparent py-1 pl-2 text-right transition-colors duration-200 after:absolute after:bottom-0 after:right-0 after:h-[2px] after:w-0 after:bg-[#bd472b] after:transition-[width] after:duration-200 focus-visible:outline-none focus-visible:text-[#bd472b] focus-visible:after:w-8 focus-visible:after:h-[3px]",
             primaryText,
           )}
         >
